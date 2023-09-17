@@ -4,11 +4,11 @@ using System.Globalization;
 
 namespace FixedMath
 {
-    public class Vector4TypeConverter : TypeConverter
+    public class FixedVector2TypeConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (VectorConversion.CanConvertTo(context, destinationType))
+            if (FixedVectorConversion.CanConvertTo(context, destinationType))
                 return true;
             if (destinationType == typeof(string))
                 return true;
@@ -18,21 +18,19 @@ namespace FixedMath
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            var vec = (Vector4)value;
+            var vec = (FixedVector2)value;
 
-            if (VectorConversion.CanConvertTo(context, destinationType))
+            if (FixedVectorConversion.CanConvertTo(context, destinationType))
             {
-                return VectorConversion.ConvertToFromVector4(context, culture, vec, destinationType);
+                var vec4 = new FixedVector4(vec.X, vec.Y, (Fixed)0.0M, (Fixed)0.0M);
+                return FixedVectorConversion.ConvertToFromVector4(context, culture, vec4, destinationType);
             }
 
             if (destinationType == typeof(string))
             {
-                var terms = new string[4];
-                float a;
+                var terms = new string[2];
                 terms[0] = vec.X.ToString("R", culture);
                 terms[1] = vec.Y.ToString("R", culture);
-                terms[2] = vec.Z.ToString("R", culture);
-                terms[3] = vec.W.ToString("R", culture);
 
                 return string.Join(culture.TextInfo.ListSeparator + " ", terms);
             }
@@ -51,7 +49,7 @@ namespace FixedMath
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var sourceType = value.GetType();
-            var vec = Vector4.Zero;
+            var vec = FixedVector2.Zero;
 
             if (sourceType == typeof(string))
             {
@@ -60,8 +58,6 @@ namespace FixedMath
 
                 vec.X = Fixed.Parse(words[0], culture);
                 vec.Y = Fixed.Parse(words[1], culture);
-                vec.Z = Fixed.Parse(words[2], culture);
-                vec.W = Fixed.Parse(words[3], culture);
 
                 return vec;
             }
@@ -70,4 +66,3 @@ namespace FixedMath
         }
     }
 }
-    

@@ -10,25 +10,25 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct BoundingBox : IEquatable<BoundingBox>
+    public struct FixedBoundingBox : IEquatable<FixedBoundingBox>
     {
 
         #region Public Fields
 
         /// <summary>
-        ///   The minimum extent of this <see cref="BoundingBox"/>.
+        ///   The minimum extent of this <see cref="FixedBoundingBox"/>.
         /// </summary>
         [DataMember]
-        public Vector3 Min;
+        public FixedVector3 Min;
       
         /// <summary>
-        ///   The maximum extent of this <see cref="BoundingBox"/>.
+        ///   The maximum extent of this <see cref="FixedBoundingBox"/>.
         /// </summary>
         [DataMember]
-        public Vector3 Max;
+        public FixedVector3 Max;
 
         /// <summary>
-        ///   The number of corners in a <see cref="BoundingBox"/>. This is equal to 8.
+        ///   The number of corners in a <see cref="FixedBoundingBox"/>. This is equal to 8.
         /// </summary>
         public const int CornerCount = 8;
 
@@ -38,11 +38,11 @@ namespace FixedMath
         #region Public Constructors
 
         /// <summary>
-        ///   Create a <see cref="BoundingBox"/>.
+        ///   Create a <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="min">The minimum extent of the <see cref="BoundingBox"/>.</param>
-        /// <param name="max">The maximum extent of the <see cref="BoundingBox"/>.</param>
-        public BoundingBox(Vector3 min, Vector3 max)
+        /// <param name="min">The minimum extent of the <see cref="FixedBoundingBox"/>.</param>
+        /// <param name="max">The maximum extent of the <see cref="FixedBoundingBox"/>.</param>
+        public FixedBoundingBox(FixedVector3 min, FixedVector3 max)
         {
             this.Min = min;
             this.Max = max;
@@ -54,14 +54,14 @@ namespace FixedMath
         #region Public Methods
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains another <see cref="BoundingBox"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains another <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for overlap.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for overlap.</param>
         /// <returns>
-        ///   A value indicating if this <see cref="BoundingBox"/> contains,
+        ///   A value indicating if this <see cref="FixedBoundingBox"/> contains,
         ///   intersects with or is disjoint with <paramref name="box"/>.
         /// </returns>
-        public ContainmentType Contains(BoundingBox box)
+        public ContainmentType Contains(FixedBoundingBox box)
         {
             //test if all corner is in the same side of a face by just checking min and max
             if (box.Max.X < Min.X
@@ -85,33 +85,33 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains another <see cref="BoundingBox"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains another <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for overlap.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for overlap.</param>
         /// <param name="result">
-        ///   A value indicating if this <see cref="BoundingBox"/> contains,
+        ///   A value indicating if this <see cref="FixedBoundingBox"/> contains,
         ///   intersects with or is disjoint with <paramref name="box"/>.
         /// </param>
-        public void Contains(ref BoundingBox box, out ContainmentType result)
+        public void Contains(ref FixedBoundingBox box, out ContainmentType result)
         {
             result = Contains(box);
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains a <see cref="BoundingFrustum"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains a <see cref="FixedBoundingFrustum"/>.
         /// </summary>
-        /// <param name="frustum">The <see cref="BoundingFrustum"/> to test for overlap.</param>
+        /// <param name="frustum">The <see cref="FixedBoundingFrustum"/> to test for overlap.</param>
         /// <returns>
-        ///   A value indicating if this <see cref="BoundingBox"/> contains,
+        ///   A value indicating if this <see cref="FixedBoundingBox"/> contains,
         ///   intersects with or is disjoint with <paramref name="frustum"/>.
         /// </returns>
-        public ContainmentType Contains(BoundingFrustum frustum)
+        public ContainmentType Contains(FixedBoundingFrustum frustum)
         {
             //TODO: bad done here need a fix. 
             //Because question is not frustum contain box but reverse and this is not the same
             int i;
             ContainmentType contained;
-            Vector3[] corners = frustum.GetCorners();
+            FixedVector3[] corners = frustum.GetCorners();
 
             // First we check if frustum is in box
             for (i = 0; i < corners.Length; i++)
@@ -145,14 +145,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains a <see cref="BoundingSphere"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains a <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingSphere"/> to test for overlap.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingSphere"/> to test for overlap.</param>
         /// <returns>
-        ///   A value indicating if this <see cref="BoundingBox"/> contains,
+        ///   A value indicating if this <see cref="FixedBoundingBox"/> contains,
         ///   intersects with or is disjoint with <paramref name="sphere"/>.
         /// </returns>
-        public ContainmentType Contains(BoundingSphere sphere)
+        public ContainmentType Contains(FixedBoundingSphere sphere)
         {
             if (sphere.Center.X - Min.X >= sphere.Radius
                 && sphere.Center.Y - Min.Y >= sphere.Radius
@@ -237,27 +237,27 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains a <see cref="BoundingSphere"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains a <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingSphere"/> to test for overlap.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingSphere"/> to test for overlap.</param>
         /// <param name="result">
-        ///   A value indicating if this <see cref="BoundingBox"/> contains,
+        ///   A value indicating if this <see cref="FixedBoundingBox"/> contains,
         ///   intersects with or is disjoint with <paramref name="sphere"/>.
         /// </param>
-        public void Contains(ref BoundingSphere sphere, out ContainmentType result)
+        public void Contains(ref FixedBoundingSphere sphere, out ContainmentType result)
         {
             result = this.Contains(sphere);
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains a point.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains a point.
         /// </summary>
-        /// <param name="point">The <see cref="Vector3"/> to test.</param>
+        /// <param name="point">The <see cref="FixedVector3"/> to test.</param>
         /// <returns>
-        ///   <see cref="ContainmentType.Contains"/> if this <see cref="BoundingBox"/> contains
+        ///   <see cref="ContainmentType.Contains"/> if this <see cref="FixedBoundingBox"/> contains
         ///   <paramref name="point"/> or <see cref="ContainmentType.Disjoint"/> if it does not.
         /// </returns>
-        public ContainmentType Contains(Vector3 point)
+        public ContainmentType Contains(FixedVector3 point)
         {
             ContainmentType result;
             this.Contains(ref point, out result);
@@ -265,14 +265,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> contains a point.
+        ///   Check if this <see cref="FixedBoundingBox"/> contains a point.
         /// </summary>
-        /// <param name="point">The <see cref="Vector3"/> to test.</param>
+        /// <param name="point">The <see cref="FixedVector3"/> to test.</param>
         /// <param name="result">
-        ///   <see cref="ContainmentType.Contains"/> if this <see cref="BoundingBox"/> contains
+        ///   <see cref="ContainmentType.Contains"/> if this <see cref="FixedBoundingBox"/> contains
         ///   <paramref name="point"/> or <see cref="ContainmentType.Disjoint"/> if it does not.
         /// </param>
-        public void Contains(ref Vector3 point, out ContainmentType result)
+        public void Contains(ref FixedVector3 point, out ContainmentType result)
         {
             //first we get if point is out of box
             if (point.X < this.Min.X
@@ -290,8 +290,8 @@ namespace FixedMath
             }
         }
 
-        private static readonly Vector3 MaxVector3 = new Vector3(Fixed.MaxValue);
-        private static readonly Vector3 MinVector3 = new Vector3(Fixed.MinValue);
+        private static readonly FixedVector3 MaxVector3 = new FixedVector3(Fixed.MaxValue);
+        private static readonly FixedVector3 MinVector3 = new FixedVector3(Fixed.MinValue);
 
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace FixedMath
         /// <param name="count">The number of points to iterate</param>
         /// <returns>A bounding box that encapsulates the given point cloud.</returns>
         /// <exception cref="System.ArgumentException">Thrown if the given array is null or has no points.</exception>
-        public static BoundingBox CreateFromPoints(Vector3[] points, int index = 0, int count = -1)
+        public static FixedBoundingBox CreateFromPoints(FixedVector3[] points, int index = 0, int count = -1)
         {
             if (points == null || points.Length == 0)
                 throw new ArgumentException();
@@ -323,7 +323,7 @@ namespace FixedMath
                 maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
             }
 
-            return new BoundingBox(minVec, maxVec);
+            return new FixedBoundingBox(minVec, maxVec);
         }
 
 
@@ -335,7 +335,7 @@ namespace FixedMath
         /// <param name="count">The number of points to iterate</param>
         /// <returns>A bounding box that encapsulates the given point cloud.</returns>
         /// <exception cref="System.ArgumentException">Thrown if the given list is null or has no points.</exception>
-        public static BoundingBox CreateFromPoints(List<Vector3> points, int index = 0, int count = -1)
+        public static FixedBoundingBox CreateFromPoints(List<FixedVector3> points, int index = 0, int count = -1)
         {
             if (points == null || points.Count == 0)
                 throw new ArgumentException();
@@ -356,17 +356,17 @@ namespace FixedMath
                 maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
             }
 
-            return new BoundingBox(minVec, maxVec);
+            return new FixedBoundingBox(minVec, maxVec);
         }
 
 
         /// <summary>
-        ///   Create the enclosing <see cref="BoundingBox"/> from the given list of points.
+        ///   Create the enclosing <see cref="FixedBoundingBox"/> from the given list of points.
         /// </summary>
-        /// <param name="points">The list of <see cref="Vector3"/> instances defining the point cloud to bound.</param>
-        /// <returns>A <see cref="BoundingBox"/> that encloses the given point cloud.</returns>
+        /// <param name="points">The list of <see cref="FixedVector3"/> instances defining the point cloud to bound.</param>
+        /// <returns>A <see cref="FixedBoundingBox"/> that encloses the given point cloud.</returns>
         /// <exception cref="System.ArgumentException">Thrown if the given list has no points.</exception>
-        public static BoundingBox CreateFromPoints(IEnumerable<Vector3> points)
+        public static FixedBoundingBox CreateFromPoints(IEnumerable<FixedVector3> points)
         {
             if (points == null)
                 throw new ArgumentNullException();
@@ -389,57 +389,57 @@ namespace FixedMath
             if (empty)
                 throw new ArgumentException();
 
-            return new BoundingBox(minVec, maxVec);
+            return new FixedBoundingBox(minVec, maxVec);
         }
 
         /// <summary>
-        ///   Create the enclosing <see cref="BoundingBox"/> of a <see cref="BoundingSphere"/>.
+        ///   Create the enclosing <see cref="FixedBoundingBox"/> of a <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingSphere"/> to enclose.</param>
-        /// <returns>A <see cref="BoundingBox"/> enclosing <paramref name="sphere"/>.</returns>
-        public static BoundingBox CreateFromSphere(BoundingSphere sphere)
+        /// <param name="sphere">The <see cref="FixedBoundingSphere"/> to enclose.</param>
+        /// <returns>A <see cref="FixedBoundingBox"/> enclosing <paramref name="sphere"/>.</returns>
+        public static FixedBoundingBox CreateFromSphere(FixedBoundingSphere sphere)
         {
-            BoundingBox result;
+            FixedBoundingBox result;
             CreateFromSphere(ref sphere, out result);
             return result;
         }
 
         /// <summary>
-        ///   Create the enclosing <see cref="BoundingBox"/> of a <see cref="BoundingSphere"/>.
+        ///   Create the enclosing <see cref="FixedBoundingBox"/> of a <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingSphere"/> to enclose.</param>
-        /// <param name="result">A <see cref="BoundingBox"/> enclosing <paramref name="sphere"/>.</param>
-        public static void CreateFromSphere(ref BoundingSphere sphere, out BoundingBox result)
+        /// <param name="sphere">The <see cref="FixedBoundingSphere"/> to enclose.</param>
+        /// <param name="result">A <see cref="FixedBoundingBox"/> enclosing <paramref name="sphere"/>.</param>
+        public static void CreateFromSphere(ref FixedBoundingSphere sphere, out FixedBoundingBox result)
         {
-            var corner = new Vector3(sphere.Radius);
+            var corner = new FixedVector3(sphere.Radius);
             result.Min = sphere.Center - corner;
             result.Max = sphere.Center + corner;
         }
 
         /// <summary>
-        ///   Create the <see cref="BoundingBox"/> enclosing two other <see cref="BoundingBox"/> instances.
+        ///   Create the <see cref="FixedBoundingBox"/> enclosing two other <see cref="FixedBoundingBox"/> instances.
         /// </summary>
-        /// <param name="original">A <see cref="BoundingBox"/> to enclose.</param>
-        /// <param name="additional">A <see cref="BoundingBox"/> to enclose.</param>
+        /// <param name="original">A <see cref="FixedBoundingBox"/> to enclose.</param>
+        /// <param name="additional">A <see cref="FixedBoundingBox"/> to enclose.</param>
         /// <returns>
-        ///   The <see cref="BoundingBox"/> enclosing <paramref name="original"/> and <paramref name="additional"/>.
+        ///   The <see cref="FixedBoundingBox"/> enclosing <paramref name="original"/> and <paramref name="additional"/>.
         /// </returns>
-        public static BoundingBox CreateMerged(BoundingBox original, BoundingBox additional)
+        public static FixedBoundingBox CreateMerged(FixedBoundingBox original, FixedBoundingBox additional)
         {
-            BoundingBox result;
+            FixedBoundingBox result;
             CreateMerged(ref original, ref additional, out result);
             return result;
         }
 
         /// <summary>
-        ///   Create the <see cref="BoundingBox"/> enclosing two other <see cref="BoundingBox"/> instances.
+        ///   Create the <see cref="FixedBoundingBox"/> enclosing two other <see cref="FixedBoundingBox"/> instances.
         /// </summary>
-        /// <param name="original">A <see cref="BoundingBox"/> to enclose.</param>
-        /// <param name="additional">A <see cref="BoundingBox"/> to enclose.</param>
+        /// <param name="original">A <see cref="FixedBoundingBox"/> to enclose.</param>
+        /// <param name="additional">A <see cref="FixedBoundingBox"/> to enclose.</param>
         /// <param name="result">
-        ///   The <see cref="BoundingBox"/> enclosing <paramref name="original"/> and <paramref name="additional"/>.
+        ///   The <see cref="FixedBoundingBox"/> enclosing <paramref name="original"/> and <paramref name="additional"/>.
         /// </param>
-        public static void CreateMerged(ref BoundingBox original, ref BoundingBox additional, out BoundingBox result)
+        public static void CreateMerged(ref FixedBoundingBox original, ref FixedBoundingBox additional, out FixedBoundingBox result)
         {
             result.Min.X = Fixed.Min(original.Min.X, additional.Min.X);
             result.Min.Y = Fixed.Min(original.Min.Y, additional.Min.Y);
@@ -450,59 +450,59 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if two <see cref="BoundingBox"/> instances are equal.
+        ///   Check if two <see cref="FixedBoundingBox"/> instances are equal.
         /// </summary>
-        /// <param name="other">The <see cref="BoundingBox"/> to compare with this <see cref="BoundingBox"/>.</param>
+        /// <param name="other">The <see cref="FixedBoundingBox"/> to compare with this <see cref="FixedBoundingBox"/>.</param>
         /// <returns>
-        ///   <code>true</code> if <see cref="other"/> is equal to this <see cref="BoundingBox"/>,
+        ///   <code>true</code> if <see cref="other"/> is equal to this <see cref="FixedBoundingBox"/>,
         ///   <code>false</code> if it is not.
         /// </returns>
-        public bool Equals(BoundingBox other)
+        public bool Equals(FixedBoundingBox other)
         {
             return (this.Min == other.Min) && (this.Max == other.Max);
         }
 
         /// <summary>
-        ///   Check if two <see cref="BoundingBox"/> instances are equal.
+        ///   Check if two <see cref="FixedBoundingBox"/> instances are equal.
         /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to compare with this <see cref="BoundingBox"/>.</param>
+        /// <param name="obj">The <see cref="Object"/> to compare with this <see cref="FixedBoundingBox"/>.</param>
         /// <returns>
-        ///   <code>true</code> if <see cref="obj"/> is equal to this <see cref="BoundingBox"/>,
+        ///   <code>true</code> if <see cref="obj"/> is equal to this <see cref="FixedBoundingBox"/>,
         ///   <code>false</code> if it is not.
         /// </returns>
         public override bool Equals(object obj)
         {
-            return (obj is BoundingBox) && this.Equals((BoundingBox)obj);
+            return (obj is FixedBoundingBox) && this.Equals((FixedBoundingBox)obj);
         }
 
         /// <summary>
-        ///   Get an array of <see cref="Vector3"/> containing the corners of this <see cref="BoundingBox"/>.
+        ///   Get an array of <see cref="FixedVector3"/> containing the corners of this <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <returns>An array of <see cref="Vector3"/> containing the corners of this <see cref="BoundingBox"/>.</returns>
-        public Vector3[] GetCorners()
+        /// <returns>An array of <see cref="FixedVector3"/> containing the corners of this <see cref="FixedBoundingBox"/>.</returns>
+        public FixedVector3[] GetCorners()
         {
-            return new Vector3[] {
-                new Vector3(this.Min.X, this.Max.Y, this.Max.Z), 
-                new Vector3(this.Max.X, this.Max.Y, this.Max.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Min.Z),
-                new Vector3(this.Min.X, this.Min.Y, this.Min.Z)
+            return new FixedVector3[] {
+                new FixedVector3(this.Min.X, this.Max.Y, this.Max.Z), 
+                new FixedVector3(this.Max.X, this.Max.Y, this.Max.Z),
+                new FixedVector3(this.Max.X, this.Min.Y, this.Max.Z), 
+                new FixedVector3(this.Min.X, this.Min.Y, this.Max.Z), 
+                new FixedVector3(this.Min.X, this.Max.Y, this.Min.Z),
+                new FixedVector3(this.Max.X, this.Max.Y, this.Min.Z),
+                new FixedVector3(this.Max.X, this.Min.Y, this.Min.Z),
+                new FixedVector3(this.Min.X, this.Min.Y, this.Min.Z)
             };
         }
 
         /// <summary>
-        ///   Fill the first 8 places of an array of <see cref="Vector3"/>
-        ///   with the corners of this <see cref="BoundingBox"/>.
+        ///   Fill the first 8 places of an array of <see cref="FixedVector3"/>
+        ///   with the corners of this <see cref="FixedBoundingBox"/>.
         /// </summary>
         /// <param name="corners">The array to fill.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="corners"/> is <code>null</code>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   If <paramref name="corners"/> has a length of less than 8.
         /// </exception>
-        public void GetCorners(Vector3[] corners)
+        public void GetCorners(FixedVector3[] corners)
         {
             if (corners == null)
             {
@@ -539,23 +539,23 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Get the hash code for this <see cref="BoundingBox"/>.
+        ///   Get the hash code for this <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <returns>A hash code for this <see cref="BoundingBox"/>.</returns>
+        /// <returns>A hash code for this <see cref="FixedBoundingBox"/>.</returns>
         public override int GetHashCode()
         {
             return this.Min.GetHashCode() + this.Max.GetHashCode();
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects another <see cref="BoundingBox"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects another <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <returns>
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="box"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="box"/>,
         ///   <code>false</code> if it does not.
         /// </returns>
-        public bool Intersects(BoundingBox box)
+        public bool Intersects(FixedBoundingBox box)
         {
             bool result;
             Intersects(ref box, out result);
@@ -563,14 +563,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects another <see cref="BoundingBox"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects another <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <param name="result">
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="box"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="box"/>,
         ///   <code>false</code> if it does not.
         /// </param>
-        public void Intersects(ref BoundingBox box, out bool result)
+        public void Intersects(ref FixedBoundingBox box, out bool result)
         {
             if ((this.Max.X >= box.Min.X) && (this.Min.X <= box.Max.X))
             {
@@ -589,27 +589,27 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="BoundingFrustum"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedBoundingFrustum"/>.
         /// </summary>
-        /// <param name="frustum">The <see cref="BoundingFrustum"/> to test for intersection.</param>
+        /// <param name="frustum">The <see cref="FixedBoundingFrustum"/> to test for intersection.</param>
         /// <returns>
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="frustum"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="frustum"/>,
         ///   <code>false</code> if it does not.
         /// </returns>
-        public bool Intersects(BoundingFrustum frustum)
+        public bool Intersects(FixedBoundingFrustum frustum)
         {
             return frustum.Intersects(this);
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="BoundingFrustum"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedBoundingFrustum"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingFrustum"/> to test for intersection.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingFrustum"/> to test for intersection.</param>
         /// <returns>
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="sphere"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="sphere"/>,
         ///   <code>false</code> if it does not.
         /// </returns>
-        public bool Intersects(BoundingSphere sphere)
+        public bool Intersects(FixedBoundingSphere sphere)
         {
             bool result;
             Intersects(ref sphere, out result);
@@ -617,14 +617,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="BoundingFrustum"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedBoundingFrustum"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingFrustum"/> to test for intersection.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingFrustum"/> to test for intersection.</param>
         /// <param name="result">
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="sphere"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="sphere"/>,
         ///   <code>false</code> if it does not.
         /// </param>
-        public void Intersects(ref BoundingSphere sphere, out bool result)
+        public void Intersects(ref FixedBoundingSphere sphere, out bool result)
         {
             var squareDistance = Fixed.Zero;
             var point = sphere.Center;
@@ -638,34 +638,34 @@ namespace FixedMath
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="Plane"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedPlane"/>.
         /// </summary>
-        /// <param name="plane">The <see cref="Plane"/> to test for intersection.</param>
+        /// <param name="plane">The <see cref="FixedPlane"/> to test for intersection.</param>
         /// <returns>
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="plane"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="plane"/>,
         ///   <code>false</code> if it does not.
         /// </returns>
-        public PlaneIntersectionType Intersects(Plane plane)
+        public FixedPlaneIntersectionType Intersects(FixedPlane plane)
         {
-            PlaneIntersectionType result;
+            FixedPlaneIntersectionType result;
             Intersects(ref plane, out result);
             return result;
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="Plane"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedPlane"/>.
         /// </summary>
-        /// <param name="plane">The <see cref="Plane"/> to test for intersection.</param>
+        /// <param name="plane">The <see cref="FixedPlane"/> to test for intersection.</param>
         /// <param name="result">
-        ///   <code>true</code> if this <see cref="BoundingBox"/> intersects <paramref name="plane"/>,
+        ///   <code>true</code> if this <see cref="FixedBoundingBox"/> intersects <paramref name="plane"/>,
         ///   <code>false</code> if it does not.
         /// </param>
-        public void Intersects(ref Plane plane, out PlaneIntersectionType result)
+        public void Intersects(ref FixedPlane plane, out FixedPlaneIntersectionType result)
         {
             // See http://zach.in.tu-clausthal.de/teaching/cg_literatur/lighthouse3d_view_frustum_culling/index.html
 
-            Vector3 positiveVertex;
-            Vector3 negativeVertex;
+            FixedVector3 positiveVertex;
+            FixedVector3 negativeVertex;
 
             if (plane.Normal.X >= Fixed.Zero)
             {
@@ -704,7 +704,7 @@ namespace FixedMath
             var distance = plane.Normal.X * negativeVertex.X + plane.Normal.Y * negativeVertex.Y + plane.Normal.Z * negativeVertex.Z + plane.D;
             if (distance > Fixed.Zero)
             {
-                result = PlaneIntersectionType.Front;
+                result = FixedPlaneIntersectionType.Front;
                 return;
             }
 
@@ -712,63 +712,63 @@ namespace FixedMath
             distance = plane.Normal.X * positiveVertex.X + plane.Normal.Y * positiveVertex.Y + plane.Normal.Z * positiveVertex.Z + plane.D;
             if (distance < Fixed.Zero)
             {
-                result = PlaneIntersectionType.Back;
+                result = FixedPlaneIntersectionType.Back;
                 return;
             }
 
-            result = PlaneIntersectionType.Intersecting;
+            result = FixedPlaneIntersectionType.Intersecting;
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="Ray"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedRay"/>.
         /// </summary>
-        /// <param name="ray">The <see cref="Ray"/> to test for intersection.</param>
+        /// <param name="ray">The <see cref="FixedRay"/> to test for intersection.</param>
         /// <returns>
-        ///   The distance along the <see cref="Ray"/> to the intersection point or
-        ///   <code>null</code> if the <see cref="Ray"/> does not intesect this <see cref="BoundingBox"/>.
+        ///   The distance along the <see cref="FixedRay"/> to the intersection point or
+        ///   <code>null</code> if the <see cref="FixedRay"/> does not intesect this <see cref="FixedBoundingBox"/>.
         /// </returns>
-        public Nullable<Fixed> Intersects(Ray ray)
+        public Nullable<Fixed> Intersects(FixedRay ray)
         {
             return ray.Intersects(this);
         }
 
         /// <summary>
-        ///   Check if this <see cref="BoundingBox"/> intersects a <see cref="Ray"/>.
+        ///   Check if this <see cref="FixedBoundingBox"/> intersects a <see cref="FixedRay"/>.
         /// </summary>
-        /// <param name="ray">The <see cref="Ray"/> to test for intersection.</param>
+        /// <param name="ray">The <see cref="FixedRay"/> to test for intersection.</param>
         /// <param name="result">
-        ///   The distance along the <see cref="Ray"/> to the intersection point or
-        ///   <code>null</code> if the <see cref="Ray"/> does not intesect this <see cref="BoundingBox"/>.
+        ///   The distance along the <see cref="FixedRay"/> to the intersection point or
+        ///   <code>null</code> if the <see cref="FixedRay"/> does not intesect this <see cref="FixedBoundingBox"/>.
         /// </param>
-        public void Intersects(ref Ray ray, out Nullable<Fixed> result)
+        public void Intersects(ref FixedRay ray, out Nullable<Fixed> result)
         {
             result = Intersects(ray);
         }
 
         /// <summary>
-        ///   Check if two <see cref="BoundingBox"/> instances are equal.
+        ///   Check if two <see cref="FixedBoundingBox"/> instances are equal.
         /// </summary>
-        /// <param name="a">A <see cref="BoundingBox"/> to compare the other.</param>
-        /// <param name="b">A <see cref="BoundingBox"/> to compare the other.</param>
+        /// <param name="a">A <see cref="FixedBoundingBox"/> to compare the other.</param>
+        /// <param name="b">A <see cref="FixedBoundingBox"/> to compare the other.</param>
         /// <returns>
         ///   <code>true</code> if <see cref="a"/> is equal to this <see cref="b"/>,
         ///   <code>false</code> if it is not.
         /// </returns>
-        public static bool operator ==(BoundingBox a, BoundingBox b)
+        public static bool operator ==(FixedBoundingBox a, FixedBoundingBox b)
         {
             return a.Equals(b);
         }
 
         /// <summary>
-        ///   Check if two <see cref="BoundingBox"/> instances are not equal.
+        ///   Check if two <see cref="FixedBoundingBox"/> instances are not equal.
         /// </summary>
-        /// <param name="a">A <see cref="BoundingBox"/> to compare the other.</param>
-        /// <param name="b">A <see cref="BoundingBox"/> to compare the other.</param>
+        /// <param name="a">A <see cref="FixedBoundingBox"/> to compare the other.</param>
+        /// <param name="b">A <see cref="FixedBoundingBox"/> to compare the other.</param>
         /// <returns>
         ///   <code>true</code> if <see cref="a"/> is not equal to this <see cref="b"/>,
         ///   <code>false</code> if it is.
         /// </returns>
-        public static bool operator !=(BoundingBox a, BoundingBox b)
+        public static bool operator !=(FixedBoundingBox a, FixedBoundingBox b)
         {
             return !a.Equals(b);
         }
@@ -785,20 +785,20 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Get a <see cref="String"/> representation of this <see cref="BoundingBox"/>.
+        /// Get a <see cref="String"/> representation of this <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <returns>A <see cref="String"/> representation of this <see cref="BoundingBox"/>.</returns>
+        /// <returns>A <see cref="String"/> representation of this <see cref="FixedBoundingBox"/>.</returns>
         public override string ToString()
         {
             return "{{Min:" + this.Min.ToString() + " Max:" + this.Max.ToString() + "}}";
         }
 
         /// <summary>
-        /// Deconstruction method for <see cref="BoundingBox"/>.
+        /// Deconstruction method for <see cref="FixedBoundingBox"/>.
         /// </summary>
         /// <param name="min"></param>
         /// <param name="max"></param>
-        public void Deconstruct(out Vector3 min, out Vector3 max)
+        public void Deconstruct(out FixedVector3 min, out FixedVector3 max)
         {
             min = Min;
             max = Max;

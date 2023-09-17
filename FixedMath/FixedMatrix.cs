@@ -9,7 +9,7 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Matrix : IEquatable<Matrix>
+    public struct FixedMatrix : IEquatable<FixedMatrix>
     {
         #region Public Constructors
 
@@ -32,7 +32,7 @@ namespace FixedMath
         /// <param name="m42">A fourth row and second column value.</param>
         /// <param name="m43">A fourth row and third column value.</param>
         /// <param name="m44">A fourth row and fourth column value.</param>
-        internal Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
+        internal FixedMatrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
                       float m32, float m33, float m34, float m41, float m42, float m43, float m44)
         {
             this.M11 = (Fixed)m11;
@@ -72,7 +72,7 @@ namespace FixedMath
         /// <param name="m42">A fourth row and second column value.</param>
         /// <param name="m43">A fourth row and third column value.</param>
         /// <param name="m44">A fourth row and fourth column value.</param>
-        public Matrix(Fixed m11, Fixed m12, Fixed m13, Fixed m14, Fixed m21, Fixed m22, Fixed m23, Fixed m24, Fixed m31,
+        public FixedMatrix(Fixed m11, Fixed m12, Fixed m13, Fixed m14, Fixed m21, Fixed m22, Fixed m23, Fixed m24, Fixed m31,
                       Fixed m32, Fixed m33, Fixed m34, Fixed m41, Fixed m42, Fixed m43, Fixed m44)
         {
             this.M11 = m11;
@@ -100,7 +100,7 @@ namespace FixedMath
         /// <param name="row2">A second row of the created matrix.</param>
         /// <param name="row3">A third row of the created matrix.</param>
         /// <param name="row4">A fourth row of the created matrix.</param>
-        public Matrix(Vector4 row1, Vector4 row2, Vector4 row3, Vector4 row4)
+        public FixedMatrix(FixedVector4 row1, FixedVector4 row2, FixedVector4 row3, FixedVector4 row4)
         {
             this.M11 = row1.X;
             this.M12 = row1.Y;
@@ -306,7 +306,7 @@ namespace FixedMath
         #endregion
 
         #region Private Members
-        private static Matrix identity = new Matrix(Fixed.One, Fixed.Zero, Fixed.Zero, Fixed.Zero,
+        private static FixedMatrix identity = new FixedMatrix(Fixed.One, Fixed.Zero, Fixed.Zero, Fixed.Zero,
                                                     Fixed.Zero, Fixed.One, Fixed.Zero, Fixed.Zero,
                                                     Fixed.Zero, Fixed.Zero, Fixed.One, Fixed.Zero,
                                                     Fixed.Zero, Fixed.Zero, Fixed.Zero, Fixed.One);
@@ -317,11 +317,11 @@ namespace FixedMath
         /// <summary>
         /// The backward vector formed from the third row M31, M32, M33 elements.
         /// </summary>
-        public Vector3 Backward
+        public FixedVector3 Backward
         {
             get
             {
-                return new Vector3(this.M31, this.M32, this.M33);
+                return new FixedVector3(this.M31, this.M32, this.M33);
             }
             set
             {
@@ -334,11 +334,11 @@ namespace FixedMath
         /// <summary>
         /// The down vector formed from the second row -M21, -M22, -M23 elements.
         /// </summary>
-        public Vector3 Down
+        public FixedVector3 Down
         {
             get
             {
-                return new Vector3(-this.M21, -this.M22, -this.M23);
+                return new FixedVector3(-this.M21, -this.M22, -this.M23);
             }
             set
             {
@@ -351,11 +351,11 @@ namespace FixedMath
         /// <summary>
         /// The forward vector formed from the third row -M31, -M32, -M33 elements.
         /// </summary>
-        public Vector3 Forward
+        public FixedVector3 Forward
         {
             get
             {
-                return new Vector3(-this.M31, -this.M32, -this.M33);
+                return new FixedVector3(-this.M31, -this.M32, -this.M33);
             }
             set
             {
@@ -368,7 +368,7 @@ namespace FixedMath
         /// <summary>
         /// Returns the identity matrix.
         /// </summary>
-        public static Matrix Identity
+        public static FixedMatrix Identity
         {
             get { return identity; }
         }
@@ -376,11 +376,11 @@ namespace FixedMath
         /// <summary>
         /// The left vector formed from the first row -M11, -M12, -M13 elements.
         /// </summary>
-        public Vector3 Left
+        public FixedVector3 Left
         {
             get
             {
-                return new Vector3(-this.M11, -this.M12, -this.M13);
+                return new FixedVector3(-this.M11, -this.M12, -this.M13);
             }
             set
             {
@@ -393,11 +393,11 @@ namespace FixedMath
         /// <summary>
         /// The right vector formed from the first row M11, M12, M13 elements.
         /// </summary>
-        public Vector3 Right
+        public FixedVector3 Right
         {
             get
             {
-                return new Vector3(this.M11, this.M12, this.M13);
+                return new FixedVector3(this.M11, this.M12, this.M13);
             }
             set
             {
@@ -410,11 +410,11 @@ namespace FixedMath
         /// <summary>
         /// Position stored in this matrix.
         /// </summary>
-        public Vector3 Translation
+        public FixedVector3 Translation
         {
             get
             {
-                return new Vector3(this.M41, this.M42, this.M43);
+                return new FixedVector3(this.M41, this.M42, this.M43);
             }
             set
             {
@@ -427,11 +427,11 @@ namespace FixedMath
         /// <summary>
         /// The upper vector formed from the second row M21, M22, M23 elements.
         /// </summary>
-        public Vector3 Up
+        public FixedVector3 Up
         {
             get
             {
-                return new Vector3(this.M21, this.M22, this.M23);
+                return new FixedVector3(this.M21, this.M22, this.M23);
             }
             set
             {
@@ -445,12 +445,12 @@ namespace FixedMath
         #region Public Methods
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains sum of two matrixes.
+        /// Creates a new <see cref="FixedMatrix"/> which contains sum of two matrixes.
         /// </summary>
         /// <param name="matrix1">The first matrix to add.</param>
         /// <param name="matrix2">The second matrix to add.</param>
         /// <returns>The result of the matrix addition.</returns>
-        public static Matrix Add(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix Add(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             matrix1.M11 += matrix2.M11;
             matrix1.M12 += matrix2.M12;
@@ -472,12 +472,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains sum of two matrixes.
+        /// Creates a new <see cref="FixedMatrix"/> which contains sum of two matrixes.
         /// </summary>
         /// <param name="matrix1">The first matrix to add.</param>
         /// <param name="matrix2">The second matrix to add.</param>
         /// <param name="result">The result of the matrix addition as an output parameter.</param>
-        public static void Add(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
+        public static void Add(ref FixedMatrix matrix1, ref FixedMatrix matrix2, out FixedMatrix result)
         {
             result.M11 = matrix1.M11 + matrix2.M11;
             result.M12 = matrix1.M12 + matrix2.M12;
@@ -499,17 +499,17 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> for spherical billboarding that rotates around specified object position.
+        /// Creates a new <see cref="FixedMatrix"/> for spherical billboarding that rotates around specified object position.
         /// </summary>
         /// <param name="objectPosition">Position of billboard object. It will rotate around that vector.</param>
         /// <param name="cameraPosition">The camera position.</param>
         /// <param name="cameraUpVector">The camera up vector.</param>
         /// <param name="cameraForwardVector">Optional camera forward vector.</param>
-        /// <returns>The <see cref="Matrix"/> for spherical billboarding.</returns>
-        public static Matrix CreateBillboard(Vector3 objectPosition, Vector3 cameraPosition,
-            Vector3 cameraUpVector, Nullable<Vector3> cameraForwardVector)
+        /// <returns>The <see cref="FixedMatrix"/> for spherical billboarding.</returns>
+        public static FixedMatrix CreateBillboard(FixedVector3 objectPosition, FixedVector3 cameraPosition,
+            FixedVector3 cameraUpVector, Nullable<FixedVector3> cameraForwardVector)
         {
-            Matrix result;
+            FixedMatrix result;
 
             // Delegate to the other overload of the function to do the work
             CreateBillboard(ref objectPosition, ref cameraPosition, ref cameraUpVector, cameraForwardVector, out result);
@@ -518,34 +518,34 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> for spherical billboarding that rotates around specified object position.
+        /// Creates a new <see cref="FixedMatrix"/> for spherical billboarding that rotates around specified object position.
         /// </summary>
         /// <param name="objectPosition">Position of billboard object. It will rotate around that vector.</param>
         /// <param name="cameraPosition">The camera position.</param>
         /// <param name="cameraUpVector">The camera up vector.</param>
         /// <param name="cameraForwardVector">Optional camera forward vector.</param>
-        /// <param name="result">The <see cref="Matrix"/> for spherical billboarding as an output parameter.</param>
-        public static void CreateBillboard(ref Vector3 objectPosition, ref Vector3 cameraPosition,
-            ref Vector3 cameraUpVector, Vector3? cameraForwardVector, out Matrix result)
+        /// <param name="result">The <see cref="FixedMatrix"/> for spherical billboarding as an output parameter.</param>
+        public static void CreateBillboard(ref FixedVector3 objectPosition, ref FixedVector3 cameraPosition,
+            ref FixedVector3 cameraUpVector, FixedVector3? cameraForwardVector, out FixedMatrix result)
         {
-            Vector3 vector;
-            Vector3 vector2;
-            Vector3 vector3;
+            FixedVector3 vector;
+            FixedVector3 vector2;
+            FixedVector3 vector3;
             vector.X = objectPosition.X - cameraPosition.X;
             vector.Y = objectPosition.Y - cameraPosition.Y;
             vector.Z = objectPosition.Z - cameraPosition.Z;
             Fixed num = vector.LengthSquared();
             if (num < (Fixed)0.0001M)
             {
-                vector = cameraForwardVector.HasValue ? -cameraForwardVector.Value : Vector3.Forward;
+                vector = cameraForwardVector.HasValue ? -cameraForwardVector.Value : FixedVector3.Forward;
             }
             else
             {
-                Vector3.Multiply(ref vector, Fixed.One / Fixed.Sqrt(num), out vector);
+                FixedVector3.Multiply(ref vector, Fixed.One / Fixed.Sqrt(num), out vector);
             }
-            Vector3.Cross(ref cameraUpVector, ref vector, out vector3);
+            FixedVector3.Cross(ref cameraUpVector, ref vector, out vector3);
             vector3.Normalize();
-            Vector3.Cross(ref vector, ref vector3, out vector2);
+            FixedVector3.Cross(ref vector, ref vector3, out vector2);
             result.M11 = vector3.X;
             result.M12 = vector3.Y;
             result.M13 = vector3.Z;
@@ -565,80 +565,80 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> for cylindrical billboarding that rotates around specified axis.
+        /// Creates a new <see cref="FixedMatrix"/> for cylindrical billboarding that rotates around specified axis.
         /// </summary>
         /// <param name="objectPosition">Object position the billboard will rotate around.</param>
         /// <param name="cameraPosition">Camera position.</param>
         /// <param name="rotateAxis">Axis of billboard for rotation.</param>
         /// <param name="cameraForwardVector">Optional camera forward vector.</param>
         /// <param name="objectForwardVector">Optional object forward vector.</param>
-        /// <returns>The <see cref="Matrix"/> for cylindrical billboarding.</returns>
-        public static Matrix CreateConstrainedBillboard(Vector3 objectPosition, Vector3 cameraPosition,
-            Vector3 rotateAxis, Nullable<Vector3> cameraForwardVector, Nullable<Vector3> objectForwardVector)
+        /// <returns>The <see cref="FixedMatrix"/> for cylindrical billboarding.</returns>
+        public static FixedMatrix CreateConstrainedBillboard(FixedVector3 objectPosition, FixedVector3 cameraPosition,
+            FixedVector3 rotateAxis, Nullable<FixedVector3> cameraForwardVector, Nullable<FixedVector3> objectForwardVector)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateConstrainedBillboard(ref objectPosition, ref cameraPosition, ref rotateAxis,
                 cameraForwardVector, objectForwardVector, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> for cylindrical billboarding that rotates around specified axis.
+        /// Creates a new <see cref="FixedMatrix"/> for cylindrical billboarding that rotates around specified axis.
         /// </summary>
         /// <param name="objectPosition">Object position the billboard will rotate around.</param>
         /// <param name="cameraPosition">Camera position.</param>
         /// <param name="rotateAxis">Axis of billboard for rotation.</param>
         /// <param name="cameraForwardVector">Optional camera forward vector.</param>
         /// <param name="objectForwardVector">Optional object forward vector.</param>
-        /// <param name="result">The <see cref="Matrix"/> for cylindrical billboarding as an output parameter.</param>
-        public static void CreateConstrainedBillboard(ref Vector3 objectPosition, ref Vector3 cameraPosition,
-            ref Vector3 rotateAxis, Vector3? cameraForwardVector, Vector3? objectForwardVector, out Matrix result)
+        /// <param name="result">The <see cref="FixedMatrix"/> for cylindrical billboarding as an output parameter.</param>
+        public static void CreateConstrainedBillboard(ref FixedVector3 objectPosition, ref FixedVector3 cameraPosition,
+            ref FixedVector3 rotateAxis, FixedVector3? cameraForwardVector, FixedVector3? objectForwardVector, out FixedMatrix result)
         {
             Fixed num;
-		    Vector3 vector;
-		    Vector3 vector2;
-		    Vector3 vector3;
+		    FixedVector3 vector;
+		    FixedVector3 vector2;
+		    FixedVector3 vector3;
 		    vector2.X = objectPosition.X - cameraPosition.X;
 		    vector2.Y = objectPosition.Y - cameraPosition.Y;
 		    vector2.Z = objectPosition.Z - cameraPosition.Z;
 		    Fixed num2 = vector2.LengthSquared();
 		    if (num2 < (Fixed)0.0001M)
 		    {
-		        vector2 = cameraForwardVector.HasValue ? -cameraForwardVector.Value : Vector3.Forward;
+		        vector2 = cameraForwardVector.HasValue ? -cameraForwardVector.Value : FixedVector3.Forward;
 		    }
 		    else
 		    {
-		        Vector3.Multiply(ref vector2, Fixed.One / Fixed.Sqrt(num2), out vector2);
+		        FixedVector3.Multiply(ref vector2, Fixed.One / Fixed.Sqrt(num2), out vector2);
 		    }
-		    Vector3 vector4 = rotateAxis;
-		    Vector3.Dot(ref rotateAxis, ref vector2, out num);
+		    FixedVector3 vector4 = rotateAxis;
+		    FixedVector3.Dot(ref rotateAxis, ref vector2, out num);
 		    if (Fixed.Abs(num) > (Fixed)0.9982547M)
 		    {
 		        if (objectForwardVector.HasValue)
 		        {
 		            vector = objectForwardVector.Value;
-		            Vector3.Dot(ref rotateAxis, ref vector, out num);
+		            FixedVector3.Dot(ref rotateAxis, ref vector, out num);
 		            if (Fixed.Abs(num) > (Fixed)0.9982547M)
 		            {
-		                num = ((rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y)) + (rotateAxis.Z * Vector3.Forward.Z);
-		                vector = (Fixed.Abs(num) > (Fixed)0.9982547M) ? Vector3.Right : Vector3.Forward;
+		                num = ((rotateAxis.X * FixedVector3.Forward.X) + (rotateAxis.Y * FixedVector3.Forward.Y)) + (rotateAxis.Z * FixedVector3.Forward.Z);
+		                vector = (Fixed.Abs(num) > (Fixed)0.9982547M) ? FixedVector3.Right : FixedVector3.Forward;
 		            }
 		        }
 		        else
 		        {
-		            num = ((rotateAxis.X * Vector3.Forward.X) + (rotateAxis.Y * Vector3.Forward.Y)) + (rotateAxis.Z * Vector3.Forward.Z);
-		            vector = (Fixed.Abs(num) > (Fixed)0.9982547M) ? Vector3.Right : Vector3.Forward;
+		            num = ((rotateAxis.X * FixedVector3.Forward.X) + (rotateAxis.Y * FixedVector3.Forward.Y)) + (rotateAxis.Z * FixedVector3.Forward.Z);
+		            vector = (Fixed.Abs(num) > (Fixed)0.9982547M) ? FixedVector3.Right : FixedVector3.Forward;
 		        }
-		        Vector3.Cross(ref rotateAxis, ref vector, out vector3);
+		        FixedVector3.Cross(ref rotateAxis, ref vector, out vector3);
 		        vector3.Normalize();
-		        Vector3.Cross(ref vector3, ref rotateAxis, out vector);
+		        FixedVector3.Cross(ref vector3, ref rotateAxis, out vector);
 		        vector.Normalize();
 		    }
 		    else
 		    {
-		        Vector3.Cross(ref rotateAxis, ref vector2, out vector3);
+		        FixedVector3.Cross(ref rotateAxis, ref vector2, out vector3);
 		        vector3.Normalize();
-		        Vector3.Cross(ref vector3, ref vector4, out vector);
+		        FixedVector3.Cross(ref vector3, ref vector4, out vector);
 		        vector.Normalize();
 		    }
 		    result.M11 = vector3.X;
@@ -661,25 +661,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains the rotation moment around specified axis.
+        /// Creates a new <see cref="FixedMatrix"/> which contains the rotation moment around specified axis.
         /// </summary>
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle of rotation in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/>.</returns>
-        public static Matrix CreateFromAxisAngle(Vector3 axis, Fixed angle)
+        /// <returns>The rotation <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateFromAxisAngle(FixedVector3 axis, Fixed angle)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateFromAxisAngle(ref axis, angle, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains the rotation moment around specified axis.
+        /// Creates a new <see cref="FixedMatrix"/> which contains the rotation moment around specified axis.
         /// </summary>
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle of rotation in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateFromAxisAngle(ref Vector3 axis, Fixed angle, out Matrix result)
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateFromAxisAngle(ref FixedVector3 axis, Fixed angle, out FixedMatrix result)
         {
             Fixed x = axis.X;
 		    Fixed y = axis.Y;
@@ -711,23 +711,23 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
+        /// Creates a new rotation <see cref="FixedMatrix"/> from a <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
-        /// <returns>The rotation <see cref="Matrix"/>.</returns>
-        public static Matrix CreateFromQuaternion(Quaternion quaternion)
+        /// <param name="quaternion"><see cref="FixedQuaternion"/> of rotation moment.</param>
+        /// <returns>The rotation <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateFromQuaternion(FixedQuaternion quaternion)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateFromQuaternion(ref quaternion, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from a <see cref="Quaternion"/>.
+        /// Creates a new rotation <see cref="FixedMatrix"/> from a <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion"><see cref="Quaternion"/> of rotation moment.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateFromQuaternion(ref Quaternion quaternion, out Matrix result)
+        /// <param name="quaternion"><see cref="FixedQuaternion"/> of rotation moment.</param>
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateFromQuaternion(ref FixedQuaternion quaternion, out FixedMatrix result)
         {
             Fixed num9 = quaternion.X * quaternion.X;
 		    Fixed num8 = quaternion.Y * quaternion.Y;
@@ -757,63 +757,63 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
+        /// Creates a new rotation <see cref="FixedMatrix"/> from the specified yaw, pitch and roll values.
         /// </summary>
         /// <param name="yaw">The yaw rotation value in radians.</param>
         /// <param name="pitch">The pitch rotation value in radians.</param>
         /// <param name="roll">The roll rotation value in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/>.</returns>
+        /// <returns>The rotation <see cref="FixedMatrix"/>.</returns>
         /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
         /// </remarks>
-		public static Matrix CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll)
+		public static FixedMatrix CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll)
 		{
-			Matrix matrix;
+			FixedMatrix matrix;
             CreateFromYawPitchRoll(yaw, pitch, roll, out matrix);
 		    return matrix;
 		}
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> from the specified yaw, pitch and roll values.
+        /// Creates a new rotation <see cref="FixedMatrix"/> from the specified yaw, pitch and roll values.
         /// </summary>
         /// <param name="yaw">The yaw rotation value in radians.</param>
         /// <param name="pitch">The pitch rotation value in radians.</param>
         /// <param name="roll">The roll rotation value in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> as an output parameter.</param>
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> as an output parameter.</param>
         /// <remarks>For more information about yaw, pitch and roll visit http://en.wikipedia.org/wiki/Euler_angles.
         /// </remarks>
-		public static void CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll, out Matrix result)
+		public static void CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll, out FixedMatrix result)
 		{
-			Quaternion quaternion;
-		    Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll, out quaternion);
+			FixedQuaternion quaternion;
+		    FixedQuaternion.CreateFromYawPitchRoll(yaw, pitch, roll, out quaternion);
 		    CreateFromQuaternion(ref quaternion, out result);
 		}
 
         /// <summary>
-        /// Creates a new viewing <see cref="Matrix"/>.
+        /// Creates a new viewing <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="cameraPosition">Position of the camera.</param>
         /// <param name="cameraTarget">Lookup vector of the camera.</param>
         /// <param name="cameraUpVector">The direction of the upper edge of the camera.</param>
-        /// <returns>The viewing <see cref="Matrix"/>.</returns>
-        public static Matrix CreateLookAt(Vector3 cameraPosition, Vector3 cameraTarget, Vector3 cameraUpVector)
+        /// <returns>The viewing <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateLookAt(FixedVector3 cameraPosition, FixedVector3 cameraTarget, FixedVector3 cameraUpVector)
         {
-            Matrix matrix;
+            FixedMatrix matrix;
             CreateLookAt(ref cameraPosition, ref cameraTarget, ref cameraUpVector, out matrix);
             return matrix;
         }
 
         /// <summary>
-        /// Creates a new viewing <see cref="Matrix"/>.
+        /// Creates a new viewing <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="cameraPosition">Position of the camera.</param>
         /// <param name="cameraTarget">Lookup vector of the camera.</param>
         /// <param name="cameraUpVector">The direction of the upper edge of the camera.</param>
-        /// <param name="result">The viewing <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateLookAt(ref Vector3 cameraPosition, ref Vector3 cameraTarget, ref Vector3 cameraUpVector, out Matrix result)
+        /// <param name="result">The viewing <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateLookAt(ref FixedVector3 cameraPosition, ref FixedVector3 cameraTarget, ref FixedVector3 cameraUpVector, out FixedMatrix result)
         {
-            var vector = Vector3.Normalize(cameraPosition - cameraTarget);
-            var vector2 = Vector3.Normalize(Vector3.Cross(cameraUpVector, vector));
-            var vector3 = Vector3.Cross(vector, vector2);
+            var vector = FixedVector3.Normalize(cameraPosition - cameraTarget);
+            var vector2 = FixedVector3.Normalize(FixedVector3.Cross(cameraUpVector, vector));
+            var vector3 = FixedVector3.Cross(vector, vector2);
 		    result.M11 = vector2.X;
 		    result.M12 = vector3.X;
 		    result.M13 = vector.X;
@@ -826,36 +826,36 @@ namespace FixedMath
 		    result.M32 = vector3.Z;
 		    result.M33 = vector.Z;
 		    result.M34 = Fixed.Zero;
-		    result.M41 = -Vector3.Dot(vector2, cameraPosition);
-		    result.M42 = -Vector3.Dot(vector3, cameraPosition);
-		    result.M43 = -Vector3.Dot(vector, cameraPosition);
+		    result.M41 = -FixedVector3.Dot(vector2, cameraPosition);
+		    result.M42 = -FixedVector3.Dot(vector3, cameraPosition);
+		    result.M43 = -FixedVector3.Dot(vector, cameraPosition);
 		    result.M44= Fixed.One;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for orthographic view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for orthographic view.
         /// </summary>
         /// <param name="width">Width of the viewing volume.</param>
         /// <param name="height">Height of the viewing volume.</param>
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
-        /// <returns>The new projection <see cref="Matrix"/> for orthographic view.</returns>
-        public static Matrix CreateOrthographic(Fixed width, Fixed height, Fixed zNearPlane, Fixed zFarPlane)
+        /// <returns>The new projection <see cref="FixedMatrix"/> for orthographic view.</returns>
+        public static FixedMatrix CreateOrthographic(Fixed width, Fixed height, Fixed zNearPlane, Fixed zFarPlane)
         {
-            Matrix matrix;
+            FixedMatrix matrix;
             CreateOrthographic(width, height, zNearPlane, zFarPlane, out matrix);
 		    return matrix;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for orthographic view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for orthographic view.
         /// </summary>
         /// <param name="width">Width of the viewing volume.</param>
         /// <param name="height">Height of the viewing volume.</param>
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
-        /// <param name="result">The new projection <see cref="Matrix"/> for orthographic view as an output parameter.</param>
-        public static void CreateOrthographic(Fixed width, Fixed height, Fixed zNearPlane, Fixed zFarPlane, out Matrix result)
+        /// <param name="result">The new projection <see cref="FixedMatrix"/> for orthographic view as an output parameter.</param>
+        public static void CreateOrthographic(Fixed width, Fixed height, Fixed zNearPlane, Fixed zFarPlane, out FixedMatrix result)
         {
             result.M11= Fixed.Two / width;
 		    result.M12 = result.M13 = result.M14 = Fixed.Zero;
@@ -869,7 +869,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized orthographic view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized orthographic view.
         /// </summary>
         /// <param name="left">Lower x-value at the near plane.</param>
         /// <param name="right">Upper x-value at the near plane.</param>
@@ -877,30 +877,30 @@ namespace FixedMath
         /// <param name="top">Upper y-value at the near plane.</param>
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
-        /// <returns>The new projection <see cref="Matrix"/> for customized orthographic view.</returns>
-        public static Matrix CreateOrthographicOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed zNearPlane, Fixed zFarPlane)
+        /// <returns>The new projection <see cref="FixedMatrix"/> for customized orthographic view.</returns>
+        public static FixedMatrix CreateOrthographicOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed zNearPlane, Fixed zFarPlane)
         {
-			Matrix matrix;
+			FixedMatrix matrix;
             CreateOrthographicOffCenter(left, right, bottom, top, zNearPlane, zFarPlane, out matrix);
 			return matrix;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized orthographic view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized orthographic view.
         /// </summary>
         /// <param name="viewingVolume">The viewing volume.</param>
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
-        /// <returns>The new projection <see cref="Matrix"/> for customized orthographic view.</returns>
-        public static Matrix CreateOrthographicOffCenter(Rectangle viewingVolume, Fixed zNearPlane, Fixed zFarPlane)
+        /// <returns>The new projection <see cref="FixedMatrix"/> for customized orthographic view.</returns>
+        public static FixedMatrix CreateOrthographicOffCenter(FixedRectangle viewingVolume, Fixed zNearPlane, Fixed zFarPlane)
         {
-            Matrix matrix;
+            FixedMatrix matrix;
             CreateOrthographicOffCenter((Fixed)viewingVolume.Left, (Fixed)viewingVolume.Right, (Fixed)viewingVolume.Bottom, (Fixed)viewingVolume.Top, zNearPlane, zFarPlane, out matrix);
             return matrix;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized orthographic view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized orthographic view.
         /// </summary>
         /// <param name="left">Lower x-value at the near plane.</param>
         /// <param name="right">Upper x-value at the near plane.</param>
@@ -908,8 +908,8 @@ namespace FixedMath
         /// <param name="top">Upper y-value at the near plane.</param>
         /// <param name="zNearPlane">Depth of the near plane.</param>
         /// <param name="zFarPlane">Depth of the far plane.</param>
-        /// <param name="result">The new projection <see cref="Matrix"/> for customized orthographic view as an output parameter.</param>
-        public static void CreateOrthographicOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed zNearPlane, Fixed zFarPlane, out Matrix result)
+        /// <param name="result">The new projection <see cref="FixedMatrix"/> for customized orthographic view as an output parameter.</param>
+        public static void CreateOrthographicOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed zNearPlane, Fixed zFarPlane, out FixedMatrix result)
         {
 			result.M11 = (Fixed)(Fixed.Two / ((Fixed)right - (Fixed)left));
 			result.M12= Fixed.Zero;
@@ -930,29 +930,29 @@ namespace FixedMath
 		}
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for perspective view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for perspective view.
         /// </summary>
         /// <param name="width">Width of the viewing volume.</param>
         /// <param name="height">Height of the viewing volume.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
-        /// <returns>The new projection <see cref="Matrix"/> for perspective view.</returns>
-        public static Matrix CreatePerspective(Fixed width, Fixed height, Fixed nearPlaneDistance, Fixed farPlaneDistance)
+        /// <returns>The new projection <see cref="FixedMatrix"/> for perspective view.</returns>
+        public static FixedMatrix CreatePerspective(Fixed width, Fixed height, Fixed nearPlaneDistance, Fixed farPlaneDistance)
         {
-            Matrix matrix;
+            FixedMatrix matrix;
             CreatePerspective(width, height, nearPlaneDistance, farPlaneDistance, out matrix);
 		    return matrix;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for perspective view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for perspective view.
         /// </summary>
         /// <param name="width">Width of the viewing volume.</param>
         /// <param name="height">Height of the viewing volume.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane, or <see cref="Fixed.PositiveInfinity"/>.</param>
-        /// <param name="result">The new projection <see cref="Matrix"/> for perspective view as an output parameter.</param>
-        public static void CreatePerspective(Fixed width, Fixed height, Fixed nearPlaneDistance, Fixed farPlaneDistance, out Matrix result)
+        /// <param name="result">The new projection <see cref="FixedMatrix"/> for perspective view as an output parameter.</param>
+        public static void CreatePerspective(Fixed width, Fixed height, Fixed nearPlaneDistance, Fixed farPlaneDistance, out FixedMatrix result)
         {
             if (nearPlaneDistance <= Fixed.Zero)
 		    {
@@ -981,29 +981,29 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for perspective view with field of view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for perspective view with field of view.
         /// </summary>
         /// <param name="fieldOfView">Field of view in the y direction in radians.</param>
         /// <param name="aspectRatio">Width divided by height of the viewing volume.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane, or <see cref="Fixed.PositiveInfinity"/>.</param>
-        /// <returns>The new projection <see cref="Matrix"/> for perspective view with FOV.</returns>
-        public static Matrix CreatePerspectiveFieldOfView(Fixed fieldOfView, Fixed aspectRatio, Fixed nearPlaneDistance, Fixed farPlaneDistance)
+        /// <returns>The new projection <see cref="FixedMatrix"/> for perspective view with FOV.</returns>
+        public static FixedMatrix CreatePerspectiveFieldOfView(Fixed fieldOfView, Fixed aspectRatio, Fixed nearPlaneDistance, Fixed farPlaneDistance)
         {
-            Matrix result;
+            FixedMatrix result;
             CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for perspective view with field of view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for perspective view with field of view.
         /// </summary>
         /// <param name="fieldOfView">Field of view in the y direction in radians.</param>
         /// <param name="aspectRatio">Width divided by height of the viewing volume.</param>
         /// <param name="nearPlaneDistance">Distance of the near plane.</param>
         /// <param name="farPlaneDistance">Distance of the far plane, or <see cref="Fixed.PositiveInfinity"/>.</param>
-        /// <param name="result">The new projection <see cref="Matrix"/> for perspective view with FOV as an output parameter.</param>
-        public static void CreatePerspectiveFieldOfView(Fixed fieldOfView, Fixed aspectRatio, Fixed nearPlaneDistance, Fixed farPlaneDistance, out Matrix result)
+        /// <param name="result">The new projection <see cref="FixedMatrix"/> for perspective view with FOV as an output parameter.</param>
+        public static void CreatePerspectiveFieldOfView(Fixed fieldOfView, Fixed aspectRatio, Fixed nearPlaneDistance, Fixed farPlaneDistance, out FixedMatrix result)
         {
             if ((fieldOfView <= Fixed.Zero) || (fieldOfView >= Fixed.Pi))
 		    {
@@ -1038,7 +1038,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized perspective view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized perspective view.
         /// </summary>
         /// <param name="left">Lower x-value at the near plane.</param>
         /// <param name="right">Upper x-value at the near plane.</param>
@@ -1046,30 +1046,30 @@ namespace FixedMath
         /// <param name="top">Upper y-value at the near plane.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
-        /// <returns>The new <see cref="Matrix"/> for customized perspective view.</returns>
-        public static Matrix CreatePerspectiveOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed nearPlaneDistance, Fixed farPlaneDistance)
+        /// <returns>The new <see cref="FixedMatrix"/> for customized perspective view.</returns>
+        public static FixedMatrix CreatePerspectiveOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed nearPlaneDistance, Fixed farPlaneDistance)
         {
-            Matrix result;
+            FixedMatrix result;
             CreatePerspectiveOffCenter(left, right, bottom, top, nearPlaneDistance, farPlaneDistance, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized perspective view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized perspective view.
         /// </summary>
         /// <param name="viewingVolume">The viewing volume.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
-        /// <returns>The new <see cref="Matrix"/> for customized perspective view.</returns>
-        public static Matrix CreatePerspectiveOffCenter(Rectangle viewingVolume, Fixed nearPlaneDistance, Fixed farPlaneDistance)
+        /// <returns>The new <see cref="FixedMatrix"/> for customized perspective view.</returns>
+        public static FixedMatrix CreatePerspectiveOffCenter(FixedRectangle viewingVolume, Fixed nearPlaneDistance, Fixed farPlaneDistance)
         {
-            Matrix result;
+            FixedMatrix result;
             CreatePerspectiveOffCenter((Fixed)viewingVolume.Left, (Fixed)viewingVolume.Right, (Fixed)viewingVolume.Bottom, (Fixed)viewingVolume.Top, nearPlaneDistance, farPlaneDistance, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new projection <see cref="Matrix"/> for customized perspective view.
+        /// Creates a new projection <see cref="FixedMatrix"/> for customized perspective view.
         /// </summary>
         /// <param name="left">Lower x-value at the near plane.</param>
         /// <param name="right">Upper x-value at the near plane.</param>
@@ -1077,8 +1077,8 @@ namespace FixedMath
         /// <param name="top">Upper y-value at the near plane.</param>
         /// <param name="nearPlaneDistance">Distance to the near plane.</param>
         /// <param name="farPlaneDistance">Distance to the far plane.</param>
-        /// <param name="result">The new <see cref="Matrix"/> for customized perspective view as an output parameter.</param>
-        public static void CreatePerspectiveOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed nearPlaneDistance, Fixed farPlaneDistance, out Matrix result)
+        /// <param name="result">The new <see cref="FixedMatrix"/> for customized perspective view as an output parameter.</param>
+        public static void CreatePerspectiveOffCenter(Fixed left, Fixed right, Fixed bottom, Fixed top, Fixed nearPlaneDistance, Fixed farPlaneDistance, out FixedMatrix result)
         {
             if (nearPlaneDistance <= Fixed.Zero)
 		    {
@@ -1105,25 +1105,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around X axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around X axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/> around X axis.</returns>
-        public static Matrix CreateRotationX(Fixed radians)
+        /// <returns>The rotation <see cref="FixedMatrix"/> around X axis.</returns>
+        public static FixedMatrix CreateRotationX(Fixed radians)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateRotationX(radians, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around X axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around X axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> around X axis as an output parameter.</param>
-        public static void CreateRotationX(Fixed radians, out Matrix result)
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> around X axis as an output parameter.</param>
+        public static void CreateRotationX(Fixed radians, out FixedMatrix result)
         {
-            result = Matrix.Identity;
+            result = FixedMatrix.Identity;
 
 			var val1 = Fixed.Cos(radians);
 			var val2 = Fixed.Sin(radians);
@@ -1135,25 +1135,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around Y axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around Y axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/> around Y axis.</returns>
-        public static Matrix CreateRotationY(Fixed radians)
+        /// <returns>The rotation <see cref="FixedMatrix"/> around Y axis.</returns>
+        public static FixedMatrix CreateRotationY(Fixed radians)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateRotationY(radians, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around Y axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around Y axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> around Y axis as an output parameter.</param>
-        public static void CreateRotationY(Fixed radians, out Matrix result)
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> around Y axis as an output parameter.</param>
+        public static void CreateRotationY(Fixed radians, out FixedMatrix result)
         {
-            result = Matrix.Identity;
+            result = FixedMatrix.Identity;
 
             var val1 = Fixed.Cos(radians);
 			var val2 = Fixed.Sin(radians);
@@ -1165,25 +1165,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around Z axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around Z axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <returns>The rotation <see cref="Matrix"/> around Z axis.</returns>
-        public static Matrix CreateRotationZ(Fixed radians)
+        /// <returns>The rotation <see cref="FixedMatrix"/> around Z axis.</returns>
+        public static FixedMatrix CreateRotationZ(Fixed radians)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateRotationZ(radians, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new rotation <see cref="Matrix"/> around Z axis.
+        /// Creates a new rotation <see cref="FixedMatrix"/> around Z axis.
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
-        /// <param name="result">The rotation <see cref="Matrix"/> around Z axis as an output parameter.</param>
-        public static void CreateRotationZ(Fixed radians, out Matrix result)
+        /// <param name="result">The rotation <see cref="FixedMatrix"/> around Z axis as an output parameter.</param>
+        public static void CreateRotationZ(Fixed radians, out FixedMatrix result)
         {
-            result = Matrix.Identity;
+            result = FixedMatrix.Identity;
 
 			var val1 = Fixed.Cos(radians);
 			var val2 = Fixed.Sin(radians);
@@ -1195,49 +1195,49 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="scale">Scale value for all three axises.</param>
-        /// <returns>The scaling <see cref="Matrix"/>.</returns>
-        public static Matrix CreateScale(Fixed scale)
+        /// <returns>The scaling <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateScale(Fixed scale)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateScale(scale, scale, scale, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="scale">Scale value for all three axises.</param>
-        /// <param name="result">The scaling <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateScale(Fixed scale, out Matrix result)
+        /// <param name="result">The scaling <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateScale(Fixed scale, out FixedMatrix result)
         {
             CreateScale(scale, scale, scale, out result);
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="xScale">Scale value for X axis.</param>
         /// <param name="yScale">Scale value for Y axis.</param>
         /// <param name="zScale">Scale value for Z axis.</param>
-        /// <returns>The scaling <see cref="Matrix"/>.</returns>
-        public static Matrix CreateScale(Fixed xScale, Fixed yScale, Fixed zScale)
+        /// <returns>The scaling <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateScale(Fixed xScale, Fixed yScale, Fixed zScale)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateScale(xScale, yScale, zScale, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="xScale">Scale value for X axis.</param>
         /// <param name="yScale">Scale value for Y axis.</param>
         /// <param name="zScale">Scale value for Z axis.</param>
-        /// <param name="result">The scaling <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateScale(Fixed xScale, Fixed yScale, Fixed zScale, out Matrix result)
+        /// <param name="result">The scaling <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateScale(Fixed xScale, Fixed yScale, Fixed zScale, out FixedMatrix result)
         {
 			result.M11 = xScale;
 			result.M12= Fixed.Zero;
@@ -1258,23 +1258,23 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="scales"><see cref="Vector3"/> representing x,y and z scale values.</param>
-        /// <returns>The scaling <see cref="Matrix"/>.</returns>
-        public static Matrix CreateScale(Vector3 scales)
+        /// <param name="scales"><see cref="FixedVector3"/> representing x,y and z scale values.</param>
+        /// <returns>The scaling <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateScale(FixedVector3 scales)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateScale(ref scales, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new scaling <see cref="Matrix"/>.
+        /// Creates a new scaling <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="scales"><see cref="Vector3"/> representing x,y and z scale values.</param>
-        /// <param name="result">The scaling <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateScale(ref Vector3 scales, out Matrix result)
+        /// <param name="scales"><see cref="FixedVector3"/> representing x,y and z scale values.</param>
+        /// <param name="result">The scaling <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateScale(ref FixedVector3 scales, out FixedMatrix result)
         {
             result.M11 = scales.X;
             result.M12= Fixed.Zero;
@@ -1296,26 +1296,26 @@ namespace FixedMath
 
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source. 
+        /// Creates a new <see cref="FixedMatrix"/> that flattens geometry into a specified <see cref="FixedPlane"/> as if casting a shadow from a specified light source. 
         /// </summary>
         /// <param name="lightDirection">A vector specifying the direction from which the light that will cast the shadow is coming.</param>
         /// <param name="plane">The plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
-        /// <returns>A <see cref="Matrix"/> that can be used to flatten geometry onto the specified plane from the specified direction. </returns>
-        public static Matrix CreateShadow(Vector3 lightDirection, Plane plane)
+        /// <returns>A <see cref="FixedMatrix"/> that can be used to flatten geometry onto the specified plane from the specified direction. </returns>
+        public static FixedMatrix CreateShadow(FixedVector3 lightDirection, FixedPlane plane)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateShadow(ref lightDirection, ref plane, out result);
             return result;
         }
 
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that flattens geometry into a specified <see cref="Plane"/> as if casting a shadow from a specified light source. 
+        /// Creates a new <see cref="FixedMatrix"/> that flattens geometry into a specified <see cref="FixedPlane"/> as if casting a shadow from a specified light source. 
         /// </summary>
         /// <param name="lightDirection">A vector specifying the direction from which the light that will cast the shadow is coming.</param>
         /// <param name="plane">The plane onto which the new matrix should flatten geometry so as to cast a shadow.</param>
-        /// <param name="result">A <see cref="Matrix"/> that can be used to flatten geometry onto the specified plane from the specified direction as an output parameter.</param>
-        public static void CreateShadow(ref Vector3 lightDirection, ref Plane plane, out Matrix result)
+        /// <param name="result">A <see cref="FixedMatrix"/> that can be used to flatten geometry onto the specified plane from the specified direction as an output parameter.</param>
+        public static void CreateShadow(ref FixedVector3 lightDirection, ref FixedPlane plane, out FixedMatrix result)
         {
             Fixed dot = (plane.Normal.X * lightDirection.X) + (plane.Normal.Y * lightDirection.Y) + (plane.Normal.Z * lightDirection.Z);
             Fixed x = -plane.Normal.X;
@@ -1342,25 +1342,25 @@ namespace FixedMath
         }
         
         /// <summary>
-        /// Creates a new translation <see cref="Matrix"/>.
+        /// Creates a new translation <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="xPosition">X coordinate of translation.</param>
         /// <param name="yPosition">Y coordinate of translation.</param>
         /// <param name="zPosition">Z coordinate of translation.</param>
-        /// <returns>The translation <see cref="Matrix"/>.</returns>
-        public static Matrix CreateTranslation(Fixed xPosition, Fixed yPosition, Fixed zPosition)
+        /// <returns>The translation <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateTranslation(Fixed xPosition, Fixed yPosition, Fixed zPosition)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateTranslation(xPosition, yPosition, zPosition, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new translation <see cref="Matrix"/>.
+        /// Creates a new translation <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="position">X,Y and Z coordinates of translation.</param>
-        /// <param name="result">The translation <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateTranslation(ref Vector3 position, out Matrix result)
+        /// <param name="result">The translation <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateTranslation(ref FixedVector3 position, out FixedMatrix result)
         {
             result.M11 = Fixed.One;
             result.M12= Fixed.Zero;
@@ -1381,25 +1381,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new translation <see cref="Matrix"/>.
+        /// Creates a new translation <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="position">X,Y and Z coordinates of translation.</param>
-        /// <returns>The translation <see cref="Matrix"/>.</returns>
-        public static Matrix CreateTranslation(Vector3 position)
+        /// <returns>The translation <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateTranslation(FixedVector3 position)
         {
-			Matrix result;
+			FixedMatrix result;
             CreateTranslation(ref position, out result);
 			return result;
         }
 
         /// <summary>
-        /// Creates a new translation <see cref="Matrix"/>.
+        /// Creates a new translation <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="xPosition">X coordinate of translation.</param>
         /// <param name="yPosition">Y coordinate of translation.</param>
         /// <param name="zPosition">Z coordinate of translation.</param>
-        /// <param name="result">The translation <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateTranslation(Fixed xPosition, Fixed yPosition, Fixed zPosition, out Matrix result)
+        /// <param name="result">The translation <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateTranslation(Fixed xPosition, Fixed yPosition, Fixed zPosition, out FixedMatrix result)
         {
             result.M11 = Fixed.One;
 			result.M12= Fixed.Zero;
@@ -1420,26 +1420,26 @@ namespace FixedMath
         }
         
         /// <summary>
-        /// Creates a new reflection <see cref="Matrix"/>.
+        /// Creates a new reflection <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="value">The plane that used for reflection calculation.</param>
-        /// <returns>The reflection <see cref="Matrix"/>.</returns>
-        public static Matrix CreateReflection(Plane value)
+        /// <returns>The reflection <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateReflection(FixedPlane value)
         {
-            Matrix result;
+            FixedMatrix result;
             CreateReflection(ref value, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new reflection <see cref="Matrix"/>.
+        /// Creates a new reflection <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="value">The plane that used for reflection calculation.</param>
-        /// <param name="result">The reflection <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateReflection(ref Plane value, out Matrix result)
+        /// <param name="result">The reflection <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateReflection(ref FixedPlane value, out FixedMatrix result)
         {
-            Plane plane;
-            Plane.Normalize(ref value, out plane);
+            FixedPlane plane;
+            FixedPlane.Normalize(ref value, out plane);
             Fixed x = plane.Normal.X;
             Fixed y = plane.Normal.Y;
             Fixed z = plane.Normal.Z;
@@ -1465,36 +1465,36 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new world <see cref="Matrix"/>.
+        /// Creates a new world <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="position">The position vector.</param>
         /// <param name="forward">The forward direction vector.</param>
-        /// <param name="up">The upward direction vector. Usually <see cref="Vector3.Up"/>.</param>
-        /// <returns>The world <see cref="Matrix"/>.</returns>
-        public static Matrix CreateWorld(Vector3 position, Vector3 forward, Vector3 up)
+        /// <param name="up">The upward direction vector. Usually <see cref="FixedVector3.Up"/>.</param>
+        /// <returns>The world <see cref="FixedMatrix"/>.</returns>
+        public static FixedMatrix CreateWorld(FixedVector3 position, FixedVector3 forward, FixedVector3 up)
         {
-            Matrix ret;
+            FixedMatrix ret;
                         CreateWorld(ref position, ref forward, ref up, out ret);
                         return ret;
         }
 
         /// <summary>
-        /// Creates a new world <see cref="Matrix"/>.
+        /// Creates a new world <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="position">The position vector.</param>
         /// <param name="forward">The forward direction vector.</param>
-        /// <param name="up">The upward direction vector. Usually <see cref="Vector3.Up"/>.</param>
-        /// <param name="result">The world <see cref="Matrix"/> as an output parameter.</param>
-        public static void CreateWorld(ref Vector3 position, ref Vector3 forward, ref Vector3 up, out Matrix result)
+        /// <param name="up">The upward direction vector. Usually <see cref="FixedVector3.Up"/>.</param>
+        /// <param name="result">The world <see cref="FixedMatrix"/> as an output parameter.</param>
+        public static void CreateWorld(ref FixedVector3 position, ref FixedVector3 forward, ref FixedVector3 up, out FixedMatrix result)
         {
-                        Vector3 x, y, z;
-                        Vector3.Normalize(ref forward, out z);
-                        Vector3.Cross(ref forward, ref up, out x);
-                        Vector3.Cross(ref x, ref forward, out y);
+                        FixedVector3 x, y, z;
+                        FixedVector3.Normalize(ref forward, out z);
+                        FixedVector3.Cross(ref forward, ref up, out x);
+                        FixedVector3.Cross(ref x, ref forward, out y);
                         x.Normalize();
                         y.Normalize();            
                         
-                        result = new Matrix();
+                        result = new FixedMatrix();
                         result.Right = x;
                         result.Up = y;
                         result.Forward = z;
@@ -1509,7 +1509,7 @@ namespace FixedMath
         /// <param name="rotation">Rotation quaternion as an output parameter.</param>
         /// <param name="translation">Translation vector as an output parameter.</param>
         /// <returns><c>true</c> if matrix can be decomposed; <c>false</c> otherwise.</returns>
-        public bool Decompose(out Vector3 scale, out Quaternion rotation, out Vector3 translation)
+        public bool Decompose(out FixedVector3 scale, out FixedQuaternion rotation, out FixedVector3 translation)
         {
             translation.X = this.M41;
             translation.Y = this.M42;
@@ -1525,23 +1525,23 @@ namespace FixedMath
 
             if (scale.X == Fixed.Zero || scale.Y == Fixed.Zero || scale.Z == Fixed.Zero)
             {
-                rotation = Quaternion.Identity;
+                rotation = FixedQuaternion.Identity;
                 return false;
             }
 
-            Matrix m1 = new Matrix(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, Fixed.Zero,
+            FixedMatrix m1 = new FixedMatrix(this.M11 / scale.X, M12 / scale.X, M13 / scale.X, Fixed.Zero,
                                    this.M21 / scale.Y, M22 / scale.Y, M23 / scale.Y, Fixed.Zero,
                                    this.M31 / scale.Z, M32 / scale.Z, M33 / scale.Z, Fixed.Zero,
                                    Fixed.Zero, Fixed.Zero, Fixed.Zero, Fixed.One);
 
-            rotation = Quaternion.CreateFromRotationMatrix(m1);
+            rotation = FixedQuaternion.CreateFromRotationMatrix(m1);
             return true;
         }	
 
 		/// <summary>
-        /// Returns a determinant of this <see cref="Matrix"/>.
+        /// Returns a determinant of this <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <returns>Determinant of this <see cref="Matrix"/></returns>
+        /// <returns>Determinant of this <see cref="FixedMatrix"/></returns>
         /// <remarks>See more about determinant here - http://en.wikipedia.org/wiki/Determinant.
         /// </remarks>
         public Fixed Determinant()
@@ -1572,12 +1572,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by the elements of another matrix.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by the elements of another matrix.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">Divisor <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">Divisor <see cref="FixedMatrix"/>.</param>
         /// <returns>The result of dividing the matrix.</returns>
-        public static Matrix Divide(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix Divide(FixedMatrix matrix1, FixedMatrix matrix2)
         {
 		    matrix1.M11 = matrix1.M11 / matrix2.M11;
 		    matrix1.M12 = matrix1.M12 / matrix2.M12;
@@ -1599,12 +1599,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by the elements of another matrix.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by the elements of another matrix.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">Divisor <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">Divisor <see cref="FixedMatrix"/>.</param>
         /// <param name="result">The result of dividing the matrix as an output parameter.</param>
-        public static void Divide(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
+        public static void Divide(ref FixedMatrix matrix1, ref FixedMatrix matrix2, out FixedMatrix result)
         {
             result.M11 = matrix1.M11 / matrix2.M11;
 		    result.M12 = matrix1.M12 / matrix2.M12;
@@ -1625,12 +1625,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by a scalar.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by a scalar.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="divider">Divisor scalar.</param>
         /// <returns>The result of dividing a matrix by a scalar.</returns>
-        public static Matrix Divide(Matrix matrix1, Fixed divider)
+        public static FixedMatrix Divide(FixedMatrix matrix1, Fixed divider)
         {
 		    Fixed num= Fixed.One / divider;
 		    matrix1.M11 = matrix1.M11 * num;
@@ -1653,12 +1653,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by a scalar.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by a scalar.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="divider">Divisor scalar.</param>
         /// <param name="result">The result of dividing a matrix by a scalar as an output parameter.</param>
-        public static void Divide(ref Matrix matrix1, Fixed divider, out Matrix result)
+        public static void Divide(ref FixedMatrix matrix1, Fixed divider, out FixedMatrix result)
         {
             Fixed num= Fixed.One / divider;
 		    result.M11 = matrix1.M11 * num;
@@ -1680,11 +1680,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="Matrix"/> without any tolerance.
+        /// Compares whether current instance is equal to specified <see cref="FixedMatrix"/> without any tolerance.
         /// </summary>
-        /// <param name="other">The <see cref="Matrix"/> to compare.</param>
+        /// <param name="other">The <see cref="FixedMatrix"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(Matrix other)
+        public bool Equals(FixedMatrix other)
         {
             return ((((((this.M11 == other.M11) && (this.M22 == other.M22)) && ((this.M33 == other.M33) && (this.M44 == other.M44))) && (((this.M12 == other.M12) && (this.M13 == other.M13)) && ((this.M14 == other.M14) && (this.M21 == other.M21)))) && ((((this.M23 == other.M23) && (this.M24 == other.M24)) && ((this.M31 == other.M31) && (this.M32 == other.M32))) && (((this.M34 == other.M34) && (this.M41 == other.M41)) && (this.M42 == other.M42)))) && (this.M43 == other.M43));
         }
@@ -1697,40 +1697,40 @@ namespace FixedMath
         public override bool Equals(object obj)
         {
             bool flag = false;
-		    if (obj is Matrix)
+		    if (obj is FixedMatrix)
 		    {
-		        flag = this.Equals((Matrix) obj);
+		        flag = this.Equals((FixedMatrix) obj);
 		    }
 		    return flag;
         }
 
         /// <summary>
-        /// Gets the hash code of this <see cref="Matrix"/>.
+        /// Gets the hash code of this <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <returns>Hash code of this <see cref="Matrix"/>.</returns>
+        /// <returns>Hash code of this <see cref="FixedMatrix"/>.</returns>
         public override int GetHashCode()
         {
             return (((((((((((((((this.M11.GetHashCode() + this.M12.GetHashCode()) + this.M13.GetHashCode()) + this.M14.GetHashCode()) + this.M21.GetHashCode()) + this.M22.GetHashCode()) + this.M23.GetHashCode()) + this.M24.GetHashCode()) + this.M31.GetHashCode()) + this.M32.GetHashCode()) + this.M33.GetHashCode()) + this.M34.GetHashCode()) + this.M41.GetHashCode()) + this.M42.GetHashCode()) + this.M43.GetHashCode()) + this.M44.GetHashCode());
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix. 
+        /// Creates a new <see cref="FixedMatrix"/> which contains inversion of the specified matrix. 
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/>.</param>
         /// <returns>The inverted matrix.</returns>
-        public static Matrix Invert(Matrix matrix)
+        public static FixedMatrix Invert(FixedMatrix matrix)
         {
-            Matrix result;
+            FixedMatrix result;
             Invert(ref matrix, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> which contains inversion of the specified matrix. 
+        /// Creates a new <see cref="FixedMatrix"/> which contains inversion of the specified matrix. 
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="result">The inverted matrix as output parameter.</param>
-        public static void Invert(ref Matrix matrix, out Matrix result)
+        public static void Invert(ref FixedMatrix matrix, out FixedMatrix result)
         {
 			Fixed num1 = matrix.M11;
 			Fixed num2 = matrix.M12;
@@ -1831,13 +1831,13 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains linear interpolation of the values in specified matrixes.
+        /// Creates a new <see cref="FixedMatrix"/> that contains linear interpolation of the values in specified matrixes.
         /// </summary>
-        /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Vector2"/>.</param>
+        /// <param name="matrix1">The first <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">The second <see cref="FixedVector2"/>.</param>
         /// <param name="amount">Weighting value(between 0.0 and 1.0).</param>
         /// <returns>>The result of linear interpolation of the specified matrixes.</returns>
-        public static Matrix Lerp(Matrix matrix1, Matrix matrix2, Fixed amount)
+        public static FixedMatrix Lerp(FixedMatrix matrix1, FixedMatrix matrix2, Fixed amount)
         {
 		    matrix1.M11 = matrix1.M11 + ((matrix2.M11 - matrix1.M11) * amount);
 		    matrix1.M12 = matrix1.M12 + ((matrix2.M12 - matrix1.M12) * amount);
@@ -1859,13 +1859,13 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains linear interpolation of the values in specified matrixes.
+        /// Creates a new <see cref="FixedMatrix"/> that contains linear interpolation of the values in specified matrixes.
         /// </summary>
-        /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Vector2"/>.</param>
+        /// <param name="matrix1">The first <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">The second <see cref="FixedVector2"/>.</param>
         /// <param name="amount">Weighting value(between 0.0 and 1.0).</param>
         /// <param name="result">The result of linear interpolation of the specified matrixes as an output parameter.</param>
-        public static void Lerp(ref Matrix matrix1, ref Matrix matrix2, Fixed amount, out Matrix result)
+        public static void Lerp(ref FixedMatrix matrix1, ref FixedMatrix matrix2, Fixed amount, out FixedMatrix result)
         {
             result.M11 = matrix1.M11 + ((matrix2.M11 - matrix1.M11) * amount);
 		    result.M12 = matrix1.M12 + ((matrix2.M12 - matrix1.M12) * amount);
@@ -1886,12 +1886,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains a multiplication of two matrix.
+        /// Creates a new <see cref="FixedMatrix"/> that contains a multiplication of two matrix.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/>.</param>
         /// <returns>Result of the matrix multiplication.</returns>
-        public static Matrix Multiply(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix Multiply(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
             var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
@@ -1929,12 +1929,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains a multiplication of two matrix.
+        /// Creates a new <see cref="FixedMatrix"/> that contains a multiplication of two matrix.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="result">Result of the matrix multiplication as an output parameter.</param>
-        public static void Multiply(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
+        public static void Multiply(ref FixedMatrix matrix1, ref FixedMatrix matrix2, out FixedMatrix result)
         {
             var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
             var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
@@ -1971,12 +1971,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains a multiplication of <see cref="Matrix"/> and a scalar.
+        /// Creates a new <see cref="FixedMatrix"/> that contains a multiplication of <see cref="FixedMatrix"/> and a scalar.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="scaleFactor">Scalar value.</param>
         /// <returns>Result of the matrix multiplication with a scalar.</returns>
-        public static Matrix Multiply(Matrix matrix1, Fixed scaleFactor)
+        public static FixedMatrix Multiply(FixedMatrix matrix1, Fixed scaleFactor)
         {
             matrix1.M11 *= scaleFactor;
             matrix1.M12 *= scaleFactor;
@@ -1998,12 +1998,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains a multiplication of <see cref="Matrix"/> and a scalar.
+        /// Creates a new <see cref="FixedMatrix"/> that contains a multiplication of <see cref="FixedMatrix"/> and a scalar.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="scaleFactor">Scalar value.</param>
         /// <param name="result">Result of the matrix multiplication with a scalar as an output parameter.</param>
-        public static void Multiply(ref Matrix matrix1, Fixed scaleFactor, out Matrix result)
+        public static void Multiply(ref FixedMatrix matrix1, Fixed scaleFactor, out FixedMatrix result)
         {
             result.M11 = matrix1.M11 * scaleFactor;
             result.M12 = matrix1.M12 * scaleFactor;
@@ -2025,14 +2025,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Copy the values of specified <see cref="Matrix"/> to the Fixed array.
+        /// Copy the values of specified <see cref="FixedMatrix"/> to the Fixed array.
         /// </summary>
-        /// <param name="matrix">The source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">The source <see cref="FixedMatrix"/>.</param>
         /// <returns>The array which matrix values will be stored.</returns>
         /// <remarks>
         /// Required for OpenGL 2.0 projection matrix stuff.
         /// </remarks>
-        public static Fixed[] ToFloatArray(Matrix matrix)
+        public static Fixed[] ToFloatArray(FixedMatrix matrix)
         {
             Fixed[] matarray = {
 									matrix.M11, matrix.M12, matrix.M13, matrix.M14,
@@ -2046,9 +2046,9 @@ namespace FixedMath
         /// <summary>
         /// Returns a matrix with the all values negated.
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/>.</param>
         /// <returns>Result of the matrix negation.</returns>
-        public static Matrix Negate(Matrix matrix)
+        public static FixedMatrix Negate(FixedMatrix matrix)
         {
 		    matrix.M11 = -matrix.M11;
 		    matrix.M12 = -matrix.M12;
@@ -2072,9 +2072,9 @@ namespace FixedMath
         /// <summary>
         /// Returns a matrix with the all values negated.
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/>.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/>.</param>
         /// <param name="result">Result of the matrix negation as an output parameter.</param>
-        public static void Negate(ref Matrix matrix, out Matrix result)
+        public static void Negate(ref FixedMatrix matrix, out FixedMatrix result)
         {
             result.M11 = -matrix.M11;
 		    result.M12 = -matrix.M12;
@@ -2095,12 +2095,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Converts a <see cref="System.Numerics.Matrix4x4"/> to a <see cref="Matrix"/>.
+        /// Converts a <see cref="System.Numerics.Matrix4x4"/> to a <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="value">The converted value.</param>
-        public static implicit operator Matrix(System.Numerics.Matrix4x4 value)
+        public static implicit operator FixedMatrix(System.Numerics.Matrix4x4 value)
         {
-            return new Matrix(
+            return new FixedMatrix(
                 (Fixed)value.M11, (Fixed)value.M12, (Fixed)value.M13, (Fixed)value.M14,
                 (Fixed)value.M21, (Fixed)value.M22, (Fixed)value.M23, (Fixed)value.M24,
                 (Fixed)value.M31, (Fixed)value.M32, (Fixed)value.M33, (Fixed)value.M34,
@@ -2110,10 +2110,10 @@ namespace FixedMath
         /// <summary>
         /// Adds two matrixes.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the add sign.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/> on the right of the add sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the add sign.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/> on the right of the add sign.</param>
         /// <returns>Sum of the matrixes.</returns>
-        public static Matrix operator +(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix operator +(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             matrix1.M11 = matrix1.M11 + matrix2.M11;
             matrix1.M12 = matrix1.M12 + matrix2.M12;
@@ -2135,12 +2135,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by the elements of another <see cref="Matrix"/>.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by the elements of another <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the div sign.</param>
-        /// <param name="matrix2">Divisor <see cref="Matrix"/> on the right of the div sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the div sign.</param>
+        /// <param name="matrix2">Divisor <see cref="FixedMatrix"/> on the right of the div sign.</param>
         /// <returns>The result of dividing the matrixes.</returns>
-        public static Matrix operator /(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix operator /(FixedMatrix matrix1, FixedMatrix matrix2)
         {
 		    matrix1.M11 = matrix1.M11 / matrix2.M11;
 		    matrix1.M12 = matrix1.M12 / matrix2.M12;
@@ -2162,12 +2162,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides the elements of a <see cref="Matrix"/> by a scalar.
+        /// Divides the elements of a <see cref="FixedMatrix"/> by a scalar.
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/> on the left of the div sign.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/> on the left of the div sign.</param>
         /// <param name="divider">Divisor scalar on the right of the div sign.</param>
         /// <returns>The result of dividing a matrix by a scalar.</returns>
-        public static Matrix operator /(Matrix matrix, Fixed divider)
+        public static FixedMatrix operator /(FixedMatrix matrix, Fixed divider)
         {
 		    Fixed num= Fixed.One / divider;
 		    matrix.M11 = matrix.M11 * num;
@@ -2190,12 +2190,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Matrix"/> instances are equal without any tolerance.
+        /// Compares whether two <see cref="FixedMatrix"/> instances are equal without any tolerance.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the equal sign.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/> on the right of the equal sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the equal sign.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/> on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public static bool operator ==(Matrix matrix1, Matrix matrix2)
+        public static bool operator ==(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             return (
                 matrix1.M11 == matrix2.M11 &&
@@ -2218,12 +2218,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Matrix"/> instances are not equal without any tolerance.
+        /// Compares whether two <see cref="FixedMatrix"/> instances are not equal without any tolerance.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the not equal sign.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/> on the right of the not equal sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the not equal sign.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/> on the right of the not equal sign.</param>
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
-        public static bool operator !=(Matrix matrix1, Matrix matrix2)
+        public static bool operator !=(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             return (
                 matrix1.M11 != matrix2.M11 ||
@@ -2248,13 +2248,13 @@ namespace FixedMath
         /// <summary>
         /// Multiplies two matrixes.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the mul sign.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/> on the right of the mul sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the mul sign.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/> on the right of the mul sign.</param>
         /// <returns>Result of the matrix multiplication.</returns>
         /// <remarks>
         /// Using matrix multiplication algorithm - see http://en.wikipedia.org/wiki/Matrix_multiplication.
         /// </remarks>
-        public static Matrix operator *(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix operator *(FixedMatrix matrix1, FixedMatrix matrix2)
         {
             var m11 = (((matrix1.M11 * matrix2.M11) + (matrix1.M12 * matrix2.M21)) + (matrix1.M13 * matrix2.M31)) + (matrix1.M14 * matrix2.M41);
             var m12 = (((matrix1.M11 * matrix2.M12) + (matrix1.M12 * matrix2.M22)) + (matrix1.M13 * matrix2.M32)) + (matrix1.M14 * matrix2.M42);
@@ -2294,10 +2294,10 @@ namespace FixedMath
         /// <summary>
         /// Multiplies the elements of matrix by a scalar.
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/> on the left of the mul sign.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/> on the left of the mul sign.</param>
         /// <param name="scaleFactor">Scalar value on the right of the mul sign.</param>
         /// <returns>Result of the matrix multiplication with a scalar.</returns>
-        public static Matrix operator *(Matrix matrix, Fixed scaleFactor)
+        public static FixedMatrix operator *(FixedMatrix matrix, Fixed scaleFactor)
         {
 		    matrix.M11 = matrix.M11 * scaleFactor;
 		    matrix.M12 = matrix.M12 * scaleFactor;
@@ -2319,12 +2319,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Subtracts the values of one <see cref="Matrix"/> from another <see cref="Matrix"/>.
+        /// Subtracts the values of one <see cref="FixedMatrix"/> from another <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="matrix1">Source <see cref="Matrix"/> on the left of the sub sign.</param>
-        /// <param name="matrix2">Source <see cref="Matrix"/> on the right of the sub sign.</param>
+        /// <param name="matrix1">Source <see cref="FixedMatrix"/> on the left of the sub sign.</param>
+        /// <param name="matrix2">Source <see cref="FixedMatrix"/> on the right of the sub sign.</param>
         /// <returns>Result of the matrix subtraction.</returns>
-        public static Matrix operator -(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix operator -(FixedMatrix matrix1, FixedMatrix matrix2)
         {
 		    matrix1.M11 = matrix1.M11 - matrix2.M11;
 		    matrix1.M12 = matrix1.M12 - matrix2.M12;
@@ -2346,11 +2346,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Inverts values in the specified <see cref="Matrix"/>.
+        /// Inverts values in the specified <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="matrix">Source <see cref="Matrix"/> on the right of the sub sign.</param>
+        /// <param name="matrix">Source <see cref="FixedMatrix"/> on the right of the sub sign.</param>
         /// <returns>Result of the inversion.</returns>
-        public static Matrix operator -(Matrix matrix)
+        public static FixedMatrix operator -(FixedMatrix matrix)
         {
 		    matrix.M11 = -matrix.M11;
 		    matrix.M12 = -matrix.M12;
@@ -2372,12 +2372,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains subtraction of one matrix from another.
+        /// Creates a new <see cref="FixedMatrix"/> that contains subtraction of one matrix from another.
         /// </summary>
-        /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">The first <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">The second <see cref="FixedMatrix"/>.</param>
         /// <returns>The result of the matrix subtraction.</returns>
-        public static Matrix Subtract(Matrix matrix1, Matrix matrix2)
+        public static FixedMatrix Subtract(FixedMatrix matrix1, FixedMatrix matrix2)
         {
 		    matrix1.M11 = matrix1.M11 - matrix2.M11;
 		    matrix1.M12 = matrix1.M12 - matrix2.M12;
@@ -2399,12 +2399,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Matrix"/> that contains subtraction of one matrix from another.
+        /// Creates a new <see cref="FixedMatrix"/> that contains subtraction of one matrix from another.
         /// </summary>
-        /// <param name="matrix1">The first <see cref="Matrix"/>.</param>
-        /// <param name="matrix2">The second <see cref="Matrix"/>.</param>
+        /// <param name="matrix1">The first <see cref="FixedMatrix"/>.</param>
+        /// <param name="matrix2">The second <see cref="FixedMatrix"/>.</param>
         /// <param name="result">The result of the matrix subtraction as an output parameter.</param>
-        public static void Subtract(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
+        public static void Subtract(ref FixedMatrix matrix1, ref FixedMatrix matrix2, out FixedMatrix result)
         {
             result.M11 = matrix1.M11 - matrix2.M11;
 		    result.M12 = matrix1.M12 - matrix2.M12;
@@ -2442,13 +2442,13 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="Matrix"/> in the format:
+        /// Returns a <see cref="String"/> representation of this <see cref="FixedMatrix"/> in the format:
         /// {M11:[<see cref="M11"/>] M12:[<see cref="M12"/>] M13:[<see cref="M13"/>] M14:[<see cref="M14"/>]}
         /// {M21:[<see cref="M21"/>] M12:[<see cref="M22"/>] M13:[<see cref="M23"/>] M14:[<see cref="M24"/>]}
         /// {M31:[<see cref="M31"/>] M32:[<see cref="M32"/>] M33:[<see cref="M33"/>] M34:[<see cref="M34"/>]}
         /// {M41:[<see cref="M41"/>] M42:[<see cref="M42"/>] M43:[<see cref="M43"/>] M44:[<see cref="M44"/>]}
         /// </summary>
-        /// <returns>A <see cref="String"/> representation of this <see cref="Matrix"/>.</returns>
+        /// <returns>A <see cref="String"/> representation of this <see cref="FixedMatrix"/>.</returns>
         public override string ToString()
         {
             return "{M11:" + M11 + " M12:" + M12 + " M13:" + M13 + " M14:" + M14 + "}"
@@ -2461,10 +2461,10 @@ namespace FixedMath
         /// Swap the matrix rows and columns.
         /// </summary>
         /// <param name="matrix">The matrix for transposing operation.</param>
-        /// <returns>The new <see cref="Matrix"/> which contains the transposing result.</returns>
-        public static Matrix Transpose(Matrix matrix)
+        /// <returns>The new <see cref="FixedMatrix"/> which contains the transposing result.</returns>
+        public static FixedMatrix Transpose(FixedMatrix matrix)
         {
-            Matrix ret;
+            FixedMatrix ret;
             Transpose(ref matrix, out ret);
             return ret;
         }
@@ -2473,10 +2473,10 @@ namespace FixedMath
         /// Swap the matrix rows and columns.
         /// </summary>
         /// <param name="matrix">The matrix for transposing operation.</param>
-        /// <param name="result">The new <see cref="Matrix"/> which contains the transposing result as an output parameter.</param>
-        public static void Transpose(ref Matrix matrix, out Matrix result)
+        /// <param name="result">The new <see cref="FixedMatrix"/> which contains the transposing result as an output parameter.</param>
+        public static void Transpose(ref FixedMatrix matrix, out FixedMatrix result)
         {
-            Matrix ret;
+            FixedMatrix ret;
             
             ret.M11 = matrix.M11;
             ret.M12 = matrix.M21;
@@ -2521,7 +2521,7 @@ namespace FixedMath
         /// Helper method for using the Laplace expansion theorem using two rows expansions to calculate major and 
         /// minor determinants of a 4x4 matrix. This method is used for inverting a matrix.
         /// </summary>
-        private static void FindDeterminants(ref Matrix matrix, out Fixed major, 
+        private static void FindDeterminants(ref FixedMatrix matrix, out Fixed major, 
                                              out Fixed minor1, out Fixed minor2, out Fixed minor3, out Fixed minor4, out Fixed minor5, out Fixed minor6,
                                              out Fixed minor7, out Fixed minor8, out Fixed minor9, out Fixed minor10, out Fixed minor11, out Fixed minor12)
         {

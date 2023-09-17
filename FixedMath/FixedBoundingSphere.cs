@@ -10,7 +10,7 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct BoundingSphere : IEquatable<BoundingSphere>
+    public struct FixedBoundingSphere : IEquatable<FixedBoundingSphere>
     {
         #region Public Fields
 
@@ -18,7 +18,7 @@ namespace FixedMath
         /// The sphere center.
         /// </summary>
         [DataMember]
-        public Vector3 Center;
+        public FixedVector3 Center;
 
         /// <summary>
         /// The sphere radius.
@@ -50,7 +50,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="center">The sphere center.</param>
         /// <param name="radius">The sphere radius.</param>
-        internal BoundingSphere(Vector3 center, float radius)
+        internal FixedBoundingSphere(FixedVector3 center, float radius)
         {
             this.Center = center;
             this.Radius = (Fixed)radius;
@@ -61,7 +61,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="center">The sphere center.</param>
         /// <param name="radius">The sphere radius.</param>
-        public BoundingSphere(Vector3 center, Fixed radius)
+        public FixedBoundingSphere(FixedVector3 center, Fixed radius)
         {
             this.Center = center;
             this.Radius = radius;
@@ -78,11 +78,11 @@ namespace FixedMath
         /// </summary>
         /// <param name="box">The box for testing.</param>
         /// <returns>The containment type.</returns>
-        public ContainmentType Contains(BoundingBox box)
+        public ContainmentType Contains(FixedBoundingBox box)
         {
             //check if all corner is in sphere
             bool inside = true;
-            foreach (Vector3 corner in box.GetCorners())
+            foreach (FixedVector3 corner in box.GetCorners())
             {
                 if (this.Contains(corner) == ContainmentType.Disjoint)
                 {
@@ -127,7 +127,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="box">The box for testing.</param>
         /// <param name="result">The containment type as an output parameter.</param>
-        public void Contains(ref BoundingBox box, out ContainmentType result)
+        public void Contains(ref FixedBoundingBox box, out ContainmentType result)
         {
             result = this.Contains(box);
         }
@@ -137,13 +137,13 @@ namespace FixedMath
         /// </summary>
         /// <param name="frustum">The frustum for testing.</param>
         /// <returns>The containment type.</returns>
-        public ContainmentType Contains(BoundingFrustum frustum)
+        public ContainmentType Contains(FixedBoundingFrustum frustum)
         {
             //check if all corner is in sphere
             bool inside = true;
 
-            Vector3[] corners = frustum.GetCorners();
-            foreach (Vector3 corner in corners)
+            FixedVector3[] corners = frustum.GetCorners();
+            foreach (FixedVector3 corner in corners)
             {
                 if (this.Contains(corner) == ContainmentType.Disjoint)
                 {
@@ -170,7 +170,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="frustum">The frustum for testing.</param>
         /// <param name="result">The containment type as an output parameter.</param>
-        public void Contains(ref BoundingFrustum frustum,out ContainmentType result)
+        public void Contains(ref FixedBoundingFrustum frustum,out ContainmentType result)
         {
             result = this.Contains(frustum);
         }
@@ -180,7 +180,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="sphere">The other sphere for testing.</param>
         /// <returns>The containment type.</returns>
-        public ContainmentType Contains(BoundingSphere sphere)
+        public ContainmentType Contains(FixedBoundingSphere sphere)
         {
             ContainmentType result;
             Contains(ref sphere, out result);
@@ -192,10 +192,10 @@ namespace FixedMath
         /// </summary>
         /// <param name="sphere">The other sphere for testing.</param>
         /// <param name="result">The containment type as an output parameter.</param>
-        public void Contains(ref BoundingSphere sphere, out ContainmentType result)
+        public void Contains(ref FixedBoundingSphere sphere, out ContainmentType result)
         {
             Fixed sqDistance;
-            Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+            FixedVector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
 
             if (sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius))
                 result = ContainmentType.Disjoint;
@@ -212,7 +212,7 @@ namespace FixedMath
         /// </summary>
         /// <param name="point">The vector in 3D-space for testing.</param>
         /// <returns>The containment type.</returns>
-        public ContainmentType Contains(Vector3 point)
+        public ContainmentType Contains(FixedVector3 point)
         {
             ContainmentType result;
             Contains(ref point, out result);
@@ -224,11 +224,11 @@ namespace FixedMath
         /// </summary>
         /// <param name="point">The vector in 3D-space for testing.</param>
         /// <param name="result">The containment type as an output parameter.</param>
-        public void Contains(ref Vector3 point, out ContainmentType result)
+        public void Contains(ref FixedVector3 point, out ContainmentType result)
         {
             Fixed sqRadius = Radius * Radius;
             Fixed sqDistance;
-            Vector3.DistanceSquared(ref point, ref Center, out sqDistance);
+            FixedVector3.DistanceSquared(ref point, ref Center, out sqDistance);
             
             if (sqDistance > sqRadius)
                 result = ContainmentType.Disjoint;
@@ -245,60 +245,60 @@ namespace FixedMath
         #region CreateFromBoundingBox
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain a specified <see cref="BoundingBox"/>.
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain a specified <see cref="FixedBoundingBox"/>.
         /// </summary>
         /// <param name="box">The box to create the sphere from.</param>
-        /// <returns>The new <see cref="BoundingSphere"/>.</returns>
-        public static BoundingSphere CreateFromBoundingBox(BoundingBox box)
+        /// <returns>The new <see cref="FixedBoundingSphere"/>.</returns>
+        public static FixedBoundingSphere CreateFromBoundingBox(FixedBoundingBox box)
         {
-            BoundingSphere result;
+            FixedBoundingSphere result;
             CreateFromBoundingBox(ref box, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain a specified <see cref="BoundingBox"/>.
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain a specified <see cref="FixedBoundingBox"/>.
         /// </summary>
         /// <param name="box">The box to create the sphere from.</param>
-        /// <param name="result">The new <see cref="BoundingSphere"/> as an output parameter.</param>
-        public static void CreateFromBoundingBox(ref BoundingBox box, out BoundingSphere result)
+        /// <param name="result">The new <see cref="FixedBoundingSphere"/> as an output parameter.</param>
+        public static void CreateFromBoundingBox(ref FixedBoundingBox box, out FixedBoundingSphere result)
         {
             // Find the center of the box.
-            Vector3 center = new Vector3((box.Min.X + box.Max.X) / Fixed.Two,
+            FixedVector3 center = new FixedVector3((box.Min.X + box.Max.X) / Fixed.Two,
                                          (box.Min.Y + box.Max.Y) / Fixed.Two,
                                          (box.Min.Z + box.Max.Z) / Fixed.Two);
 
             // Find the distance between the center and one of the corners of the box.
-            Fixed radius = Vector3.Distance(center, box.Max);
+            Fixed radius = FixedVector3.Distance(center, box.Max);
 
-            result = new BoundingSphere(center, radius);
+            result = new FixedBoundingSphere(center, radius);
         }
 
         #endregion
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain a specified <see cref="BoundingFrustum"/>.
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain a specified <see cref="FixedBoundingFrustum"/>.
         /// </summary>
         /// <param name="frustum">The frustum to create the sphere from.</param>
-        /// <returns>The new <see cref="BoundingSphere"/>.</returns>
-        public static BoundingSphere CreateFromFrustum(BoundingFrustum frustum)
+        /// <returns>The new <see cref="FixedBoundingSphere"/>.</returns>
+        public static FixedBoundingSphere CreateFromFrustum(FixedBoundingFrustum frustum)
         {
             return CreateFromPoints(frustum.GetCorners());
         }
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain a specified list of points in 3D-space. 
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain a specified list of points in 3D-space. 
         /// </summary>
         /// <param name="points">List of point to create the sphere from.</param>
-        /// <returns>The new <see cref="BoundingSphere"/>.</returns>
-        public static BoundingSphere CreateFromPoints(IEnumerable<Vector3> points)
+        /// <returns>The new <see cref="FixedBoundingSphere"/>.</returns>
+        public static FixedBoundingSphere CreateFromPoints(IEnumerable<FixedVector3> points)
         {
             if (points == null )
                 throw new ArgumentNullException("points");
 
             // From "Real-Time Collision Detection" (Page 89)
 
-            var minx = new Vector3(Fixed.MaxValue, Fixed.MaxValue, Fixed.MaxValue);
+            var minx = new FixedVector3(Fixed.MaxValue, Fixed.MaxValue, Fixed.MaxValue);
             var maxx = -minx;
             var miny = minx;
             var maxy = -minx;
@@ -328,9 +328,9 @@ namespace FixedMath
             if (numPoints == 0)
                 throw new ArgumentException("You should have at least one point in points.");
 
-            var sqDistX = Vector3.DistanceSquared(maxx, minx);
-            var sqDistY = Vector3.DistanceSquared(maxy, miny);
-            var sqDistZ = Vector3.DistanceSquared(maxz, minz);
+            var sqDistX = FixedVector3.DistanceSquared(maxx, minx);
+            var sqDistY = FixedVector3.DistanceSquared(maxy, miny);
+            var sqDistZ = FixedVector3.DistanceSquared(maxz, minz);
 
             // Pick the pair of most distant points.
             var min = minx;
@@ -347,7 +347,7 @@ namespace FixedMath
             }
             
             var center = (min + max) * Fixed.Half;
-            var radius = Vector3.Distance(max, center);
+            var radius = FixedVector3.Distance(max, center);
             
             // Test every point and expand the sphere.
             // The current bounding sphere is just a good approximation and may not enclose all points.            
@@ -356,44 +356,44 @@ namespace FixedMath
             Fixed sqRadius = radius * radius;
             foreach (var pt in points)
             {
-                Vector3 diff = (pt-center);
+                FixedVector3 diff = (pt-center);
                 Fixed sqDist = diff.LengthSquared();
                 if (sqDist > sqRadius)
                 {
                     Fixed distance = Fixed.Sqrt(sqDist); // equal to diff.Length();
-                    Vector3 direction = diff / distance;
-                    Vector3 G = center - radius * direction;
+                    FixedVector3 direction = diff / distance;
+                    FixedVector3 G = center - radius * direction;
                     center = (G + pt) / Fixed.Two;
-                    radius = Vector3.Distance(pt, center);
+                    radius = FixedVector3.Distance(pt, center);
                     sqRadius = radius * radius;
                 }
             }
 
-            return new BoundingSphere(center, radius);
+            return new FixedBoundingSphere(center, radius);
         }
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain two spheres.
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain two spheres.
         /// </summary>
         /// <param name="original">First sphere.</param>
         /// <param name="additional">Second sphere.</param>
-        /// <returns>The new <see cref="BoundingSphere"/>.</returns>
-        public static BoundingSphere CreateMerged(BoundingSphere original, BoundingSphere additional)
+        /// <returns>The new <see cref="FixedBoundingSphere"/>.</returns>
+        public static FixedBoundingSphere CreateMerged(FixedBoundingSphere original, FixedBoundingSphere additional)
         {
-            BoundingSphere result;
+            FixedBoundingSphere result;
             CreateMerged(ref original, ref additional, out result);
             return result;
         }
 
         /// <summary>
-        /// Creates the smallest <see cref="BoundingSphere"/> that can contain two spheres.
+        /// Creates the smallest <see cref="FixedBoundingSphere"/> that can contain two spheres.
         /// </summary>
         /// <param name="original">First sphere.</param>
         /// <param name="additional">Second sphere.</param>
-        /// <param name="result">The new <see cref="BoundingSphere"/> as an output parameter.</param>
-        public static void CreateMerged(ref BoundingSphere original, ref BoundingSphere additional, out BoundingSphere result)
+        /// <param name="result">The new <see cref="FixedBoundingSphere"/> as an output parameter.</param>
+        public static void CreateMerged(ref FixedBoundingSphere original, ref FixedBoundingSphere additional, out FixedBoundingSphere result)
         {
-            Vector3 ocenterToaCenter = Vector3.Subtract(additional.Center, original.Center);
+            FixedVector3 ocenterToaCenter = FixedVector3.Subtract(additional.Center, original.Center);
             Fixed distance = ocenterToaCenter.Length();
             if (distance <= original.Radius + additional.Radius)//intersect
             {
@@ -413,17 +413,17 @@ namespace FixedMath
             Fixed Rightradius = Fixed.Max(original.Radius + distance, additional.Radius);
             ocenterToaCenter = ocenterToaCenter + (((leftRadius - Rightradius) / (Fixed.Two * ocenterToaCenter.Length())) * ocenterToaCenter);//oCenterToResultCenter
 
-            result = new BoundingSphere();
+            result = new FixedBoundingSphere();
             result.Center = original.Center + ocenterToaCenter;
             result.Radius = (leftRadius + Rightradius) / Fixed.Two;
         }
 
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="BoundingSphere"/>.
+        /// Compares whether current instance is equal to specified <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="other">The <see cref="BoundingSphere"/> to compare.</param>
+        /// <param name="other">The <see cref="FixedBoundingSphere"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(BoundingSphere other)
+        public bool Equals(FixedBoundingSphere other)
         {
             return this.Center == other.Center && this.Radius == other.Radius;
         }
@@ -435,16 +435,16 @@ namespace FixedMath
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is BoundingSphere)
-                return this.Equals((BoundingSphere)obj);
+            if (obj is FixedBoundingSphere)
+                return this.Equals((FixedBoundingSphere)obj);
 
             return false;
         }
 
         /// <summary>
-        /// Gets the hash code of this <see cref="BoundingSphere"/>.
+        /// Gets the hash code of this <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <returns>Hash code of this <see cref="BoundingSphere"/>.</returns>
+        /// <returns>Hash code of this <see cref="FixedBoundingSphere"/>.</returns>
         public override int GetHashCode()
         {
             return this.Center.GetHashCode() + this.Radius.GetHashCode();
@@ -453,21 +453,21 @@ namespace FixedMath
         #region Intersects
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="BoundingBox"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedBoundingBox"/> intersects with this sphere.
         /// </summary>
         /// <param name="box">The box for testing.</param>
-        /// <returns><c>true</c> if <see cref="BoundingBox"/> intersects with this sphere; <c>false</c> otherwise.</returns>
-        public bool Intersects(BoundingBox box)
+        /// <returns><c>true</c> if <see cref="FixedBoundingBox"/> intersects with this sphere; <c>false</c> otherwise.</returns>
+        public bool Intersects(FixedBoundingBox box)
         {
 			return box.Intersects(this);
         }
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="BoundingBox"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedBoundingBox"/> intersects with this sphere.
         /// </summary>
         /// <param name="box">The box for testing.</param>
-        /// <param name="result"><c>true</c> if <see cref="BoundingBox"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
-        public void Intersects(ref BoundingBox box, out bool result)
+        /// <param name="result"><c>true</c> if <see cref="FixedBoundingBox"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
+        public void Intersects(ref FixedBoundingBox box, out bool result)
         {
             box.Intersects(ref this, out result);
         }
@@ -486,11 +486,11 @@ namespace FixedMath
         */
 
         /// <summary>
-        /// Gets whether or not the other <see cref="BoundingSphere"/> intersects with this sphere.
+        /// Gets whether or not the other <see cref="FixedBoundingSphere"/> intersects with this sphere.
         /// </summary>
         /// <param name="sphere">The other sphere for testing.</param>
-        /// <returns><c>true</c> if other <see cref="BoundingSphere"/> intersects with this sphere; <c>false</c> otherwise.</returns>
-        public bool Intersects(BoundingSphere sphere)
+        /// <returns><c>true</c> if other <see cref="FixedBoundingSphere"/> intersects with this sphere; <c>false</c> otherwise.</returns>
+        public bool Intersects(FixedBoundingSphere sphere)
         {
             bool result;
             Intersects(ref sphere, out result);
@@ -498,14 +498,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Gets whether or not the other <see cref="BoundingSphere"/> intersects with this sphere.
+        /// Gets whether or not the other <see cref="FixedBoundingSphere"/> intersects with this sphere.
         /// </summary>
         /// <param name="sphere">The other sphere for testing.</param>
-        /// <param name="result"><c>true</c> if other <see cref="BoundingSphere"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
-        public void Intersects(ref BoundingSphere sphere, out bool result)
+        /// <param name="result"><c>true</c> if other <see cref="FixedBoundingSphere"/> intersects with this sphere; <c>false</c> otherwise. As an output parameter.</param>
+        public void Intersects(ref FixedBoundingSphere sphere, out bool result)
         {
             Fixed sqDistance;
-            Vector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
+            FixedVector3.DistanceSquared(ref sphere.Center, ref Center, out sqDistance);
 
             if (sqDistance > (sphere.Radius + Radius) * (sphere.Radius + Radius))
                 result = false;
@@ -514,53 +514,53 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="Plane"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedPlane"/> intersects with this sphere.
         /// </summary>
         /// <param name="plane">The plane for testing.</param>
         /// <returns>Type of intersection.</returns>
-        public PlaneIntersectionType Intersects(Plane plane)
+        public FixedPlaneIntersectionType Intersects(FixedPlane plane)
         {
-            var result = default(PlaneIntersectionType);
+            var result = default(FixedPlaneIntersectionType);
             // TODO: we might want to inline this for performance reasons
             this.Intersects(ref plane, out result);
             return result;
         }
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="Plane"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedPlane"/> intersects with this sphere.
         /// </summary>
         /// <param name="plane">The plane for testing.</param>
         /// <param name="result">Type of intersection as an output parameter.</param>
-        public void Intersects(ref Plane plane, out PlaneIntersectionType result)
+        public void Intersects(ref FixedPlane plane, out FixedPlaneIntersectionType result)
         {
             var distance = default(Fixed);
             // TODO: we might want to inline this for performance reasons
-            Vector3.Dot(ref plane.Normal, ref this.Center, out distance);
+            FixedVector3.Dot(ref plane.Normal, ref this.Center, out distance);
             distance += plane.D;
             if (distance > this.Radius)
-                result = PlaneIntersectionType.Front;
+                result = FixedPlaneIntersectionType.Front;
             else if (distance < -this.Radius)
-                result = PlaneIntersectionType.Back;
+                result = FixedPlaneIntersectionType.Back;
             else
-                result = PlaneIntersectionType.Intersecting;
+                result = FixedPlaneIntersectionType.Intersecting;
         }
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="Ray"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedRay"/> intersects with this sphere.
         /// </summary>
         /// <param name="ray">The ray for testing.</param>
         /// <returns>Distance of ray intersection or <c>null</c> if there is no intersection.</returns>
-        public Fixed? Intersects(Ray ray)
+        public Fixed? Intersects(FixedRay ray)
         {
             return ray.Intersects(this);
         }
 
         /// <summary>
-        /// Gets whether or not a specified <see cref="Ray"/> intersects with this sphere.
+        /// Gets whether or not a specified <see cref="FixedRay"/> intersects with this sphere.
         /// </summary>
         /// <param name="ray">The ray for testing.</param>
         /// <param name="result">Distance of ray intersection or <c>null</c> if there is no intersection as an output parameter.</param>
-        public void Intersects(ref Ray ray, out Fixed? result)
+        public void Intersects(ref FixedRay ray, out Fixed? result)
         {
             ray.Intersects(ref this, out result);
         }
@@ -568,10 +568,10 @@ namespace FixedMath
         #endregion
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="BoundingSphere"/> in the format:
+        /// Returns a <see cref="String"/> representation of this <see cref="FixedBoundingSphere"/> in the format:
         /// {Center:[<see cref="Center"/>] Radius:[<see cref="Radius"/>]}
         /// </summary>
-        /// <returns>A <see cref="String"/> representation of this <see cref="BoundingSphere"/>.</returns>
+        /// <returns>A <see cref="String"/> representation of this <see cref="FixedBoundingSphere"/>.</returns>
         public override string ToString()
         {
             return "{Center:" + this.Center + " Radius:" + this.Radius + "}";
@@ -580,37 +580,37 @@ namespace FixedMath
         #region Transform
 
         /// <summary>
-        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="FixedBoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
-        /// <returns>Transformed <see cref="BoundingSphere"/>.</returns>
-        public BoundingSphere Transform(Matrix matrix)
+        /// <param name="matrix">The transformation <see cref="FixedMatrix"/>.</param>
+        /// <returns>Transformed <see cref="FixedBoundingSphere"/>.</returns>
+        public FixedBoundingSphere Transform(FixedMatrix matrix)
         {
-            BoundingSphere sphere = new BoundingSphere();
-            sphere.Center = Vector3.Transform(this.Center, matrix);
+            FixedBoundingSphere sphere = new FixedBoundingSphere();
+            sphere.Center = FixedVector3.Transform(this.Center, matrix);
             sphere.Radius = this.Radius * Fixed.Sqrt(Fixed.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Fixed.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))));
             return sphere;
         }
 
         /// <summary>
-        /// Creates a new <see cref="BoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="FixedBoundingSphere"/> that contains a transformation of translation and scale from this sphere by the specified <see cref="FixedMatrix"/>.
         /// </summary>
-        /// <param name="matrix">The transformation <see cref="Matrix"/>.</param>
-        /// <param name="result">Transformed <see cref="BoundingSphere"/> as an output parameter.</param>
-        public void Transform(ref Matrix matrix, out BoundingSphere result)
+        /// <param name="matrix">The transformation <see cref="FixedMatrix"/>.</param>
+        /// <param name="result">Transformed <see cref="FixedBoundingSphere"/> as an output parameter.</param>
+        public void Transform(ref FixedMatrix matrix, out FixedBoundingSphere result)
         {
-            result.Center = Vector3.Transform(this.Center, matrix);
+            result.Center = FixedVector3.Transform(this.Center, matrix);
             result.Radius = this.Radius * Fixed.Sqrt(Fixed.Max(((matrix.M11 * matrix.M11) + (matrix.M12 * matrix.M12)) + (matrix.M13 * matrix.M13), Fixed.Max(((matrix.M21 * matrix.M21) + (matrix.M22 * matrix.M22)) + (matrix.M23 * matrix.M23), ((matrix.M31 * matrix.M31) + (matrix.M32 * matrix.M32)) + (matrix.M33 * matrix.M33))));
         }
 
         #endregion
 
         /// <summary>
-        /// Deconstruction method for <see cref="BoundingSphere"/>.
+        /// Deconstruction method for <see cref="FixedBoundingSphere"/>.
         /// </summary>
         /// <param name="center"></param>
         /// <param name="radius"></param>
-        public void Deconstruct(out Vector3 center, out Fixed radius)
+        public void Deconstruct(out FixedVector3 center, out Fixed radius)
         {
             center = Center;
             radius = Radius;
@@ -621,23 +621,23 @@ namespace FixedMath
         #region Operators
 
         /// <summary>
-        /// Compares whether two <see cref="BoundingSphere"/> instances are equal.
+        /// Compares whether two <see cref="FixedBoundingSphere"/> instances are equal.
         /// </summary>
-        /// <param name="a"><see cref="BoundingSphere"/> instance on the left of the equal sign.</param>
-        /// <param name="b"><see cref="BoundingSphere"/> instance on the right of the equal sign.</param>
+        /// <param name="a"><see cref="FixedBoundingSphere"/> instance on the left of the equal sign.</param>
+        /// <param name="b"><see cref="FixedBoundingSphere"/> instance on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public static bool operator == (BoundingSphere a, BoundingSphere b)
+        public static bool operator == (FixedBoundingSphere a, FixedBoundingSphere b)
         {
             return a.Equals(b);
         }
 
         /// <summary>
-        /// Compares whether two <see cref="BoundingSphere"/> instances are not equal.
+        /// Compares whether two <see cref="FixedBoundingSphere"/> instances are not equal.
         /// </summary>
-        /// <param name="a"><see cref="BoundingSphere"/> instance on the left of the not equal sign.</param>
-        /// <param name="b"><see cref="BoundingSphere"/> instance on the right of the not equal sign.</param>
+        /// <param name="a"><see cref="FixedBoundingSphere"/> instance on the left of the not equal sign.</param>
+        /// <param name="b"><see cref="FixedBoundingSphere"/> instance on the right of the not equal sign.</param>
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
-        public static bool operator != (BoundingSphere a, BoundingSphere b)
+        public static bool operator != (FixedBoundingSphere a, FixedBoundingSphere b)
         {
             return !a.Equals(b);
         }

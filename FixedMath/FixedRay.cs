@@ -9,21 +9,21 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Ray : IEquatable<Ray>
+    public struct FixedRay : IEquatable<FixedRay>
     {
         #region Public Fields
 
         /// <summary>
-        /// The direction of this <see cref="Ray"/>.
+        /// The direction of this <see cref="FixedRay"/>.
         /// </summary>
         [DataMember]
-        public Vector3 Direction;
+        public FixedVector3 Direction;
       
         /// <summary>
-        /// The origin of this <see cref="Ray"/>.
+        /// The origin of this <see cref="FixedRay"/>.
         /// </summary>
         [DataMember]
-        public Vector3 Position;
+        public FixedVector3 Position;
 
         #endregion
 
@@ -31,11 +31,11 @@ namespace FixedMath
         #region Public Constructors
 
         /// <summary>
-        /// Create a <see cref="Ray"/>.
+        /// Create a <see cref="FixedRay"/>.
         /// </summary>
-        /// <param name="position">The origin of the <see cref="Ray"/>.</param>
-        /// <param name="direction">The direction of the <see cref="Ray"/>.</param>
-        public Ray(Vector3 position, Vector3 direction)
+        /// <param name="position">The origin of the <see cref="FixedRay"/>.</param>
+        /// <param name="direction">The direction of the <see cref="FixedRay"/>.</param>
+        public FixedRay(FixedVector3 position, FixedVector3 direction)
         {
             this.Position = position;
             this.Direction = direction;
@@ -47,35 +47,35 @@ namespace FixedMath
         #region Public Methods
 
         /// <summary>
-        /// Check if the specified <see cref="Object"/> is equal to this <see cref="Ray"/>.
+        /// Check if the specified <see cref="Object"/> is equal to this <see cref="FixedRay"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="Object"/> to test for equality with this <see cref="Ray"/>.</param>
+        /// <param name="obj">The <see cref="Object"/> to test for equality with this <see cref="FixedRay"/>.</param>
         /// <returns>
-        /// <code>true</code> if the specified <see cref="Object"/> is equal to this <see cref="Ray"/>,
+        /// <code>true</code> if the specified <see cref="Object"/> is equal to this <see cref="FixedRay"/>,
         /// <code>false</code> if it is not.
         /// </returns>
         public override bool Equals(object obj)
         {
-            return (obj is Ray) && this.Equals((Ray)obj);
+            return (obj is FixedRay) && this.Equals((FixedRay)obj);
         }
 
         /// <summary>
-        /// Check if the specified <see cref="Ray"/> is equal to this <see cref="Ray"/>.
+        /// Check if the specified <see cref="FixedRay"/> is equal to this <see cref="FixedRay"/>.
         /// </summary>
-        /// <param name="other">The <see cref="Ray"/> to test for equality with this <see cref="Ray"/>.</param>
+        /// <param name="other">The <see cref="FixedRay"/> to test for equality with this <see cref="FixedRay"/>.</param>
         /// <returns>
-        /// <code>true</code> if the specified <see cref="Ray"/> is equal to this <see cref="Ray"/>,
+        /// <code>true</code> if the specified <see cref="FixedRay"/> is equal to this <see cref="FixedRay"/>,
         /// <code>false</code> if it is not.
         /// </returns>
-        public bool Equals(Ray other)
+        public bool Equals(FixedRay other)
         {
             return this.Position.Equals(other.Position) && this.Direction.Equals(other.Direction);
         }
 
         /// <summary>
-        /// Get a hash code for this <see cref="Ray"/>.
+        /// Get a hash code for this <see cref="FixedRay"/>.
         /// </summary>
-        /// <returns>A hash code for this <see cref="Ray"/>.</returns>
+        /// <returns>A hash code for this <see cref="FixedRay"/>.</returns>
         public override int GetHashCode()
         {
             return Position.GetHashCode() ^ Direction.GetHashCode();
@@ -83,14 +83,14 @@ namespace FixedMath
 
         // adapted from http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-7-intersecting-simple-shapes/ray-box-intersection/
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="BoundingBox"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <returns>
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="BoundingBox"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedBoundingBox"/>.
         /// </returns>
-        public Fixed? Intersects(BoundingBox box)
+        public Fixed? Intersects(FixedBoundingBox box)
         {
             Fixed Epsilon = (Fixed)1e-6M;
 
@@ -174,14 +174,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="BoundingBox"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedBoundingBox"/>.
         /// </summary>
-        /// <param name="box">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="box">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <param name="result">
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="BoundingBox"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedBoundingBox"/>.
         /// </param>
-        public void Intersects(ref BoundingBox box, out Fixed? result)
+        public void Intersects(ref FixedBoundingBox box, out Fixed? result)
         {
 			result = Intersects(box);
         }
@@ -199,14 +199,14 @@ namespace FixedMath
         */
 
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="BoundingSphere"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <returns>
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="BoundingSphere"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedBoundingSphere"/>.
         /// </returns>
-        public Fixed? Intersects(BoundingSphere sphere)
+        public Fixed? Intersects(FixedBoundingSphere sphere)
         {
             Fixed? result;
             Intersects(ref sphere, out result);
@@ -214,14 +214,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="Plane"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedPlane"/>.
         /// </summary>
-        /// <param name="plane">The <see cref="Plane"/> to test for intersection.</param>
+        /// <param name="plane">The <see cref="FixedPlane"/> to test for intersection.</param>
         /// <returns>
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="Plane"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedPlane"/>.
         /// </returns>
-        public Fixed? Intersects(Plane plane)
+        public Fixed? Intersects(FixedPlane plane)
         {
             Fixed? result;
             Intersects(ref plane, out result);
@@ -229,23 +229,23 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="Plane"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedPlane"/>.
         /// </summary>
-        /// <param name="plane">The <see cref="Plane"/> to test for intersection.</param>
+        /// <param name="plane">The <see cref="FixedPlane"/> to test for intersection.</param>
         /// <param name="result">
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="Plane"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedPlane"/>.
         /// </param>
-        public void Intersects(ref Plane plane, out Fixed? result)
+        public void Intersects(ref FixedPlane plane, out Fixed? result)
         {
-            var den = Vector3.Dot(Direction, plane.Normal);
+            var den = FixedVector3.Dot(Direction, plane.Normal);
             if (Fixed.Abs(den) < (Fixed)0.00001M)
             {
                 result = null;
                 return;
             }
 
-            result = (-plane.D - Vector3.Dot(plane.Normal, Position)) / den;
+            result = (-plane.D - FixedVector3.Dot(plane.Normal, Position)) / den;
 
             if (result < Fixed.Zero)
             {
@@ -260,17 +260,17 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Check if this <see cref="Ray"/> intersects the specified <see cref="BoundingSphere"/>.
+        /// Check if this <see cref="FixedRay"/> intersects the specified <see cref="FixedBoundingSphere"/>.
         /// </summary>
-        /// <param name="sphere">The <see cref="BoundingBox"/> to test for intersection.</param>
+        /// <param name="sphere">The <see cref="FixedBoundingBox"/> to test for intersection.</param>
         /// <param name="result">
         /// The distance along the ray of the intersection or <code>null</code> if this
-        /// <see cref="Ray"/> does not intersect the <see cref="BoundingSphere"/>.
+        /// <see cref="FixedRay"/> does not intersect the <see cref="FixedBoundingSphere"/>.
         /// </param>
-        public void Intersects(ref BoundingSphere sphere, out Fixed? result)
+        public void Intersects(ref FixedBoundingSphere sphere, out Fixed? result)
         {
             // Find the vector between where the ray starts the the sphere's centre
-            Vector3 difference = sphere.Center - this.Position;
+            FixedVector3 difference = sphere.Center - this.Position;
 
             Fixed differenceLengthSquared = difference.LengthSquared();
             Fixed sphereRadiusSquared = sphere.Radius * sphere.Radius;
@@ -285,7 +285,7 @@ namespace FixedMath
                 return;
             }
 
-            Vector3.Dot(ref this.Direction, ref difference, out distanceAlongRay);
+            FixedVector3.Dot(ref this.Direction, ref difference, out distanceAlongRay);
             // If the ray is pointing away from the sphere then we don't ever intersect
             if (distanceAlongRay < Fixed.Zero)
             {
@@ -309,7 +309,7 @@ namespace FixedMath
         /// <param name="a">A ray to check for inequality.</param>
         /// <param name="b">A ray to check for inequality.</param>
         /// <returns><code>true</code> if the two rays are not equal, <code>false</code> if they are.</returns>
-        public static bool operator !=(Ray a, Ray b)
+        public static bool operator !=(FixedRay a, FixedRay b)
         {
             return !a.Equals(b);
         }
@@ -320,7 +320,7 @@ namespace FixedMath
         /// <param name="a">A ray to check for equality.</param>
         /// <param name="b">A ray to check for equality.</param>
         /// <returns><code>true</code> if the two rays are equals, <code>false</code> if they are not.</returns>
-        public static bool operator ==(Ray a, Ray b)
+        public static bool operator ==(FixedRay a, FixedRay b)
         {
             return a.Equals(b);
         }
@@ -337,20 +337,20 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Get a <see cref="String"/> representation of this <see cref="Ray"/>.
+        /// Get a <see cref="String"/> representation of this <see cref="FixedRay"/>.
         /// </summary>
-        /// <returns>A <see cref="String"/> representation of this <see cref="Ray"/>.</returns>
+        /// <returns>A <see cref="String"/> representation of this <see cref="FixedRay"/>.</returns>
         public override string ToString()
         {
             return "{{Position:" + Position.ToString() + " Direction:" + Direction.ToString() + "}}";
         }
 
         /// <summary>
-        /// Deconstruction method for <see cref="Ray"/>.
+        /// Deconstruction method for <see cref="FixedRay"/>.
         /// </summary>
         /// <param name="position">Receives the start position of the ray.</param>
         /// <param name="direction">Receives the direction of the ray.</param>
-        public void Deconstruct(out Vector3 position, out Vector3 direction)
+        public void Deconstruct(out FixedVector3 position, out FixedVector3 direction)
         {
             position = Position;
             direction = Direction;

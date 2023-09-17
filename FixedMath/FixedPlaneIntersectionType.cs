@@ -1,9 +1,9 @@
 ﻿namespace FixedMath
 {
     /// <summary>
-    /// Defines the intersection between a <see cref="Plane"/> and a bounding volume.
+    /// Defines the intersection between a <see cref="FixedPlane"/> and a bounding volume.
     /// </summary>
-    public enum PlaneIntersectionType
+    public enum FixedPlaneIntersectionType
     {
         /// <summary>
         /// There is no intersection, the bounding volume is in the negative half space of the plane.

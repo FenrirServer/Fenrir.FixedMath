@@ -4,11 +4,11 @@ using System.Globalization;
 
 namespace FixedMath
 {
-    public class Vector3TypeConverter : TypeConverter
+    public class FixedVector3TypeConverter : TypeConverter
     {
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (VectorConversion.CanConvertTo(context, destinationType))
+            if (FixedVectorConversion.CanConvertTo(context, destinationType))
                 return true;
             if (destinationType == typeof(string))
                 return true;
@@ -18,12 +18,12 @@ namespace FixedMath
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            var vec = (Vector3)value;
+            var vec = (FixedVector3)value;
 
-            if (VectorConversion.CanConvertTo(context, destinationType))
+            if (FixedVectorConversion.CanConvertTo(context, destinationType))
             {
-                var vec4 = new Vector4(vec.X, vec.Y, vec.Z, Fixed.Zero);
-                return VectorConversion.ConvertToFromVector4(context, culture, vec4, destinationType);
+                var vec4 = new FixedVector4(vec.X, vec.Y, vec.Z, Fixed.Zero);
+                return FixedVectorConversion.ConvertToFromVector4(context, culture, vec4, destinationType);
             }
 
             if (destinationType == typeof(string))
@@ -50,7 +50,7 @@ namespace FixedMath
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             var sourceType = value.GetType();
-            var vec = Vector3.Zero;
+            var vec = FixedVector3.Zero;
 
             if (sourceType == typeof(string))
             {

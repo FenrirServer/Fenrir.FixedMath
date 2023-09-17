@@ -5,15 +5,15 @@
         [Test]
         public void ConstructorsAndProperties()
         {
-            var rectangle = new Rectangle(10, 20, 64, 64);
+            var rectangle = new FixedRectangle(10, 20, 64, 64);
 
             // Constructor
 
-            Assert.AreEqual(new Rectangle(){X = 10, Y = 20, Width = 64, Height = 64}, rectangle);
+            Assert.AreEqual(new FixedRectangle(){X = 10, Y = 20, Width = 64, Height = 64}, rectangle);
 
             // Constructor 2
 
-            Assert.AreEqual(new Rectangle() { X = 1, Y = 2, Width = 4, Height = 45 }, new Rectangle(new Point(1, 2), new Point(4, 45)));
+            Assert.AreEqual(new FixedRectangle() { X = 1, Y = 2, Width = 4, Height = 45 }, new FixedRectangle(new FixedPoint(1, 2), new FixedPoint(4, 45)));
 
             // Left property
 
@@ -33,38 +33,38 @@
 
             // Location property
 
-            Assert.AreEqual(new Point(10, 20), rectangle.Location);
+            Assert.AreEqual(new FixedPoint(10, 20), rectangle.Location);
 
             // Center property
 
-            Assert.AreEqual(new Point(10+32,20+32), rectangle.Center);
+            Assert.AreEqual(new FixedPoint(10+32,20+32), rectangle.Center);
 
 
             // Size property
 
-            Assert.AreEqual(new Point(64,64), rectangle.Size);
+            Assert.AreEqual(new FixedPoint(64,64), rectangle.Size);
 
 
             // IsEmpty property
 
             Assert.AreEqual(false, rectangle.IsEmpty);
-            Assert.AreEqual(true, new Rectangle().IsEmpty);
+            Assert.AreEqual(true, new FixedRectangle().IsEmpty);
 
             // Empty - static property
 
-            Assert.AreEqual(new Rectangle(),Rectangle.Empty);
+            Assert.AreEqual(new FixedRectangle(),FixedRectangle.Empty);
         }
 
         [Test]
         public void ContainsPoint()
         {
-            Rectangle rectangle = new Rectangle(0,0,64,64);
+            FixedRectangle rectangle = new FixedRectangle(0,0,64,64);
 
-            var p1 = new Point(-1, -1);
-            var p2 = new Point(0, 0);
-            var p3 = new Point(32, 32);
-            var p4 = new Point(63, 63);
-            var p5 = new Point(64, 64);
+            var p1 = new FixedPoint(-1, -1);
+            var p2 = new FixedPoint(0, 0);
+            var p3 = new FixedPoint(32, 32);
+            var p4 = new FixedPoint(63, 63);
+            var p5 = new FixedPoint(64, 64);
 
             bool result;
 
@@ -89,13 +89,13 @@
         [Test]
         public void ContainsVector2()
         {
-            Rectangle rectangle = new Rectangle(0, 0, 64, 64);
+            FixedRectangle rectangle = new FixedRectangle(0, 0, 64, 64);
 
-            var p1 = new Vector2(-1, -1);
-            var p2 = new Vector2(0, 0);
-            var p3 = new Vector2(32, 32);
-            var p4 = new Vector2(63, 63);
-            var p5 = new Vector2(64, 64);
+            var p1 = new FixedVector2(-1, -1);
+            var p2 = new FixedVector2(0, 0);
+            var p3 = new FixedVector2(32, 32);
+            var p4 = new FixedVector2(63, 63);
+            var p5 = new FixedVector2(64, 64);
 
             bool result;
 
@@ -120,7 +120,7 @@
         [Test]
         public void ContainsInts()
         {
-            Rectangle rectangle = new Rectangle(0, 0, 64, 64);
+            FixedRectangle rectangle = new FixedRectangle(0, 0, 64, 64);
 
             int x1 = -1; int y1 = -1;
             int x2 = 0;  int y2 = 0;
@@ -138,7 +138,7 @@
         [Test]
         public void ContainsFloats()
         {
-            Rectangle rectangle = new Rectangle(0, 0, 64, 64);
+            FixedRectangle rectangle = new FixedRectangle(0, 0, 64, 64);
 
             float x1 = -1; float y1 = -1;
             float x2 = 0;  float y2 = 0;
@@ -156,11 +156,11 @@
         [Test]
         public void ContainsRectangle()
         {
-            var rectangle = new Rectangle(0, 0, 64, 64);
-            var rect1 = new Rectangle(-1, -1, 32, 32);
-            var rect2 = new Rectangle(0, 0, 32, 32);
-            var rect3 = new Rectangle(0, 0, 64, 64);
-            var rect4 = new Rectangle(1, 1, 64, 64);
+            var rectangle = new FixedRectangle(0, 0, 64, 64);
+            var rect1 = new FixedRectangle(-1, -1, 32, 32);
+            var rect2 = new FixedRectangle(0, 0, 32, 32);
+            var rect3 = new FixedRectangle(0, 0, 64, 64);
+            var rect4 = new FixedRectangle(1, 1, 64, 64);
 
             bool result;
 
@@ -189,75 +189,75 @@
         [Test]
         public void Inflate()
         {
-            Rectangle rectangle = new Rectangle(0,0,64,64);
+            FixedRectangle rectangle = new FixedRectangle(0,0,64,64);
             rectangle.Inflate(10,-10);
-            Assert.AreEqual(new Rectangle(-10, 10, 84, 44),rectangle);
+            Assert.AreEqual(new FixedRectangle(-10, 10, 84, 44),rectangle);
 
-            Rectangle rectangleF = new Rectangle(0, 0, 64, 64);
+            FixedRectangle rectangleF = new FixedRectangle(0, 0, 64, 64);
             rectangleF.Inflate((Fixed)10.0f, (Fixed)(-10.0f));
-            Assert.AreEqual(new Rectangle(-10, 10, 84, 44), rectangleF);
+            Assert.AreEqual(new FixedRectangle(-10, 10, 84, 44), rectangleF);
 
         }
 
         [Test]
         public void Intersect()
         {
-            var first = new Rectangle(0, 0, 64, 64);
-            var second = new Rectangle(-32, -32, 64, 64);
-            var expected = new Rectangle(0, 0, 32, 32);
+            var first = new FixedRectangle(0, 0, 64, 64);
+            var second = new FixedRectangle(-32, -32, 64, 64);
+            var expected = new FixedRectangle(0, 0, 32, 32);
 
             // First overload testing(forward and backward)
 
-            Rectangle result;
-            Rectangle.Intersect(ref first, ref second, out result);
+            FixedRectangle result;
+            FixedRectangle.Intersect(ref first, ref second, out result);
 
             Assert.AreEqual(expected, result);
 
-            Rectangle.Intersect(ref second, ref first, out result);
+            FixedRectangle.Intersect(ref second, ref first, out result);
 
             Assert.AreEqual(expected, result);
 
             // Second overload testing(forward and backward)
 
-            Assert.AreEqual(expected, Rectangle.Intersect(first, second));
-            Assert.AreEqual(expected, Rectangle.Intersect(second, first));
+            Assert.AreEqual(expected, FixedRectangle.Intersect(first, second));
+            Assert.AreEqual(expected, FixedRectangle.Intersect(second, first));
         }
 
         [Test]
         public void Union()
         {
-            var first = new Rectangle(-64, -64, 64, 64);
-            var second = new Rectangle(0, 0, 64, 64);
-            var expected = new Rectangle(-64, -64, 128, 128);
+            var first = new FixedRectangle(-64, -64, 64, 64);
+            var second = new FixedRectangle(0, 0, 64, 64);
+            var expected = new FixedRectangle(-64, -64, 128, 128);
 
             // First overload testing(forward and backward)
 
-            Rectangle result;
-            Rectangle.Union(ref first, ref second, out result);
+            FixedRectangle result;
+            FixedRectangle.Union(ref first, ref second, out result);
 
             Assert.AreEqual(expected, result);
 
-            Rectangle.Union(ref second, ref first, out result);
+            FixedRectangle.Union(ref second, ref first, out result);
 
             Assert.AreEqual(expected, result);
 
             // Second overload testing(forward and backward)
 
-            Assert.AreEqual(expected, Rectangle.Union(first, second));
-            Assert.AreEqual(expected, Rectangle.Union(second, first));
+            Assert.AreEqual(expected, FixedRectangle.Union(first, second));
+            Assert.AreEqual(expected, FixedRectangle.Union(second, first));
         }
 
         [Test]
         public void ToStringTest()
         {
-            StringAssert.IsMatch("{X:-10 Y:10 Width:100 Height:1000}",new Rectangle(-10,10,100,1000).ToString());
+            StringAssert.IsMatch("{X:-10 Y:10 Width:100 Height:1000}",new FixedRectangle(-10,10,100,1000).ToString());
         }
 
 
         [Test]
         public void Deconstruct()
         {
-            Rectangle rectangle = new Rectangle(int.MinValue, int.MaxValue, int.MinValue, int.MaxValue);
+            FixedRectangle rectangle = new FixedRectangle(int.MinValue, int.MaxValue, int.MinValue, int.MaxValue);
 
             int x, y, width, height;
 

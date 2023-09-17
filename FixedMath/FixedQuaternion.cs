@@ -9,36 +9,36 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Quaternion : IEquatable<Quaternion>
+    public struct FixedQuaternion : IEquatable<FixedQuaternion>
     {
         #region Private Fields
 
-        private static readonly Quaternion _identity = new Quaternion(Fixed.Zero, Fixed.Zero, Fixed.Zero, Fixed.One);
+        private static readonly FixedQuaternion _identity = new FixedQuaternion(Fixed.Zero, Fixed.Zero, Fixed.Zero, Fixed.One);
 
         #endregion
 
         #region Public Fields
 
         /// <summary>
-        /// The x coordinate of this <see cref="Quaternion"/>.
+        /// The x coordinate of this <see cref="FixedQuaternion"/>.
         /// </summary>
         [DataMember]
         public Fixed X;
 
         /// <summary>
-        /// The y coordinate of this <see cref="Quaternion"/>.
+        /// The y coordinate of this <see cref="FixedQuaternion"/>.
         /// </summary>
         [DataMember]
         public Fixed Y;
 
         /// <summary>
-        /// The z coordinate of this <see cref="Quaternion"/>.
+        /// The z coordinate of this <see cref="FixedQuaternion"/>.
         /// </summary>
         [DataMember]
         public Fixed Z;
 
         /// <summary>
-        /// The rotation component of this <see cref="Quaternion"/>.
+        /// The rotation component of this <see cref="FixedQuaternion"/>.
         /// </summary>
         [DataMember]
         public Fixed W;
@@ -54,7 +54,7 @@ namespace FixedMath
         /// <param name="y">The y coordinate in 3d-space.</param>
         /// <param name="z">The z coordinate in 3d-space.</param>
         /// <param name="w">The rotation component.</param>
-        internal Quaternion(float x, float y, float z, float w)
+        internal FixedQuaternion(float x, float y, float z, float w)
         {
             this.X = (Fixed)x;
             this.Y = (Fixed)y;
@@ -69,7 +69,7 @@ namespace FixedMath
         /// <param name="y">The y coordinate in 3d-space.</param>
         /// <param name="z">The z coordinate in 3d-space.</param>
         /// <param name="w">The rotation component.</param>
-        public Quaternion(Fixed x, Fixed y, Fixed z, Fixed w)
+        public FixedQuaternion(Fixed x, Fixed y, Fixed z, Fixed w)
         {
             this.X = x;
             this.Y = y;
@@ -78,11 +78,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Constructs a quaternion with X, Y, Z from <see cref="Vector3"/> and rotation component from a scalar.
+        /// Constructs a quaternion with X, Y, Z from <see cref="FixedVector3"/> and rotation component from a scalar.
         /// </summary>
         /// <param name="value">The x, y, z coordinates in 3d-space.</param>
         /// <param name="w">The rotation component.</param>
-        internal Quaternion(Vector3 value, float w)
+        internal FixedQuaternion(FixedVector3 value, float w)
         {
             this.X = value.X;
             this.Y = value.Y;
@@ -91,11 +91,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Constructs a quaternion with X, Y, Z from <see cref="Vector3"/> and rotation component from a scalar.
+        /// Constructs a quaternion with X, Y, Z from <see cref="FixedVector3"/> and rotation component from a scalar.
         /// </summary>
         /// <param name="value">The x, y, z coordinates in 3d-space.</param>
         /// <param name="w">The rotation component.</param>
-        public Quaternion(Vector3 value, Fixed w)
+        public FixedQuaternion(FixedVector3 value, Fixed w)
         {
             this.X = value.X;
             this.Y = value.Y;
@@ -104,10 +104,10 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Constructs a quaternion from <see cref="Vector4"/>.
+        /// Constructs a quaternion from <see cref="FixedVector4"/>.
         /// </summary>
         /// <param name="value">The x, y, z coordinates in 3d-space and the rotation component.</param>
-        public Quaternion(Vector4 value)
+        public FixedQuaternion(FixedVector4 value)
         {
             this.X = value.X;
             this.Y = value.Y;
@@ -122,7 +122,7 @@ namespace FixedMath
         /// <summary>
         /// Returns a quaternion representing no rotation.
         /// </summary>
-        public static Quaternion Identity
+        public static FixedQuaternion Identity
         {
             get{ return _identity; }
         }
@@ -135,7 +135,7 @@ namespace FixedMath
         {
             get
             {
-                if (this == Quaternion._identity)
+                if (this == FixedQuaternion._identity)
                 {
                     return "Identity";
                 }
@@ -156,14 +156,14 @@ namespace FixedMath
         #region Add
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains the sum of two quaternions.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains the sum of two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The result of the quaternion addition.</returns>
-        public static Quaternion Add(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion Add(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-			Quaternion quaternion;
+			FixedQuaternion quaternion;
 			quaternion.X = quaternion1.X + quaternion2.X;
 			quaternion.Y = quaternion1.Y + quaternion2.Y;
 			quaternion.Z = quaternion1.Z + quaternion2.Z;
@@ -172,12 +172,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains the sum of two quaternions.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains the sum of two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The result of the quaternion addition as an output parameter.</param>
-        public static void Add(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
+        public static void Add(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, out FixedQuaternion result)
         {
 			result.X = quaternion1.X + quaternion2.X;
 			result.Y = quaternion1.Y + quaternion2.Y;
@@ -190,14 +190,14 @@ namespace FixedMath
         #region Concatenate
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains concatenation between two quaternion.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains concatenation between two quaternion.
         /// </summary>
-        /// <param name="value1">The first <see cref="Quaternion"/> to concatenate.</param>
-        /// <param name="value2">The second <see cref="Quaternion"/> to concatenate.</param>
+        /// <param name="value1">The first <see cref="FixedQuaternion"/> to concatenate.</param>
+        /// <param name="value2">The second <see cref="FixedQuaternion"/> to concatenate.</param>
         /// <returns>The result of rotation of <paramref name="value1"/> followed by <paramref name="value2"/> rotation.</returns>
-        public static Quaternion Concatenate(Quaternion value1, Quaternion value2)
+        public static FixedQuaternion Concatenate(FixedQuaternion value1, FixedQuaternion value2)
 		{
-			Quaternion quaternion;
+			FixedQuaternion quaternion;
 
             Fixed x1 = value1.X;
             Fixed y1 = value1.Y;
@@ -218,12 +218,12 @@ namespace FixedMath
 		}
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains concatenation between two quaternion.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains concatenation between two quaternion.
         /// </summary>
-        /// <param name="value1">The first <see cref="Quaternion"/> to concatenate.</param>
-        /// <param name="value2">The second <see cref="Quaternion"/> to concatenate.</param>
+        /// <param name="value1">The first <see cref="FixedQuaternion"/> to concatenate.</param>
+        /// <param name="value2">The second <see cref="FixedQuaternion"/> to concatenate.</param>
         /// <param name="result">The result of rotation of <paramref name="value1"/> followed by <paramref name="value2"/> rotation as an output parameter.</param>
-        public static void Concatenate(ref Quaternion value1, ref Quaternion value2, out Quaternion result)
+        public static void Concatenate(ref FixedQuaternion value1, ref FixedQuaternion value2, out FixedQuaternion result)
 		{
             Fixed x1 = value1.X;
             Fixed y1 = value1.Y;
@@ -256,21 +256,21 @@ namespace FixedMath
 		}
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains conjugated version of the specified quaternion.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains conjugated version of the specified quaternion.
         /// </summary>
         /// <param name="value">The quaternion which values will be used to create the conjugated version.</param>
         /// <returns>The conjugate version of the specified quaternion.</returns>
-        public static Quaternion Conjugate(Quaternion value)
+        public static FixedQuaternion Conjugate(FixedQuaternion value)
 		{
-			return new Quaternion(-value.X,-value.Y,-value.Z,value.W);
+			return new FixedQuaternion(-value.X,-value.Y,-value.Z,value.W);
 		}
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains conjugated version of the specified quaternion.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains conjugated version of the specified quaternion.
         /// </summary>
         /// <param name="value">The quaternion which values will be used to create the conjugated version.</param>
         /// <param name="result">The conjugated version of the specified quaternion as an output parameter.</param>
-        public static void Conjugate(ref Quaternion value, out Quaternion result)
+        public static void Conjugate(ref FixedQuaternion value, out FixedQuaternion result)
 		{
 			result.X = -value.X;
 			result.Y = -value.Y;
@@ -283,26 +283,26 @@ namespace FixedMath
         #region CreateFromAxisAngle
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified axis and angle.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified axis and angle.
         /// </summary>
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle in radians.</param>
         /// <returns>The new quaternion builded from axis and angle.</returns>
-        public static Quaternion CreateFromAxisAngle(Vector3 axis, Fixed angle)
+        public static FixedQuaternion CreateFromAxisAngle(FixedVector3 axis, Fixed angle)
         {
 		    Fixed half = angle * Fixed.Half;
 		    Fixed sin = Fixed.Sin(half);
 		    Fixed cos = Fixed.Cos(half);
-		    return new Quaternion(axis.X * sin, axis.Y * sin, axis.Z * sin, cos);
+		    return new FixedQuaternion(axis.X * sin, axis.Y * sin, axis.Z * sin, cos);
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified axis and angle.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified axis and angle.
         /// </summary>
         /// <param name="axis">The axis of rotation.</param>
         /// <param name="angle">The angle in radians.</param>
         /// <param name="result">The new quaternion builded from axis and angle as an output parameter.</param>
-        public static void CreateFromAxisAngle(ref Vector3 axis, Fixed angle, out Quaternion result)
+        public static void CreateFromAxisAngle(ref FixedVector3 axis, Fixed angle, out FixedQuaternion result)
         {
             Fixed half = angle * Fixed.Half;
 		    Fixed sin = Fixed.Sin(half);
@@ -318,13 +318,13 @@ namespace FixedMath
         #region CreateFromRotationMatrix
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <returns>A quaternion composed from the rotation part of the matrix.</returns>
-        public static Quaternion CreateFromRotationMatrix(Matrix matrix)
+        public static FixedQuaternion CreateFromRotationMatrix(FixedMatrix matrix)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
             Fixed sqrt;
             Fixed half;
             Fixed scale = matrix.M11 + matrix.M22 + matrix.M33;
@@ -377,11 +377,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified <see cref="Matrix"/>.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified <see cref="FixedMatrix"/>.
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <param name="result">A quaternion composed from the rotation part of the matrix as an output parameter.</param>
-        public static void CreateFromRotationMatrix(ref Matrix matrix, out Quaternion result)
+        public static void CreateFromRotationMatrix(ref FixedMatrix matrix, out FixedQuaternion result)
         {
             Fixed sqrt;
             Fixed half;
@@ -435,13 +435,13 @@ namespace FixedMath
         #region CreateFromYawPitchRoll
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified yaw, pitch and roll angles.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified yaw, pitch and roll angles.
         /// </summary>
         /// <param name="yaw">Yaw around the y axis in radians.</param>
         /// <param name="pitch">Pitch around the x axis in radians.</param>
         /// <param name="roll">Roll around the z axis in radians.</param>
         /// <returns>A new quaternion from the concatenated yaw, pitch, and roll angles.</returns>
-        public static Quaternion CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll)
+        public static FixedQuaternion CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll)
 		{
             Fixed halfRoll = roll * Fixed.Half;
             Fixed halfPitch = pitch * Fixed.Half;
@@ -454,20 +454,20 @@ namespace FixedMath
             Fixed sinYaw = Fixed.Sin(halfYaw);
             Fixed cosYaw = Fixed.Cos(halfYaw);
 
-            return new Quaternion((cosYaw * sinPitch * cosRoll) + (sinYaw * cosPitch * sinRoll),
+            return new FixedQuaternion((cosYaw * sinPitch * cosRoll) + (sinYaw * cosPitch * sinRoll),
                                   (sinYaw * cosPitch * cosRoll) - (cosYaw * sinPitch * sinRoll),
                                   (cosYaw * cosPitch * sinRoll) - (sinYaw * sinPitch * cosRoll),
                                   (cosYaw * cosPitch * cosRoll) + (sinYaw * sinPitch * sinRoll));
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> from the specified yaw, pitch and roll angles.
+        /// Creates a new <see cref="FixedQuaternion"/> from the specified yaw, pitch and roll angles.
         /// </summary>
         /// <param name="yaw">Yaw around the y axis in radians.</param>
         /// <param name="pitch">Pitch around the x axis in radians.</param>
         /// <param name="roll">Roll around the z axis in radians.</param>
         /// <param name="result">A new quaternion from the concatenated yaw, pitch, and roll angles as an output parameter.</param>
- 		public static void CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll, out Quaternion result)
+ 		public static void CreateFromYawPitchRoll(Fixed yaw, Fixed pitch, Fixed roll, out FixedQuaternion result)
 		{
             Fixed halfRoll = roll * Fixed.Half;
             Fixed halfPitch = pitch * Fixed.Half;
@@ -491,14 +491,14 @@ namespace FixedMath
         #region Divide
 
         /// <summary>
-        /// Divides a <see cref="Quaternion"/> by the other <see cref="Quaternion"/>.
+        /// Divides a <see cref="FixedQuaternion"/> by the other <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Divisor <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Divisor <see cref="FixedQuaternion"/>.</param>
         /// <returns>The result of dividing the quaternions.</returns>
-        public static Quaternion Divide(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion Divide(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
 		    Fixed z = quaternion1.Z;
@@ -521,12 +521,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides a <see cref="Quaternion"/> by the other <see cref="Quaternion"/>.
+        /// Divides a <see cref="FixedQuaternion"/> by the other <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Divisor <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Divisor <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The result of dividing the quaternions as an output parameter.</param>
-        public static void Divide(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
+        public static void Divide(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, out FixedQuaternion result)
         {
             Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
@@ -558,7 +558,7 @@ namespace FixedMath
         /// <param name="quaternion1">The first quaternion.</param>
         /// <param name="quaternion2">The second quaternion.</param>
         /// <returns>The dot product of two quaternions.</returns>
-        public static Fixed Dot(Quaternion quaternion1, Quaternion quaternion2)
+        public static Fixed Dot(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
             return ((((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W));
         }
@@ -569,7 +569,7 @@ namespace FixedMath
         /// <param name="quaternion1">The first quaternion.</param>
         /// <param name="quaternion2">The second quaternion.</param>
         /// <param name="result">The dot product of two quaternions as an output parameter.</param>
-        public static void Dot(ref Quaternion quaternion1, ref Quaternion quaternion2, out Fixed result)
+        public static void Dot(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, out Fixed result)
         {
             result = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
         }
@@ -585,17 +585,17 @@ namespace FixedMath
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is Quaternion)
-                return Equals((Quaternion)obj);
+            if (obj is FixedQuaternion)
+                return Equals((FixedQuaternion)obj);
             return false;
         }
 
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="Quaternion"/>.
+        /// Compares whether current instance is equal to specified <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="other">The <see cref="Quaternion"/> to compare.</param>
+        /// <param name="other">The <see cref="FixedQuaternion"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(Quaternion other)
+        public bool Equals(FixedQuaternion other)
         {
 			return X == other.X &&
                    Y == other.Y &&
@@ -606,9 +606,9 @@ namespace FixedMath
         #endregion
 
         /// <summary>
-        /// Gets the hash code of this <see cref="Quaternion"/>.
+        /// Gets the hash code of this <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <returns>Hash code of this <see cref="Quaternion"/>.</returns>
+        /// <returns>Hash code of this <see cref="FixedQuaternion"/>.</returns>
         public override int GetHashCode()
         {
             return X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode() + W.GetHashCode();
@@ -619,11 +619,11 @@ namespace FixedMath
         /// <summary>
         /// Returns the inverse quaternion which represents the opposite rotation.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The inverse quaternion.</returns>
-        public static Quaternion Inverse(Quaternion quaternion)
+        public static FixedQuaternion Inverse(FixedQuaternion quaternion)
         {
-            Quaternion quaternion2;
+            FixedQuaternion quaternion2;
 		    Fixed num2 = (((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y)) + (quaternion.Z * quaternion.Z)) + (quaternion.W * quaternion.W);
 		    Fixed num = Fixed.One / num2;
 		    quaternion2.X = -quaternion.X * num;
@@ -636,9 +636,9 @@ namespace FixedMath
         /// <summary>
         /// Returns the inverse quaternion which represents the opposite rotation.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The inverse quaternion as an output parameter.</param>
-        public static void Inverse(ref Quaternion quaternion, out Quaternion result)
+        public static void Inverse(ref FixedQuaternion quaternion, out FixedQuaternion result)
         {
             Fixed num2 = (((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y)) + (quaternion.Z * quaternion.Z)) + (quaternion.W * quaternion.W);
 		    Fixed num = Fixed.One / num2;
@@ -673,15 +673,15 @@ namespace FixedMath
         /// <summary>
         /// Performs a linear blend between two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="amount">The blend amount where 0 returns <paramref name="quaternion1"/> and 1 <paramref name="quaternion2"/>.</param>
         /// <returns>The result of linear blending between two quaternions.</returns>
-        public static Quaternion Lerp(Quaternion quaternion1, Quaternion quaternion2, Fixed amount)
+        public static FixedQuaternion Lerp(FixedQuaternion quaternion1, FixedQuaternion quaternion2, Fixed amount)
         {
             Fixed num = amount;
 		    Fixed num2 = Fixed.One - num;
-		    Quaternion quaternion = new Quaternion();
+		    FixedQuaternion quaternion = new FixedQuaternion();
 		    Fixed num5 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
 		    if (num5 >= Fixed.Zero)
 		    {
@@ -709,11 +709,11 @@ namespace FixedMath
         /// <summary>
         /// Performs a linear blend between two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="amount">The blend amount where 0 returns <paramref name="quaternion1"/> and 1 <paramref name="quaternion2"/>.</param>
         /// <param name="result">The result of linear blending between two quaternions as an output parameter.</param>
-        public static void Lerp(ref Quaternion quaternion1, ref Quaternion quaternion2, Fixed amount, out Quaternion result)
+        public static void Lerp(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, Fixed amount, out FixedQuaternion result)
         {
             Fixed num = amount;
 		    Fixed num2 = Fixed.One - num;
@@ -748,15 +748,15 @@ namespace FixedMath
         /// <summary>
         /// Performs a spherical linear blend between two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="amount">The blend amount where 0 returns <paramref name="quaternion1"/> and 1 <paramref name="quaternion2"/>.</param>
         /// <returns>The result of spherical linear blending between two quaternions.</returns>
-        public static Quaternion Slerp(Quaternion quaternion1, Quaternion quaternion2, Fixed amount)
+        public static FixedQuaternion Slerp(FixedQuaternion quaternion1, FixedQuaternion quaternion2, Fixed amount)
         {
             Fixed num2;
 		    Fixed num3;
-		    Quaternion quaternion;
+		    FixedQuaternion quaternion;
 		    Fixed num = amount;
 		    Fixed num4 = (((quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y)) + (quaternion1.Z * quaternion2.Z)) + (quaternion1.W * quaternion2.W);
 		    bool flag = false;
@@ -787,11 +787,11 @@ namespace FixedMath
         /// <summary>
         /// Performs a spherical linear blend between two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="amount">The blend amount where 0 returns <paramref name="quaternion1"/> and 1 <paramref name="quaternion2"/>.</param>
         /// <param name="result">The result of spherical linear blending between two quaternions as an output parameter.</param>
-        public static void Slerp(ref Quaternion quaternion1, ref Quaternion quaternion2, Fixed amount, out Quaternion result)
+        public static void Slerp(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, Fixed amount, out FixedQuaternion result)
         {
             Fixed num2;
 		    Fixed num3;
@@ -826,14 +826,14 @@ namespace FixedMath
         #region Subtract
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains subtraction of one <see cref="Quaternion"/> from another.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains subtraction of one <see cref="FixedQuaternion"/> from another.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The result of the quaternion subtraction.</returns>
-        public static Quaternion Subtract(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion Subtract(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    quaternion.X = quaternion1.X - quaternion2.X;
 		    quaternion.Y = quaternion1.Y - quaternion2.Y;
 		    quaternion.Z = quaternion1.Z - quaternion2.Z;
@@ -842,12 +842,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains subtraction of one <see cref="Quaternion"/> from another.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains subtraction of one <see cref="FixedQuaternion"/> from another.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The result of the quaternion subtraction as an output parameter.</param>
-        public static void Subtract(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
+        public static void Subtract(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, out FixedQuaternion result)
         {
             result.X = quaternion1.X - quaternion2.X;
 		    result.Y = quaternion1.Y - quaternion2.Y;
@@ -860,14 +860,14 @@ namespace FixedMath
         #region Multiply
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains a multiplication of two quaternions.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains a multiplication of two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The result of the quaternion multiplication.</returns>
-        public static Quaternion Multiply(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion Multiply(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
 		    Fixed z = quaternion1.Z;
@@ -888,14 +888,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains a multiplication of <see cref="Quaternion"/> and a scalar.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains a multiplication of <see cref="FixedQuaternion"/> and a scalar.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="scaleFactor">Scalar value.</param>
         /// <returns>The result of the quaternion multiplication with a scalar.</returns>
-        public static Quaternion Multiply(Quaternion quaternion1, Fixed scaleFactor)
+        public static FixedQuaternion Multiply(FixedQuaternion quaternion1, Fixed scaleFactor)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    quaternion.X = quaternion1.X * scaleFactor;
 		    quaternion.Y = quaternion1.Y * scaleFactor;
 		    quaternion.Z = quaternion1.Z * scaleFactor;
@@ -904,12 +904,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains a multiplication of <see cref="Quaternion"/> and a scalar.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains a multiplication of <see cref="FixedQuaternion"/> and a scalar.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="scaleFactor">Scalar value.</param>
         /// <param name="result">The result of the quaternion multiplication with a scalar as an output parameter.</param>
-        public static void Multiply(ref Quaternion quaternion1, Fixed scaleFactor, out Quaternion result)
+        public static void Multiply(ref FixedQuaternion quaternion1, Fixed scaleFactor, out FixedQuaternion result)
         {
             result.X = quaternion1.X * scaleFactor;
 		    result.Y = quaternion1.Y * scaleFactor;
@@ -918,12 +918,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Quaternion"/> that contains a multiplication of two quaternions.
+        /// Creates a new <see cref="FixedQuaternion"/> that contains a multiplication of two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/>.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/>.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The result of the quaternion multiplication as an output parameter.</param>
-        public static void Multiply(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
+        public static void Multiply(ref FixedQuaternion quaternion1, ref FixedQuaternion quaternion2, out FixedQuaternion result)
         {
             Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
@@ -950,19 +950,19 @@ namespace FixedMath
         /// <summary>
         /// Flips the sign of the all the quaternion components.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The result of the quaternion negation.</returns>
-        public static Quaternion Negate(Quaternion quaternion)
+        public static FixedQuaternion Negate(FixedQuaternion quaternion)
         {
-		    return new Quaternion(-quaternion.X, -quaternion.Y, -quaternion.Z, -quaternion.W);
+		    return new FixedQuaternion(-quaternion.X, -quaternion.Y, -quaternion.Z, -quaternion.W);
         }
 
         /// <summary>
         /// Flips the sign of the all the quaternion components.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The result of the quaternion negation as an output parameter.</param>
-        public static void Negate(ref Quaternion quaternion, out Quaternion result)
+        public static void Negate(ref FixedQuaternion quaternion, out FixedQuaternion result)
         {
             result.X = -quaternion.X;
 		    result.Y = -quaternion.Y;
@@ -989,11 +989,11 @@ namespace FixedMath
         /// <summary>
         /// Scales the quaternion magnitude to unit length.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <returns>The unit length quaternion.</returns>
-        public static Quaternion Normalize(Quaternion quaternion)
+        public static FixedQuaternion Normalize(FixedQuaternion quaternion)
         {
-            Quaternion result;
+            FixedQuaternion result;
 		    Fixed num = Fixed.One / Fixed.Sqrt((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W));
             result.X = quaternion.X * num;
             result.Y = quaternion.Y * num;
@@ -1005,9 +1005,9 @@ namespace FixedMath
         /// <summary>
         /// Scales the quaternion magnitude to unit length.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/>.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/>.</param>
         /// <param name="result">The unit length quaternion an output parameter.</param>
-        public static void Normalize(ref Quaternion quaternion, out Quaternion result)
+        public static void Normalize(ref FixedQuaternion quaternion, out FixedQuaternion result)
         {
 		    Fixed num = Fixed.One / Fixed.Sqrt((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W));
 		    result.X = quaternion.X * num;
@@ -1019,22 +1019,22 @@ namespace FixedMath
         #endregion
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="Quaternion"/> in the format:
+        /// Returns a <see cref="String"/> representation of this <see cref="FixedQuaternion"/> in the format:
         /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Z:[<see cref="Z"/>] W:[<see cref="W"/>]}
         /// </summary>
-        /// <returns>A <see cref="String"/> representation of this <see cref="Quaternion"/>.</returns>
+        /// <returns>A <see cref="String"/> representation of this <see cref="FixedQuaternion"/>.</returns>
         public override string ToString()
         {
             return "{X:" + X + " Y:" + Y + " Z:" + Z + " W:" + W + "}";
         }
 
         /// <summary>
-        /// Gets a <see cref="Vector4"/> representation for this object.
+        /// Gets a <see cref="FixedVector4"/> representation for this object.
         /// </summary>
-        /// <returns>A <see cref="Vector4"/> representation for this object.</returns>
-        public Vector4 ToVector4()
+        /// <returns>A <see cref="FixedVector4"/> representation for this object.</returns>
+        public FixedVector4 ToVector4()
         {
-            return new Vector4(X,Y,Z,W);
+            return new FixedVector4(X,Y,Z,W);
         }
 
         public void Deconstruct(out Fixed x, out Fixed y, out Fixed z, out Fixed w)
@@ -1058,23 +1058,23 @@ namespace FixedMath
         #region Operators
 
         /// <summary>
-        /// Converts a <see cref="System.Numerics.Quaternion"/> to a <see cref="Quaternion"/>.
+        /// Converts a <see cref="System.Numerics.Quaternion"/> to a <see cref="FixedQuaternion"/>.
         /// </summary>
         /// <param name="value">The converted value.</param>
-        public static implicit operator Quaternion(System.Numerics.Quaternion value)
+        public static implicit operator FixedQuaternion(System.Numerics.Quaternion value)
         {
-            return new Quaternion((Fixed)value.X, (Fixed)value.Y, (Fixed)value.Z, (Fixed)value.W);
+            return new FixedQuaternion((Fixed)value.X, (Fixed)value.Y, (Fixed)value.Z, (Fixed)value.W);
         }
 
         /// <summary>
         /// Adds two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/> on the left of the add sign.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/> on the right of the add sign.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/> on the left of the add sign.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/> on the right of the add sign.</param>
         /// <returns>Sum of the vectors.</returns>
-        public static Quaternion operator +(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion operator +(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    quaternion.X = quaternion1.X + quaternion2.X;
 		    quaternion.Y = quaternion1.Y + quaternion2.Y;
 		    quaternion.Z = quaternion1.Z + quaternion2.Z;
@@ -1083,14 +1083,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Divides a <see cref="Quaternion"/> by the other <see cref="Quaternion"/>.
+        /// Divides a <see cref="FixedQuaternion"/> by the other <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/> on the left of the div sign.</param>
-        /// <param name="quaternion2">Divisor <see cref="Quaternion"/> on the right of the div sign.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/> on the left of the div sign.</param>
+        /// <param name="quaternion2">Divisor <see cref="FixedQuaternion"/> on the right of the div sign.</param>
         /// <returns>The result of dividing the quaternions.</returns>
-        public static Quaternion operator /(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion operator /(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
 		    Fixed z = quaternion1.Z;
@@ -1113,23 +1113,23 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Quaternion"/> instances are equal.
+        /// Compares whether two <see cref="FixedQuaternion"/> instances are equal.
         /// </summary>
-        /// <param name="quaternion1"><see cref="Quaternion"/> instance on the left of the equal sign.</param>
-        /// <param name="quaternion2"><see cref="Quaternion"/> instance on the right of the equal sign.</param>
+        /// <param name="quaternion1"><see cref="FixedQuaternion"/> instance on the left of the equal sign.</param>
+        /// <param name="quaternion2"><see cref="FixedQuaternion"/> instance on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public static bool operator ==(Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator ==(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
             return ((((quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y)) && (quaternion1.Z == quaternion2.Z)) && (quaternion1.W == quaternion2.W));
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Quaternion"/> instances are not equal.
+        /// Compares whether two <see cref="FixedQuaternion"/> instances are not equal.
         /// </summary>
-        /// <param name="quaternion1"><see cref="Quaternion"/> instance on the left of the not equal sign.</param>
-        /// <param name="quaternion2"><see cref="Quaternion"/> instance on the right of the not equal sign.</param>
+        /// <param name="quaternion1"><see cref="FixedQuaternion"/> instance on the left of the not equal sign.</param>
+        /// <param name="quaternion2"><see cref="FixedQuaternion"/> instance on the right of the not equal sign.</param>
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
-        public static bool operator !=(Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator !=(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
             if (((quaternion1.X == quaternion2.X) && (quaternion1.Y == quaternion2.Y)) && (quaternion1.Z == quaternion2.Z))
 		    {
@@ -1141,12 +1141,12 @@ namespace FixedMath
         /// <summary>
         /// Multiplies two quaternions.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Quaternion"/> on the left of the mul sign.</param>
-        /// <param name="quaternion2">Source <see cref="Quaternion"/> on the right of the mul sign.</param>
+        /// <param name="quaternion1">Source <see cref="FixedQuaternion"/> on the left of the mul sign.</param>
+        /// <param name="quaternion2">Source <see cref="FixedQuaternion"/> on the right of the mul sign.</param>
         /// <returns>Result of the quaternions multiplication.</returns>
-        public static Quaternion operator *(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion operator *(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    Fixed x = quaternion1.X;
 		    Fixed y = quaternion1.Y;
 		    Fixed z = quaternion1.Z;
@@ -1169,12 +1169,12 @@ namespace FixedMath
         /// <summary>
         /// Multiplies the components of quaternion by a scalar.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Vector3"/> on the left of the mul sign.</param>
+        /// <param name="quaternion1">Source <see cref="FixedVector3"/> on the left of the mul sign.</param>
         /// <param name="scaleFactor">Scalar value on the right of the mul sign.</param>
         /// <returns>Result of the quaternion multiplication with a scalar.</returns>
-        public static Quaternion operator *(Quaternion quaternion1, Fixed scaleFactor)
+        public static FixedQuaternion operator *(FixedQuaternion quaternion1, Fixed scaleFactor)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    quaternion.X = quaternion1.X * scaleFactor;
 		    quaternion.Y = quaternion1.Y * scaleFactor;
 		    quaternion.Z = quaternion1.Z * scaleFactor;
@@ -1183,14 +1183,14 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Subtracts a <see cref="Quaternion"/> from a <see cref="Quaternion"/>.
+        /// Subtracts a <see cref="FixedQuaternion"/> from a <see cref="FixedQuaternion"/>.
         /// </summary>
-        /// <param name="quaternion1">Source <see cref="Vector3"/> on the left of the sub sign.</param>
-        /// <param name="quaternion2">Source <see cref="Vector3"/> on the right of the sub sign.</param>
+        /// <param name="quaternion1">Source <see cref="FixedVector3"/> on the left of the sub sign.</param>
+        /// <param name="quaternion2">Source <see cref="FixedVector3"/> on the right of the sub sign.</param>
         /// <returns>Result of the quaternion subtraction.</returns>
-        public static Quaternion operator -(Quaternion quaternion1, Quaternion quaternion2)
+        public static FixedQuaternion operator -(FixedQuaternion quaternion1, FixedQuaternion quaternion2)
         {
-            Quaternion quaternion;
+            FixedQuaternion quaternion;
 		    quaternion.X = quaternion1.X - quaternion2.X;
 		    quaternion.Y = quaternion1.Y - quaternion2.Y;
 		    quaternion.Z = quaternion1.Z - quaternion2.Z;
@@ -1202,11 +1202,11 @@ namespace FixedMath
         /// <summary>
         /// Flips the sign of the all the quaternion components.
         /// </summary>
-        /// <param name="quaternion">Source <see cref="Quaternion"/> on the right of the sub sign.</param>
+        /// <param name="quaternion">Source <see cref="FixedQuaternion"/> on the right of the sub sign.</param>
         /// <returns>The result of the quaternion negation.</returns>
-        public static Quaternion operator -(Quaternion quaternion)
+        public static FixedQuaternion operator -(FixedQuaternion quaternion)
         {
-            Quaternion quaternion2;
+            FixedQuaternion quaternion2;
 		    quaternion2.X = -quaternion.X;
 		    quaternion2.Y = -quaternion.Y;
 		    quaternion2.Z = -quaternion.Z;

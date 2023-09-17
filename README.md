@@ -11,15 +11,15 @@ Fixed point 31.32 numeric type with operations and extensions
 ## Math Data Structures:
 Math data structures were ported from MonoGame to work with Fixed numeric type.
 
-- `Vector2`
-- `Vector3`
-- `Vector4`
-- `Quaternion`
-- `Matrix`
-- `Plane`
-- `Point`
-- `Ray`
-- `Rectangle`
-- `BoundingBox`
-- `BoundingFrustum`
-- `BoundingSphere`
+- `FixedVector2`
+- `FixedVector3`
+- `FixedVector4`
+- `FixedQuaternion`
+- `FixedMatrix`
+- `FixedPlane`
+- `FixedPoint`
+- `FixedRay`
+- `FixedRectangle`
+- `FixedBoundingBox`
+- `FixedBoundingFrustum`
+- `FixedBoundingSphere`

@@ -8,32 +8,32 @@ namespace FixedMath
         public void TransformByMatrix()
         {
             // Our test plane.
-            var plane = Plane.Normalize(new Plane(new Vector3(0, 1, 1), 2.5f));
+            var plane = FixedPlane.Normalize(new FixedPlane(new FixedVector3(0, 1, 1), 2.5f));
 
             // Our matrix.
-            var matrix = Matrix.CreateRotationX(Fixed.PiOver2);
+            var matrix = FixedMatrix.CreateRotationX(Fixed.PiOver2);
 
             // Test transform.
-            var expectedResult = new Plane(new Vector3(0, -0.7071068f, 0.7071067f), 1.767767f);
-            Assert.That(Plane.Transform(plane, matrix), Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
+            var expectedResult = new FixedPlane(new FixedVector3(0, -0.7071068f, 0.7071067f), 1.767767f);
+            Assert.That(FixedPlane.Transform(plane, matrix), Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
         }
 
         [Test]
         public void TransformByRefMatrix()
         {
             // Our test plane.
-            var plane = Plane.Normalize(new Plane(new Vector3(1, 0.8f, 0.5f), 2.5f));
+            var plane = FixedPlane.Normalize(new FixedPlane(new FixedVector3(1, 0.8f, 0.5f), 2.5f));
             var originalPlane = plane;
 
             // Our matrix.
-            var matrix = Matrix.CreateRotationX(Fixed.PiOver2);
+            var matrix = FixedMatrix.CreateRotationX(Fixed.PiOver2);
             var originalMatrix = matrix;
 
             // Test transform.
-            Plane result;
-            Plane.Transform(ref plane, ref matrix, out result);
+            FixedPlane result;
+            FixedPlane.Transform(ref plane, ref matrix, out result);
 
-            var expectedResult = new Plane(new Vector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
+            var expectedResult = new FixedPlane(new FixedVector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
             Assert.That(result, Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
 
             Assert.That(plane, Is.EqualTo(originalPlane));
@@ -44,32 +44,32 @@ namespace FixedMath
         public void TransformByQuaternion()
         {
             // Our test plane.
-            var plane = Plane.Normalize(new Plane(new Vector3(0, 1, 1), 2.5f));
+            var plane = FixedPlane.Normalize(new FixedPlane(new FixedVector3(0, 1, 1), 2.5f));
 
             // Our quaternion.
-            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Fixed.PiOver2);
+            var quaternion = FixedQuaternion.CreateFromAxisAngle(FixedVector3.UnitX, Fixed.PiOver2);
 
             // Test transform.
-            var expectedResult = new Plane(new Vector3(0, -0.7071068f, 0.7071067f), 1.767767f);
-            Assert.That(Plane.Transform(plane, quaternion), Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
+            var expectedResult = new FixedPlane(new FixedVector3(0, -0.7071068f, 0.7071067f), 1.767767f);
+            Assert.That(FixedPlane.Transform(plane, quaternion), Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
         }
 
         [Test]
         public void TransformByRefQuaternion()
         {
             // Our test plane.
-            var plane = Plane.Normalize(new Plane(new Vector3(1, 0.8f, 0.5f), 2.5f));
+            var plane = FixedPlane.Normalize(new FixedPlane(new FixedVector3(1, 0.8f, 0.5f), 2.5f));
             var originalPlane = plane;
 
             // Our quaternion.
-            var quaternion = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Fixed.PiOver2);
+            var quaternion = FixedQuaternion.CreateFromAxisAngle(FixedVector3.UnitX, Fixed.PiOver2);
             var originalQuaternion = quaternion;
 
             // Test transform.
-            Plane result;
-            Plane.Transform(ref plane, ref quaternion, out result);
+            FixedPlane result;
+            FixedPlane.Transform(ref plane, ref quaternion, out result);
 
-            var expectedResult = new Plane(new Vector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
+            var expectedResult = new FixedPlane(new FixedVector3(0.7273929f, -0.3636965f, 0.5819144f), 1.818482f);
             Assert.That(result, Is.EqualTo(expectedResult).Using(PlaneComparer.Epsilon));
 
             Assert.That(plane, Is.EqualTo(originalPlane));
@@ -79,9 +79,9 @@ namespace FixedMath
         [Test]
         public void Deconstruct()
         {
-            Plane plane = new Plane(new Vector3(255, 255, 255), float.MaxValue);
+            FixedPlane plane = new FixedPlane(new FixedVector3(255, 255, 255), float.MaxValue);
 
-            Vector3 normal;
+            FixedVector3 normal;
             Fixed d;
 
             plane.Deconstruct(out normal, out d);

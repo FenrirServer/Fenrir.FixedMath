@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace FixedMath.Tests
 {
 
-    public class MatrixComparer : IEqualityComparer<Matrix>
+    public class MatrixComparer : IEqualityComparer<FixedMatrix>
     {
         static public MatrixComparer Epsilon = new MatrixComparer((Fixed)0.000001M);
 
@@ -17,7 +17,7 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Matrix x, Matrix y)
+        public bool Equals(FixedMatrix x, FixedMatrix y)
         {
             return Fixed.Abs(x.M11 - y.M11) < _epsilon &&
                     Fixed.Abs(x.M12 - y.M12) < _epsilon &&
@@ -37,7 +37,7 @@ namespace FixedMath.Tests
                     Fixed.Abs(x.M44 - y.M44) < _epsilon;
         }
 
-        public int GetHashCode(Matrix obj)
+        public int GetHashCode(FixedMatrix obj)
         {
             throw new NotImplementedException();
         }
@@ -84,7 +84,7 @@ namespace FixedMath.Tests
         }
     }
 
-    public class BoundingSphereComparer : IEqualityComparer<BoundingSphere>
+    public class BoundingSphereComparer : IEqualityComparer<FixedBoundingSphere>
     {
         static public BoundingSphereComparer Epsilon = new BoundingSphereComparer((Fixed)0.000001M);
 
@@ -95,7 +95,7 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(BoundingSphere x, BoundingSphere y)
+        public bool Equals(FixedBoundingSphere x, FixedBoundingSphere y)
         {
             return Fixed.Abs(x.Center.X - y.Center.X) < _epsilon &&
                     Fixed.Abs(x.Center.Y - y.Center.Y) < _epsilon &&
@@ -103,13 +103,13 @@ namespace FixedMath.Tests
                     Fixed.Abs(x.Radius - y.Radius) < _epsilon;
         }
 
-        public int GetHashCode(BoundingSphere obj)
+        public int GetHashCode(FixedBoundingSphere obj)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class Vector2Comparer : IEqualityComparer<Vector2>
+    public class Vector2Comparer : IEqualityComparer<FixedVector2>
     {
         static public Vector2Comparer Epsilon = new Vector2Comparer((Fixed)0.000001M);
 
@@ -120,19 +120,19 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Vector2 x, Vector2 y)
+        public bool Equals(FixedVector2 x, FixedVector2 y)
         {
             return Fixed.Abs(x.X - y.X) < _epsilon &&
                    Fixed.Abs(x.Y - y.Y) < _epsilon;
         }
 
-        public int GetHashCode(Vector2 obj)
+        public int GetHashCode(FixedVector2 obj)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class Vector3Comparer : IEqualityComparer<Vector3>
+    public class Vector3Comparer : IEqualityComparer<FixedVector3>
     {
         static public Vector3Comparer Epsilon = new Vector3Comparer((Fixed)0.000001M);
 
@@ -143,20 +143,20 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Vector3 x, Vector3 y)
+        public bool Equals(FixedVector3 x, FixedVector3 y)
         {
             return Fixed.Abs(x.X - y.X) < _epsilon &&
                    Fixed.Abs(x.Y - y.Y) < _epsilon &&
                    Fixed.Abs(x.Z - y.Z) < _epsilon;
         }
 
-        public int GetHashCode(Vector3 obj)
+        public int GetHashCode(FixedVector3 obj)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class Vector4Comparer : IEqualityComparer<Vector4>
+    public class Vector4Comparer : IEqualityComparer<FixedVector4>
     {
         static public Vector4Comparer Epsilon = new Vector4Comparer((Fixed)0.001M);
 
@@ -167,7 +167,7 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Vector4 x, Vector4 y)
+        public bool Equals(FixedVector4 x, FixedVector4 y)
         {
             return Fixed.Abs(x.X - y.X) < _epsilon &&
                    Fixed.Abs(x.Y - y.Y) < _epsilon &&
@@ -175,13 +175,13 @@ namespace FixedMath.Tests
                    Fixed.Abs(x.W - y.W) < _epsilon;
         }
 
-        public int GetHashCode(Vector4 obj)
+        public int GetHashCode(FixedVector4 obj)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class QuaternionComparer : IEqualityComparer<Quaternion>
+    public class QuaternionComparer : IEqualityComparer<FixedQuaternion>
     {
         static public QuaternionComparer Epsilon = new QuaternionComparer((Fixed)0.000001M);
 
@@ -192,7 +192,7 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Quaternion x, Quaternion y)
+        public bool Equals(FixedQuaternion x, FixedQuaternion y)
         {
             return Fixed.Abs(x.X - y.X) < _epsilon &&
                    Fixed.Abs(x.Y - y.Y) < _epsilon &&
@@ -200,12 +200,12 @@ namespace FixedMath.Tests
                    Fixed.Abs(x.W - y.W) < _epsilon;
         }
 
-        public int GetHashCode(Quaternion obj)
+        public int GetHashCode(FixedQuaternion obj)
         {
             throw new NotImplementedException();
         }
     }
-    public class PlaneComparer : IEqualityComparer<Plane>
+    public class PlaneComparer : IEqualityComparer<FixedPlane>
     {
         static public PlaneComparer Epsilon = new PlaneComparer((Fixed)0.000001M);
 
@@ -216,7 +216,7 @@ namespace FixedMath.Tests
             _epsilon = epsilon;
         }
 
-        public bool Equals(Plane x, Plane y)
+        public bool Equals(FixedPlane x, FixedPlane y)
         {
             return Fixed.Abs(x.Normal.X - y.Normal.X) < _epsilon &&
                    Fixed.Abs(x.Normal.Y - y.Normal.Y) < _epsilon &&
@@ -224,7 +224,7 @@ namespace FixedMath.Tests
                    Fixed.Abs(x.D - y.D) < _epsilon;
         }
 
-        public int GetHashCode(Plane obj)
+        public int GetHashCode(FixedPlane obj)
         {
             throw new NotImplementedException();
         }

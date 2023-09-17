@@ -5,7 +5,7 @@
         [Test]
         public void Deconstruct()
         {
-            Point point = new Point(int.MinValue, int.MaxValue);
+            FixedPoint point = new FixedPoint(int.MinValue, int.MaxValue);
 
             int x, y;
 

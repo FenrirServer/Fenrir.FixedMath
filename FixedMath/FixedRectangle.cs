@@ -9,36 +9,36 @@ namespace FixedMath
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Rectangle : IEquatable<Rectangle>
+    public struct FixedRectangle : IEquatable<FixedRectangle>
     {
         #region Private Fields
 
-        private static Rectangle emptyRectangle = new Rectangle();
+        private static FixedRectangle emptyRectangle = new FixedRectangle();
 
         #endregion
 
         #region Public Fields
 
         /// <summary>
-        /// The x coordinate of the top-left corner of this <see cref="Rectangle"/>.
+        /// The x coordinate of the top-left corner of this <see cref="FixedRectangle"/>.
         /// </summary>
         [DataMember]
         public int X;
 
         /// <summary>
-        /// The y coordinate of the top-left corner of this <see cref="Rectangle"/>.
+        /// The y coordinate of the top-left corner of this <see cref="FixedRectangle"/>.
         /// </summary>
         [DataMember]
         public int Y;
 
         /// <summary>
-        /// The width of this <see cref="Rectangle"/>.
+        /// The width of this <see cref="FixedRectangle"/>.
         /// </summary>
         [DataMember]
         public int Width;
 
         /// <summary>
-        /// The height of this <see cref="Rectangle"/>.
+        /// The height of this <see cref="FixedRectangle"/>.
         /// </summary>
         [DataMember]
         public int Height;
@@ -48,15 +48,15 @@ namespace FixedMath
         #region Public Properties
 
         /// <summary>
-        /// Returns a <see cref="Rectangle"/> with X=0, Y=0, Width=0, Height=0.
+        /// Returns a <see cref="FixedRectangle"/> with X=0, Y=0, Width=0, Height=0.
         /// </summary>
-        public static Rectangle Empty
+        public static FixedRectangle Empty
         {
             get { return emptyRectangle; }
         }
 
         /// <summary>
-        /// Returns the x coordinate of the left edge of this <see cref="Rectangle"/>.
+        /// Returns the x coordinate of the left edge of this <see cref="FixedRectangle"/>.
         /// </summary>
         public int Left
         {
@@ -64,7 +64,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Returns the x coordinate of the right edge of this <see cref="Rectangle"/>.
+        /// Returns the x coordinate of the right edge of this <see cref="FixedRectangle"/>.
         /// </summary>
         public int Right
         {
@@ -72,7 +72,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Returns the y coordinate of the top edge of this <see cref="Rectangle"/>.
+        /// Returns the y coordinate of the top edge of this <see cref="FixedRectangle"/>.
         /// </summary>
         public int Top
         {
@@ -80,7 +80,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Returns the y coordinate of the bottom edge of this <see cref="Rectangle"/>.
+        /// Returns the y coordinate of the bottom edge of this <see cref="FixedRectangle"/>.
         /// </summary>
         public int Bottom
         {
@@ -88,7 +88,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Whether or not this <see cref="Rectangle"/> has a <see cref="Width"/> and
+        /// Whether or not this <see cref="FixedRectangle"/> has a <see cref="Width"/> and
         /// <see cref="Height"/> of 0, and a <see cref="Location"/> of (0, 0).
         /// </summary>
         public bool IsEmpty
@@ -100,13 +100,13 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// The top-left coordinates of this <see cref="Rectangle"/>.
+        /// The top-left coordinates of this <see cref="FixedRectangle"/>.
         /// </summary>
-        public Point Location
+        public FixedPoint Location
         {
             get
             {
-                return new Point(this.X, this.Y);
+                return new FixedPoint(this.X, this.Y);
             }
             set
             {
@@ -116,13 +116,13 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// The width-height coordinates of this <see cref="Rectangle"/>.
+        /// The width-height coordinates of this <see cref="FixedRectangle"/>.
         /// </summary>
-        public Point Size
+        public FixedPoint Size
         {
             get
             {
-                return new Point(this.Width,this.Height);
+                return new FixedPoint(this.Width,this.Height);
             }
             set
             {
@@ -132,17 +132,17 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// A <see cref="Point"/> located in the center of this <see cref="Rectangle"/>.
+        /// A <see cref="FixedPoint"/> located in the center of this <see cref="FixedRectangle"/>.
         /// </summary>
         /// <remarks>
         /// If <see cref="Width"/> or <see cref="Height"/> is an odd number,
         /// the center point will be rounded down.
         /// </remarks>
-        public Point Center
+        public FixedPoint Center
         {
             get
             {
-                return new Point(this.X + (this.Width / 2), this.Y + (this.Height / 2));
+                return new FixedPoint(this.X + (this.Width / 2), this.Y + (this.Height / 2));
             }
         }
 
@@ -168,14 +168,14 @@ namespace FixedMath
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
+        /// Creates a new instance of <see cref="FixedRectangle"/> struct, with the specified
         /// position, width, and height.
         /// </summary>
-        /// <param name="x">The x coordinate of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="y">The y coordinate of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="width">The width of the created <see cref="Rectangle"/>.</param>
-        /// <param name="height">The height of the created <see cref="Rectangle"/>.</param>
-        public Rectangle(int x, int y, int width, int height)
+        /// <param name="x">The x coordinate of the top-left corner of the created <see cref="FixedRectangle"/>.</param>
+        /// <param name="y">The y coordinate of the top-left corner of the created <see cref="FixedRectangle"/>.</param>
+        /// <param name="width">The width of the created <see cref="FixedRectangle"/>.</param>
+        /// <param name="height">The height of the created <see cref="FixedRectangle"/>.</param>
+        public FixedRectangle(int x, int y, int width, int height)
         {
             this.X = x;
             this.Y = y;
@@ -184,12 +184,12 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
+        /// Creates a new instance of <see cref="FixedRectangle"/> struct, with the specified
         /// location and size.
         /// </summary>
-        /// <param name="location">The x and y coordinates of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="size">The width and height of the created <see cref="Rectangle"/>.</param>
-        public Rectangle(Point location,Point size)
+        /// <param name="location">The x and y coordinates of the top-left corner of the created <see cref="FixedRectangle"/>.</param>
+        /// <param name="size">The width and height of the created <see cref="FixedRectangle"/>.</param>
+        public FixedRectangle(FixedPoint location,FixedPoint size)
         {
             this.X = location.X;
             this.Y = location.Y;
@@ -202,23 +202,23 @@ namespace FixedMath
         #region Operators
 
         /// <summary>
-        /// Compares whether two <see cref="Rectangle"/> instances are equal.
+        /// Compares whether two <see cref="FixedRectangle"/> instances are equal.
         /// </summary>
-        /// <param name="a"><see cref="Rectangle"/> instance on the left of the equal sign.</param>
-        /// <param name="b"><see cref="Rectangle"/> instance on the right of the equal sign.</param>
+        /// <param name="a"><see cref="FixedRectangle"/> instance on the left of the equal sign.</param>
+        /// <param name="b"><see cref="FixedRectangle"/> instance on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public static bool operator ==(Rectangle a, Rectangle b)
+        public static bool operator ==(FixedRectangle a, FixedRectangle b)
         {
             return ((a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height));
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Rectangle"/> instances are not equal.
+        /// Compares whether two <see cref="FixedRectangle"/> instances are not equal.
         /// </summary>
-        /// <param name="a"><see cref="Rectangle"/> instance on the left of the not equal sign.</param>
-        /// <param name="b"><see cref="Rectangle"/> instance on the right of the not equal sign.</param>
+        /// <param name="a"><see cref="FixedRectangle"/> instance on the left of the not equal sign.</param>
+        /// <param name="b"><see cref="FixedRectangle"/> instance on the right of the not equal sign.</param>
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
-        public static bool operator !=(Rectangle a, Rectangle b)
+        public static bool operator !=(FixedRectangle a, FixedRectangle b)
         {
             return !(a == b);
         }
@@ -228,83 +228,83 @@ namespace FixedMath
         #region Public Methods
        
         /// <summary>
-        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
         /// <param name="x">The x coordinate of the point to check for containment.</param>
         /// <param name="y">The y coordinate of the point to check for containment.</param>
-        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise.</returns>
 		public bool Contains(int x, int y)
         {
             return ((((this.X <= x) && (x < (this.X + this.Width))) && (this.Y <= y)) && (y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
         /// <param name="x">The x coordinate of the point to check for containment.</param>
         /// <param name="y">The y coordinate of the point to check for containment.</param>
-        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise.</returns>
         public bool Contains(Fixed x, Fixed y)
         {
             return (((((Fixed)this.X <= x) && (x < (Fixed)(this.X + this.Width))) && ((Fixed)this.Y <= y)) && (y < (Fixed)(this.Y + this.Height)));
         }
 		
         /// <summary>
-        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedPoint"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-        public bool Contains(Point value)
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="FixedPoint"/> lies inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise.</returns>
+        public bool Contains(FixedPoint value)
         {
             return ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedPoint"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
-        public void Contains(ref Point value, out bool result)
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="FixedPoint"/> lies inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
+        public void Contains(ref FixedPoint value, out bool result)
         {
             result = ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedVector2"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-        public bool Contains(Vector2 value)
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="FixedVector2"/> lies inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise.</returns>
+        public bool Contains(FixedVector2 value)
         {
             return (((((Fixed)this.X <= value.X) && (value.X < (Fixed)(this.X + this.Width))) && ((Fixed)this.Y <= value.Y)) && (value.Y < (Fixed)(this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedVector2"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
-        public void Contains(ref Vector2 value, out bool result)
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="FixedVector2"/> lies inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
+        public void Contains(ref FixedVector2 value, out bool result)
         {
             result = (((((Fixed)this.X <= value.X) && (value.X < (Fixed)(this.X + this.Width))) && ((Fixed)this.Y <= value.Y)) && (value.Y < (Fixed)(this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Rectangle"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedRectangle"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The <see cref="Rectangle"/> to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Rectangle"/>'s bounds lie entirely inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-        public bool Contains(Rectangle value)
+        /// <param name="value">The <see cref="FixedRectangle"/> to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="FixedRectangle"/>'s bounds lie entirely inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise.</returns>
+        public bool Contains(FixedRectangle value)
         {
             return ((((this.X <= value.X) && ((value.X + value.Width) <= (this.X + this.Width))) && (this.Y <= value.Y)) && ((value.Y + value.Height) <= (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Rectangle"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="FixedRectangle"/> lies within the bounds of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="value">The <see cref="Rectangle"/> to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Rectangle"/>'s bounds lie entirely inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
-        public void Contains(ref Rectangle value,out bool result)
+        /// <param name="value">The <see cref="FixedRectangle"/> to check for inclusion in this <see cref="FixedRectangle"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="FixedRectangle"/>'s bounds lie entirely inside this <see cref="FixedRectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
+        public void Contains(ref FixedRectangle value,out bool result)
         {
             result = ((((this.X <= value.X) && ((value.X + value.Width) <= (this.X + this.Width))) && (this.Y <= value.Y)) && ((value.Y + value.Height) <= (this.Y + this.Height)));
         }
@@ -316,23 +316,23 @@ namespace FixedMath
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is Rectangle) && this == ((Rectangle)obj);
+            return (obj is FixedRectangle) && this == ((FixedRectangle)obj);
         }
 
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="Rectangle"/>.
+        /// Compares whether current instance is equal to specified <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="other">The <see cref="Rectangle"/> to compare.</param>
+        /// <param name="other">The <see cref="FixedRectangle"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(Rectangle other)
+        public bool Equals(FixedRectangle other)
         {
             return this == other;
         }
 
         /// <summary>
-        /// Gets the hash code of this <see cref="Rectangle"/>.
+        /// Gets the hash code of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <returns>Hash code of this <see cref="Rectangle"/>.</returns>
+        /// <returns>Hash code of this <see cref="FixedRectangle"/>.</returns>
         public override int GetHashCode()
         {
             unchecked
@@ -347,7 +347,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="FixedRectangle"/> by specified horizontal and vertical amounts. 
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -360,7 +360,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="FixedRectangle"/> by specified horizontal and vertical amounts. 
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -373,11 +373,11 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
+        /// Gets whether or not the other <see cref="FixedRectangle"/> intersects with this rectangle.
         /// </summary>
         /// <param name="value">The other rectangle for testing.</param>
-        /// <returns><c>true</c> if other <see cref="Rectangle"/> intersects with this rectangle; <c>false</c> otherwise.</returns>
-        public bool Intersects(Rectangle value)
+        /// <returns><c>true</c> if other <see cref="FixedRectangle"/> intersects with this rectangle; <c>false</c> otherwise.</returns>
+        public bool Intersects(FixedRectangle value)
         {
             return value.Left < Right &&
                    Left < value.Right &&
@@ -387,11 +387,11 @@ namespace FixedMath
 
 
         /// <summary>
-        /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
+        /// Gets whether or not the other <see cref="FixedRectangle"/> intersects with this rectangle.
         /// </summary>
         /// <param name="value">The other rectangle for testing.</param>
-        /// <param name="result"><c>true</c> if other <see cref="Rectangle"/> intersects with this rectangle; <c>false</c> otherwise. As an output parameter.</param>
-        public void Intersects(ref Rectangle value, out bool result)
+        /// <param name="result"><c>true</c> if other <see cref="FixedRectangle"/> intersects with this rectangle; <c>false</c> otherwise. As an output parameter.</param>
+        public void Intersects(ref FixedRectangle value, out bool result)
         {
             result = value.Left < Right &&
                      Left < value.Right &&
@@ -400,25 +400,25 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that contains overlapping region of two other rectangles.
+        /// Creates a new <see cref="FixedRectangle"/> that contains overlapping region of two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="FixedRectangle"/>.</param>
+        /// <param name="value2">The second <see cref="FixedRectangle"/>.</param>
         /// <returns>Overlapping region of the two rectangles.</returns>
-        public static Rectangle Intersect(Rectangle value1, Rectangle value2)
+        public static FixedRectangle Intersect(FixedRectangle value1, FixedRectangle value2)
         {
-            Rectangle rectangle;
+            FixedRectangle rectangle;
             Intersect(ref value1, ref value2, out rectangle);
             return rectangle;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that contains overlapping region of two other rectangles.
+        /// Creates a new <see cref="FixedRectangle"/> that contains overlapping region of two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="FixedRectangle"/>.</param>
+        /// <param name="value2">The second <see cref="FixedRectangle"/>.</param>
         /// <param name="result">Overlapping region of the two rectangles as an output parameter.</param>
-        public static void Intersect(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+        public static void Intersect(ref FixedRectangle value1, ref FixedRectangle value2, out FixedRectangle result)
         {
             if (value1.Intersects(value2))
             {
@@ -426,19 +426,19 @@ namespace FixedMath
                 int left_side = Fixed.Max(value1.X, value2.X);
                 int top_side = Fixed.Max(value1.Y, value2.Y);
                 int bottom_side = Fixed.Min(value1.Y + value1.Height, value2.Y + value2.Height);
-                result = new Rectangle(left_side, top_side, right_side - left_side, bottom_side - top_side);
+                result = new FixedRectangle(left_side, top_side, right_side - left_side, bottom_side - top_side);
             }
             else
             {
-                result = new Rectangle(0, 0, 0, 0);
+                result = new FixedRectangle(0, 0, 0, 0);
             }
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
-        /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="offsetX">The x coordinate to add to this <see cref="FixedRectangle"/>.</param>
+        /// <param name="offsetY">The y coordinate to add to this <see cref="FixedRectangle"/>.</param>
         public void Offset(int offsetX, int offsetY)
         {
             X += offsetX;
@@ -446,10 +446,10 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
-        /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="offsetX">The x coordinate to add to this <see cref="FixedRectangle"/>.</param>
+        /// <param name="offsetY">The y coordinate to add to this <see cref="FixedRectangle"/>.</param>
         public void Offset(Fixed offsetX, Fixed offsetY)
         {
             X += (int)offsetX;
@@ -457,57 +457,57 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
-        public void Offset(Point amount)
+        /// <param name="amount">The x and y components to add to this <see cref="FixedRectangle"/>.</param>
+        public void Offset(FixedPoint amount)
         {
             X += amount.X;
             Y += amount.Y;
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="FixedRectangle"/>.
         /// </summary>
-        /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
-        public void Offset(Vector2 amount)
+        /// <param name="amount">The x and y components to add to this <see cref="FixedRectangle"/>.</param>
+        public void Offset(FixedVector2 amount)
         {
             X += (int)amount.X;
             Y += (int)amount.Y;
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="Rectangle"/> in the format:
+        /// Returns a <see cref="String"/> representation of this <see cref="FixedRectangle"/> in the format:
         /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Width:[<see cref="Width"/>] Height:[<see cref="Height"/>]}
         /// </summary>
-        /// <returns><see cref="String"/> representation of this <see cref="Rectangle"/>.</returns>
+        /// <returns><see cref="String"/> representation of this <see cref="FixedRectangle"/>.</returns>
         public override string ToString()
         {
             return "{X:" + X + " Y:" + Y + " Width:" + Width + " Height:" + Height + "}";
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that completely contains two other rectangles.
+        /// Creates a new <see cref="FixedRectangle"/> that completely contains two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="FixedRectangle"/>.</param>
+        /// <param name="value2">The second <see cref="FixedRectangle"/>.</param>
         /// <returns>The union of the two rectangles.</returns>
-        public static Rectangle Union(Rectangle value1, Rectangle value2)
+        public static FixedRectangle Union(FixedRectangle value1, FixedRectangle value2)
         {
             int x = Fixed.Min(value1.X, value2.X);
             int y = Fixed.Min(value1.Y, value2.Y);
-            return new Rectangle(x, y,
+            return new FixedRectangle(x, y,
                                  Fixed.Max(value1.Right, value2.Right) - x,
                                      Fixed.Max(value1.Bottom, value2.Bottom) - y);
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that completely contains two other rectangles.
+        /// Creates a new <see cref="FixedRectangle"/> that completely contains two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="FixedRectangle"/>.</param>
+        /// <param name="value2">The second <see cref="FixedRectangle"/>.</param>
         /// <param name="result">The union of the two rectangles as an output parameter.</param>
-        public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+        public static void Union(ref FixedRectangle value1, ref FixedRectangle value2, out FixedRectangle result)
         {
             result.X = Fixed.Min(value1.X, value2.X);
             result.Y = Fixed.Min(value1.Y, value2.Y);
@@ -516,7 +516,7 @@ namespace FixedMath
         }
 
         /// <summary>
-        /// Deconstruction method for <see cref="Rectangle"/>.
+        /// Deconstruction method for <see cref="FixedRectangle"/>.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
