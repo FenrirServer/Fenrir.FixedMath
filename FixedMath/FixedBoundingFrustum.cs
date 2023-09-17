@@ -7,7 +7,7 @@ namespace FixedMath
     /// Defines a viewing frustum for intersection operations.
     /// </summary>
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct FixedBoundingFrustum : IEquatable<FixedBoundingFrustum>
+    public class FixedBoundingFrustum : IEquatable<FixedBoundingFrustum>
     {
         #region Private Fields
 
