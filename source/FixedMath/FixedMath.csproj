@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Description>Deterministic fixed-math library based on FixedMath.Net and MonoGame Math structures</Description>
+	<Version>1.0.0</Version>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\UnityPackage\Assets\Runtime\**\*.cs" />
+	</ItemGroup>
+
+</Project>

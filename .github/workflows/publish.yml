@@ -1,0 +1,49 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-upm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://upm.fenrirserver.org/
+  
+      - run: npm publish
+        working-directory: source/UnityPackage/Assets
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  deploy-nuget:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: source
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Test
+        run: dotnet test -c Release --no-build --verbosity normal -p:ParallelizeTestCollections=false
+
+      - name: Build solution and generate NuGet package
+        run: dotnet pack Fenrir.FixedMath -c Release
+
+      - name: Push generated package to NuGet
+        run: dotnet nuget push ./Fenrir.FixedMath/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN --skip-duplicate
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_TOKEN}}

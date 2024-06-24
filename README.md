@@ -1,4 +1,4 @@
-# Fixed Math Library
+# Fixed Math Library for C# (.NET and Unity)
 
 A deterministic fixed-math library based on [FixedMath.Net](https://github.com/asik/FixedMath.Net/) and [MonoGame](https://github.com/MonoGame/MonoGame) Math structures.
 

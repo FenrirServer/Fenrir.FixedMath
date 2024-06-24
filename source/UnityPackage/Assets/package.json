@@ -1,0 +1,15 @@
+{
+    "name": "org.fenrirserver.fixedmath",
+    "displayName": "Fenrir Fixed Math",
+    "description": "A deterministic fixed-math library based on FixedMath.Net and MonoGame Math structures.",
+    "license": "MIT",
+    "version": "1.0.0",
+    "author": {
+        "name": "Fenrir",
+        "email": "info@fenrirserver.com",
+        "url": "https://fenrirserver.com"
+    },
+    "unity": "2018.3",
+    "dependencies": {
+    }
+}
