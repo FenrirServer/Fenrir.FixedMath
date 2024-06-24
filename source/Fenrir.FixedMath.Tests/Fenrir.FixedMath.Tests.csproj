@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FixedMath\FixedMath.csproj" />
+    <ProjectReference Include="..\Fenrir.FixedMath\Fenrir.FixedMath.csproj" />
   </ItemGroup>
 
 </Project>
